@@ -79,7 +79,7 @@ class SettingsActivity : AppCompatActivity() {
             if (!fromUser) return@addOnChangeListener
             val rounded = value.toInt()
             prefs.edit().putInt("goal_percent", rounded).apply()
-            binding.tvGoalValue.text = getString(R.string.settings_goal_per_day, rounded)
+            binding.tvGoalValue.text = formatGoalPerDay(rounded)
         }
     }
 
@@ -265,7 +265,7 @@ class SettingsActivity : AppCompatActivity() {
         renderThemeSelection(currentMode)
 
         val goal = prefs.getInt("goal_percent", 5)
-        binding.tvGoalValue.text = getString(R.string.settings_goal_per_day, goal)
+        binding.tvGoalValue.text = formatGoalPerDay(goal)
         binding.sliderGoal.value = goal.toFloat().coerceIn(1f, 10f)
 
         val quietStart = prefs.getInt("quiet_start", 22)
@@ -288,6 +288,10 @@ class SettingsActivity : AppCompatActivity() {
         binding.btnModeLight.isChecked = mode == ThemeHelper.MODE_LIGHT
         binding.btnModeDark.isChecked = mode == ThemeHelper.MODE_DARK
         binding.btnModeSystem.isChecked = mode == ThemeHelper.MODE_SYSTEM
+    }
+
+    private fun formatGoalPerDay(goal: Int): String {
+        return resources.getQuantityString(R.plurals.settings_goal_per_day, goal, goal)
     }
 
     private fun showQuietPicker(isStart: Boolean) {

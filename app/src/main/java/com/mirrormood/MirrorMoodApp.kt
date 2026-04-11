@@ -53,7 +53,6 @@ class MirrorMoodApp : Application(), Configuration.Provider {
 
     private fun scheduleDatabaseCleanup() {
         val constraints = androidx.work.Constraints.Builder()
-            .setRequiresDeviceIdle(true)
             .setRequiresCharging(true)
             .build()
 

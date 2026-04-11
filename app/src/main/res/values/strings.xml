@@ -15,7 +15,10 @@
     <string name="settings_monitoring">Monitoring</string>
     <string name="settings_data">Data</string>
     <string name="settings_daily_check_in_goal">Daily Check-In Goal</string>
-    <string name="settings_goal_per_day">%1$d check-ins per day</string>
+    <plurals name="settings_goal_per_day">
+        <item quantity="one">%1$d check-in per day</item>
+        <item quantity="other">%1$d check-ins per day</item>
+    </plurals>
     <string name="settings_quiet_from">From</string>
     <string name="settings_quiet_to">To</string>
     <string name="settings_biometric_lock">Biometric Lock</string>
@@ -42,7 +45,10 @@
     <string name="app_lock_disabled">App lock disabled</string>
 
     <string name="insights_no_data">No data yet. Start monitoring to see your patterns.</string>
-    <string name="insights_total_entries">%d mood snapshots recorded today</string>
+    <plurals name="insights_total_entries">
+        <item quantity="one">%d mood snapshot recorded</item>
+        <item quantity="other">%d mood snapshots recorded</item>
+    </plurals>
     <string name="insights_no_chart_data">Start tracking to see trends</string>
     <string name="insights_back">Back</string>
 
@@ -60,11 +66,14 @@
     <string name="journal_mood_stressed">😰 Stressed</string>
     <string name="journal_mood_tired">😴 Tired</string>
     <string name="journal_mood_bored">😒 Bored</string>
-    <string name="journal_hint_waiting">The words are waiting for you...</string>
+    <string name="journal_hint_waiting">The words are waiting for you&#8230;</string>
     <string name="journal_empty">No reflections yet today. Your next entry can start here.</string>
     <string name="journal_save_prompt">Write a few words before saving this reflection.</string>
     <string name="journal_saved">Reflection saved</string>
-    <string name="journal_word_count">%1$d words</string>
+    <plurals name="journal_word_count">
+        <item quantity="one">%1$d word</item>
+        <item quantity="other">%1$d words</item>
+    </plurals>
     <string name="journal_save_entry">Save Entry</string>
     <string name="journal_gentle_guidance">Gentle Guidance</string>
     <string name="journal_morning_reflection">Morning Reflection</string>
@@ -82,7 +91,10 @@
     <string name="timeline_subtitle">Your emotional archive.</string>
     <string name="timeline_private_archive">Private Archive</string>
     <string name="timeline_archive_title">Your Archive</string>
-    <string name="timeline_archive_count_total">%1$d entries total</string>
+    <plurals name="timeline_archive_count_total">
+        <item quantity="one">%1$d entry total</item>
+        <item quantity="other">%1$d entries total</item>
+    </plurals>
     <string name="timeline_archive_empty">Your timeline will begin after the first reflection.</string>
     <string name="timeline_distribution_title">Distribution</string>
     <string name="timeline_snapshot_title">Today\'s Snapshot</string>
@@ -163,7 +175,7 @@
     <!-- Calibration -->
     <string name="calibration_title">Camera calibration</string>
     <string name="calibration_subtitle">Position your face in the frame so MirrorMood can learn your baseline. Everything stays on-device.</string>
-    <string name="calibration_seek_face">Looking for your face...</string>
+    <string name="calibration_seek_face">Looking for your face&#8230;</string>
     <string name="calibration_face_detected">Face detected - hold steady</string>
     <string name="calibration_face_locked">Face locked in</string>
     <string name="calibration_hint_center">Center your face in the rounded frame.</string>
@@ -187,10 +199,10 @@
     <string name="lock_emergency_cancel">Cancel</string>
     <string name="lock_setup_pin_title">Create a backup PIN</string>
     <string name="lock_setup_pin_message">If biometrics fail, you can unlock with this PIN. It is stored only on this device as a secure hash.</string>
-    <string name="lock_setup_pin_hint">PIN (4-6 digits)</string>
+    <string name="lock_setup_pin_hint">PIN (4&#8211;6 digits)</string>
     <string name="lock_setup_pin_confirm_hint">Confirm PIN</string>
     <string name="lock_setup_pin_save">Save</string>
-    <string name="lock_setup_pin_mismatch">PINs must match and be 4-6 digits.</string>
+    <string name="lock_setup_pin_mismatch">PINs must match and be 4&#8211;6 digits.</string>
 
     <!-- Dashboard -->
 </resources>

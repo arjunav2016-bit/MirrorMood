@@ -264,7 +264,11 @@ class InsightsActivity : AppCompatActivity() {
 
     private fun renderBreakdown(entries: List<MoodEntry>, periodLabel: String) {
         val total = entries.size
-        binding.tvTotalEntries.text = getString(R.string.insights_total_entries, total)
+        binding.tvTotalEntries.text = resources.getQuantityString(
+            R.plurals.insights_total_entries,
+            total,
+            total
+        )
 
         val moodCounts = entries.groupBy { it.mood }
         val dominant = moodCounts.maxByOrNull { it.value.size }?.key ?: "Neutral"

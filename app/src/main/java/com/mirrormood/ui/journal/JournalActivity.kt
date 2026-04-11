@@ -50,7 +50,9 @@ class JournalActivity : AppCompatActivity() {
             dateLabel = currentJournalDateLabel(),
             onBackClicked = { finishWithTransition() },
             onSaveClicked = { mood, note -> saveEntry(mood, note) },
-            formatWordCount = { count -> getString(R.string.journal_word_count, count) },
+            formatWordCount = { count ->
+                resources.getQuantityString(R.plurals.journal_word_count, count, count)
+            },
             countWords = ::fastWordCount
         )
     }

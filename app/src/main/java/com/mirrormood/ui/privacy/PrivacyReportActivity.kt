@@ -1,6 +1,7 @@
 package com.mirrormood.ui.privacy
 
 import android.content.Intent
+import android.content.ActivityNotFoundException
 import android.net.Uri
 import android.os.Bundle
 import android.provider.Settings
@@ -86,9 +87,9 @@ class PrivacyReportActivity : AppCompatActivity() {
         val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
             data = Uri.fromParts("package", packageName, null)
         }
-        if (intent.resolveActivity(packageManager) != null) {
+        try {
             startActivity(intent)
-        } else {
+        } catch (_: ActivityNotFoundException) {
             Toast.makeText(this, R.string.privacy_open_settings_error, Toast.LENGTH_SHORT).show()
         }
     }

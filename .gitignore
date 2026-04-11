@@ -10,3 +10,10 @@
 .externalNativeBuild
 .cxx
 local.properties
+
+# Local build/debug scratch artifacts
+/build*.txt
+/kotlin_errors.txt
+/unresolved.txt
+/hs_err_pid*.log
+/replay_pid*.log

@@ -258,7 +258,11 @@ class TimelineActivity : AppCompatActivity() {
                     ?: "Neutral"
 
                 binding.tvArchiveTitle.text = itemView.context.getString(R.string.timeline_archive_title)
-                binding.tvArchiveCount.text = itemView.context.getString(R.string.timeline_archive_count_total, entries.size)
+                binding.tvArchiveCount.text = itemView.context.resources.getQuantityString(
+                    R.plurals.timeline_archive_count_total,
+                    entries.size,
+                    entries.size
+                )
                 binding.tvArchiveEmoji.text = MoodUtils.getEmoji(dominantMood)
 
                 binding.tvSnapshotEmoji.text = MoodUtils.getEmoji(latest.mood)

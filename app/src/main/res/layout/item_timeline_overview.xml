@@ -64,6 +64,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:baselineAligned="false"
             android:gravity="center_vertical"
             android:orientation="horizontal"
             android:padding="20dp">
@@ -106,8 +107,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
-                    android:text="@string/timeline_archive_count_total"
-                    android:textColor="?attr/colorOnSurfaceVariant" />
+                    android:textColor="?attr/colorOnSurfaceVariant"
+                    tools:text="12 entries total" />
             </LinearLayout>
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>
