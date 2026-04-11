@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="?attr/colorSurface">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="32dp">
+
+        <!-- ═══ App Title ═══ -->
+        <TextView
+            style="?attr/textAppearanceHeadlineMedium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="MirrorMood"
+            android:textColor="?attr/colorPrimary" />
+
+        <TextView
+            style="?attr/textAppearanceBodyMedium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Your private sanctuary"
+            android:textColor="?attr/colorOnSurfaceVariant" />
+
+        <!-- ═══ Biometric Orb ═══ -->
+        <FrameLayout
+            android:layout_width="160dp"
+            android:layout_height="160dp"
+            android:layout_marginTop="48dp">
+
+            <!-- Outer ring -->
+            <View
+                android:layout_width="160dp"
+                android:layout_height="160dp"
+                android:background="@drawable/bg_circle_ring_ethereal" />
+
+            <!-- Inner orb -->
+            <FrameLayout
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_gravity="center"
+                android:background="@drawable/bg_mood_orb">
+
+                <ImageView
+                    android:id="@+id/ivBiometricIcon"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_privacy"
+                    app:tint="?attr/colorOnPrimaryContainer" />
+            </FrameLayout>
+        </FrameLayout>
+
+        <TextView
+            style="?attr/textAppearanceBodyMedium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="Authenticate to continue"
+            android:textColor="?attr/colorOnSurfaceVariant" />
+
+        <!-- ═══ Unlock Button ═══ -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnBiometric"
+            style="@style/MM.Button.Filled"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginTop="32dp"
+            android:text="Use Biometrics"
+            app:icon="@drawable/ic_privacy"
+            app:iconGravity="textStart"
+            app:iconSize="20dp" />
+
+        <!-- ═══ PIN Fallback ═══ -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnPin"
+            style="@style/MM.Button.Tonal"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginTop="12dp"
+            android:text="Enter PIN" />
+
+        <!-- ═══ PIN Input (hidden by default) ═══ -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/pinInputLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:visibility="gone"
+            style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+            android:hint="Enter your PIN">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etPin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="numberPassword"
+                android:maxLength="6"
+                android:textAlignment="center" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnSubmitPin"
+            style="@style/MM.Button.Filled"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginTop="12dp"
+            android:text="Unlock"
+            android:visibility="gone" />
+
+    </LinearLayout>
+</FrameLayout>

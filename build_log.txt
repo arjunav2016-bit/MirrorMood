@@ -1,0 +1,1170 @@
+﻿
+> Configure project :app
+WARNING: The option setting 'android.disallowKotlinSourceSets=false' is experimental.
+The current default is 'true'.
+
+> Task :app:preBuild UP-TO-DATE
+> Task :app:preDebugBuild UP-TO-DATE
+> Task :app:mergeDebugNativeDebugMetadata NO-SOURCE
+> Task :app:dataBindingMergeDependencyArtifactsDebug UP-TO-DATE
+> Task :app:generateDebugResources UP-TO-DATE
+> Task :app:mergeDebugResources UP-TO-DATE
+> Task :app:packageDebugResources UP-TO-DATE
+> Task :app:processDebugNavigationResources UP-TO-DATE
+> Task :app:parseDebugLocalResources UP-TO-DATE
+> Task :app:dataBindingGenBaseClassesDebug UP-TO-DATE
+> Task :app:generateDebugRFile UP-TO-DATE
+> Task :app:kspDebugKotlin UP-TO-DATE
+> Task :app:javaPreCompileDebug UP-TO-DATE
+> Task :app:generateDebugAssets UP-TO-DATE
+> Task :app:mergeDebugAssets UP-TO-DATE
+> Task :app:compressDebugAssets UP-TO-DATE
+> Task :app:checkDebugDuplicateClasses UP-TO-DATE
+> Task :app:desugarDebugFileDependencies UP-TO-DATE
+> Task :app:mergeExtDexDebug UP-TO-DATE
+> Task :app:mergeLibDexDebug UP-TO-DATE
+> Task :app:checkDebugAarMetadata UP-TO-DATE
+> Task :app:mapDebugSourceSetPaths UP-TO-DATE
+> Task :app:compileDebugNavigationResources UP-TO-DATE
+> Task :app:createDebugCompatibleScreenManifests UP-TO-DATE
+> Task :app:extractDeepLinksDebug UP-TO-DATE
+> Task :app:processDebugMainManifest UP-TO-DATE
+> Task :app:processDebugManifest UP-TO-DATE
+> Task :app:processDebugManifestForPackage UP-TO-DATE
+> Task :app:processDebugResources UP-TO-DATE
+> Task :app:mergeDebugJniLibFolders UP-TO-DATE
+> Task :app:mergeDebugNativeLibs UP-TO-DATE
+> Task :app:stripDebugDebugSymbols UP-TO-DATE
+> Task :app:validateSigningDebug UP-TO-DATE
+> Task :app:writeDebugAppMetadata UP-TO-DATE
+> Task :app:writeDebugSigningConfigVersions UP-TO-DATE
+
+> Task :app:compileDebugKotlin FAILED
+.\gradlew.bat : e: fil
+e:///C:/Users/minod/An
+droidStudioProjects/Mi
+rrorMood/app/src/main/
+java/com/mirrormood/in
+sights/InsightsActivit
+y.kt:66:17 Unresolved 
+reference 'tabToday'.
+At line:1 char:1
++ .\gradlew.bat 
+assembleDebug 2>&1 | 
+Out-File -FilePath 
+build_log.txt - ...
++ ~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~
+    + CategoryInfo    
+          : 
+NotSpecified: (e:     
+file:///C:/U...nce 
+'ta    
+bToday'.:String) [], 
+R    emoteException
+    + 
+FullyQualifiedErrorI  
+  d : 
+NativeCommandError
+ 
+e: file:///C:/Users/mi
+nod/AndroidStudioProje
+cts/MirrorMood/app/src
+/main/java/com/mirrorm
+ood/insights/InsightsA
+ctivity.kt:67:17 
+Unresolved reference 
+'tabWeek'.
+e: file:///C:/Users/mi
+nod/AndroidStudioProje
+cts/MirrorMood/app/src
+/main/java/com/mirrorm
+ood/insights/InsightsA
+ctivity.kt:75:25 
+Unresolved reference 
+'tvChartTitle'.
+e: file:///C:/Users/mi
+nod/AndroidStudioProje
+cts/MirrorMood/app/src
+/main/java/com/mirrorm
+ood/insights/InsightsA
+ctivity.kt:80:25 
+Unresolved reference 
+'tvChartTitle'.
+e: file:///C:/Users/mi
+nod/AndroidStudioProje
+cts/MirrorMood/app/src
+/main/java/com/mirrorm
+ood/insights/InsightsA
+ctivity.kt:88:54 
+Unresolved reference 
+'tabToday'.
+e: file:///C:/Users/mi
+nod/AndroidStudioProje
+cts/MirrorMood/app/src
+/main/java/com/mirrorm
+ood/insights/InsightsA
+ctivity.kt:88:76 
+Unresolved reference 
+'tabWeek'.
+e: file:///C:/Users/mi
+nod/AndroidStudioProje
+cts/MirrorMood/app/src
+/main/java/com/mirrorm
+ood/insights/InsightsA
+ctivity.kt:89:56 
+Unresolved reference 
+'tabWeek'.
+e: file:///C:/Users/mi
+nod/AndroidStudioProje
+cts/MirrorMood/app/src
+/main/java/com/mirrorm
+ood/insights/InsightsA
+ctivity.kt:89:77 
+Unresolved reference 
+'tabToday'.
+e: file:///C:/Users/mi
+nod/AndroidStudioProje
+cts/MirrorMood/app/src
+/main/java/com/mirrorm
+ood/insights/InsightsA
+ctivity.kt:91:18 
+Unresolved reference '
+setBackgroundResource'
+.
+e: file:///C:/Users/mi
+nod/AndroidStudioProje
+cts/MirrorMood/app/src
+/main/java/com/mirrorm
+ood/insights/InsightsA
+ctivity.kt:91:51 
+Unresolved reference 
+'chip_selected_bg'.
+e: file:///C:/Users/mi
+nod/AndroidStudioProje
+cts/MirrorMood/app/src
+/main/java/com/mirrorm
+ood/insights/InsightsA
+ctivity.kt:92:18 
+Unresolved reference 
+'setTextColor'.
+e: file:///C:/Users/mi
+nod/AndroidStudioProje
+cts/MirrorMood/app/src
+/main/java/com/mirrorm
+ood/insights/InsightsA
+ctivity.kt:93:20 
+Unresolved reference '
+setBackgroundResource'
+.
+e: file:///C:/Users/mi
+nod/AndroidStudioProje
+cts/MirrorMood/app/src
+/main/java/com/mirrorm
+ood/insights/InsightsA
+ctivity.kt:93:53 
+Unresolved reference 
+'chip_default_bg'.
+e: file:///C:/Users/mi
+nod/AndroidStudioProje
+cts/MirrorMood/app/src
+/main/java/com/mirrorm
+ood/insights/InsightsA
+ctivity.kt:94:20 
+Unresolved reference 
+'setTextColor'.
+e: file:///C:/Users/mi
+nod/AndroidStudioProje
+cts/MirrorMood/app/src
+/main/java/com/mirrorm
+ood/insights/InsightsA
+ctivity.kt:110:29 
+Unresolved reference 
+'tvDominantMood'.
+e: file:///C:/Users/mi
+nod/AndroidStudioProje
+cts/MirrorMood/app/src
+/main/java/com/mirrorm
+ood/insights/InsightsA
+ctivity.kt:112:29 
+Unresolved reference 
+'tvDominantSubtitle'.
+e: file:///C:/Users/mi
+nod/AndroidStudioProje
+cts/MirrorMood/app/src
+/main/java/com/mirrorm
+ood/insights/InsightsA
+ctivity.kt:136:25 
+Unresolved reference 
+'barChartMonthly'.
+e: file:///C:/Users/mi
+nod/AndroidStudioProje
+cts/MirrorMood/app/src
+/main/java/com/mirrorm
+ood/insights/InsightsA
+ctivity.kt:137:25 
+Unresolved reference 
+'barChartMonthly'.
+e: file:///C:/Users/mi
+nod/AndroidStudioProje
+cts/MirrorMood/app/src
+/main/java/com/mirrorm
+ood/insights/InsightsA
+ctivity.kt:184:25 
+Unresolved reference 
+'tvDominantMood'.
+e: file:///C:/Users/mi
+nod/AndroidStudioProje
+cts/MirrorMood/app/src
+/main/java/com/mirrorm
+ood/insights/InsightsA
+ctivity.kt:186:25 
+Unresolved reference 
+'tvDominantSubtitle'.
+e: file:///C:/Users/mi
+nod/AndroidStudioProje
+cts/MirrorMood/app/src
+/main/java/com/mirrorm
+ood/insights/InsightsA
+ctivity.kt:212:25 
+Unresolved reference 
+'barChartMonthly'.
+e: file:///C:/Users/mi
+nod/AndroidStudioProje
+cts/MirrorMood/app/src
+/main/java/com/mirrorm
+ood/insights/InsightsA
+ctivity.kt:213:25 
+Unresolved reference 
+'barChartMonthly'.
+e: file:///C:/Users/mi
+nod/AndroidStudioProje
+cts/MirrorMood/app/src
+/main/java/com/mirrorm
+ood/insights/InsightsA
+ctivity.kt:251:17 
+Unresolved reference 
+'tvDominantMood'.
+e: file:///C:/Users/mi
+nod/AndroidStudioProje
+cts/MirrorMood/app/src
+/main/java/com/mirrorm
+ood/insights/InsightsA
+ctivity.kt:252:17 
+Unresolved reference 
+'tvDominantSubtitle'.
+e: file:///C:/Users/mi
+nod/AndroidStudioProje
+cts/MirrorMood/app/src
+/main/java/com/mirrorm
+ood/insights/InsightsA
+ctivity.kt:256:33 
+Unresolved reference 
+'pillHappy'.
+e: file:///C:/Users/mi
+nod/AndroidStudioProje
+cts/MirrorMood/app/src
+/main/java/com/mirrorm
+ood/insights/InsightsA
+ctivity.kt:257:35 
+Unresolved reference 
+'pillFocused'.
+e: file:///C:/Users/mi
+nod/AndroidStudioProje
+cts/MirrorMood/app/src
+/main/java/com/mirrorm
+ood/insights/InsightsA
+ctivity.kt:258:35 
+Unresolved reference 
+'pillNeutral'.
+e: file:///C:/Users/mi
+nod/AndroidStudioProje
+cts/MirrorMood/app/src
+/main/java/com/mirrorm
+ood/insights/InsightsA
+ctivity.kt:259:36 
+Unresolved reference 
+'pillStressed'.
+e: file:///C:/Users/mi
+nod/AndroidStudioProje
+cts/MirrorMood/app/src
+/main/java/com/mirrorm
+ood/insights/InsightsA
+ctivity.kt:260:33 
+Unresolved reference 
+'pillTired'.
+e: file:///C:/Users/mi
+nod/AndroidStudioProje
+cts/MirrorMood/app/src
+/main/java/com/mirrorm
+ood/insights/InsightsA
+ctivity.kt:261:33 
+Unresolved reference 
+'pillBored'.
+e: file:///C:/Users/mi
+nod/AndroidStudioProje
+cts/MirrorMood/app/src
+/main/java/com/mirrorm
+ood/insights/InsightsA
+ctivity.kt:282:17 
+Unresolved reference 
+'tvHappyPercent'.
+e: file:///C:/Users/mi
+nod/AndroidStudioProje
+cts/MirrorMood/app/src
+/main/java/com/mirrorm
+ood/insights/InsightsA
+ctivity.kt:283:17 
+Unresolved reference 
+'tvNeutralPercent'.
+e: file:///C:/Users/mi
+nod/AndroidStudioProje
+cts/MirrorMood/app/src
+/main/java/com/mirrorm
+ood/insights/InsightsA
+ctivity.kt:284:17 
+Unresolved reference 
+'tvStressedPercent'.
+e: file:///C:/Users/mi
+nod/AndroidStudioProje
+cts/MirrorMood/app/src
+/main/java/com/mirrorm
+ood/insights/InsightsA
+ctivity.kt:285:17 
+Unresolved reference 
+'tvTiredPercent'.
+e: file:///C:/Users/mi
+nod/AndroidStudioProje
+cts/MirrorMood/app/src
+/main/java/com/mirrorm
+ood/insights/InsightsA
+ctivity.kt:286:17 
+Unresolved reference 
+'tvFocusedPercent'.
+e: file:///C:/Users/mi
+nod/AndroidStudioProje
+cts/MirrorMood/app/src
+/main/java/com/mirrorm
+ood/insights/InsightsA
+ctivity.kt:287:17 
+Unresolved reference 
+'tvBoredPercent'.
+e: file:///C:/Users/mi
+nod/AndroidStudioProje
+cts/MirrorMood/app/src
+/main/java/com/mirrorm
+ood/insights/InsightsA
+ctivity.kt:293:17 
+Unresolved reference 
+'tvHappiestTime'.
+e: file:///C:/Users/mi
+nod/AndroidStudioProje
+cts/MirrorMood/app/src
+/main/java/com/mirrorm
+ood/insights/InsightsA
+ctivity.kt:293:54 
+Cannot infer type for 
+this parameter. 
+Specify it explicitly.
+e: file:///C:/Users/mi
+nod/AndroidStudioProje
+cts/MirrorMood/app/src
+/main/java/com/mirrorm
+ood/insights/InsightsA
+ctivity.kt:300:17 
+Unresolved reference 
+'tvMostStressedTime'.
+e: file:///C:/Users/mi
+nod/AndroidStudioProje
+cts/MirrorMood/app/src
+/main/java/com/mirrorm
+ood/insights/InsightsA
+ctivity.kt:300:58 
+Cannot infer type for 
+this parameter. 
+Specify it explicitly.
+e: file:///C:/Users/mi
+nod/AndroidStudioProje
+cts/MirrorMood/app/src
+/main/java/com/mirrorm
+ood/insights/InsightsA
+ctivity.kt:307:21 
+Unresolved reference 
+'pillHappy'.
+e: file:///C:/Users/mi
+nod/AndroidStudioProje
+cts/MirrorMood/app/src
+/main/java/com/mirrorm
+ood/insights/InsightsA
+ctivity.kt:308:21 
+Unresolved reference 
+'pillFocused'.
+e: file:///C:/Users/mi
+nod/AndroidStudioProje
+cts/MirrorMood/app/src
+/main/java/com/mirrorm
+ood/insights/InsightsA
+ctivity.kt:309:21 
+Unresolved reference 
+'pillNeutral'.
+e: file:///C:/Users/mi
+nod/AndroidStudioProje
+cts/MirrorMood/app/src
+/main/java/com/mirrorm
+ood/insights/InsightsA
+ctivity.kt:310:21 
+Unresolved reference 
+'pillStressed'.
+e: file:///C:/Users/mi
+nod/AndroidStudioProje
+cts/MirrorMood/app/src
+/main/java/com/mirrorm
+ood/insights/InsightsA
+ctivity.kt:311:21 
+Unresolved reference 
+'pillTired'.
+e: file:///C:/Users/mi
+nod/AndroidStudioProje
+cts/MirrorMood/app/src
+/main/java/com/mirrorm
+ood/insights/InsightsA
+ctivity.kt:312:21 
+Unresolved reference 
+'pillBored'.
+e: file:///C:/Users/mi
+nod/AndroidStudioProje
+cts/MirrorMood/app/src
+/main/java/com/mirrorm
+ood/insights/InsightsA
+ctivity.kt:319:42 
+Unresolved reference 
+'barChartMonthly'.
+e: file:///C:/Users/mi
+nod/AndroidStudioProje
+cts/MirrorMood/app/src
+/main/java/com/mirrorm
+ood/ui/journal/Journal
+Activity.kt:114:67 
+Unresolved reference 
+'chip_selected_bg'.
+e: file:///C:/Users/mi
+nod/AndroidStudioProje
+cts/MirrorMood/app/src
+/main/java/com/mirrorm
+ood/ui/journal/Journal
+Activity.kt:114:100 
+Unresolved reference 
+'chip_default_bg'.
+e: file:///C:/Users/mi
+nod/AndroidStudioProje
+cts/MirrorMood/app/src
+/main/java/com/mirrorm
+ood/ui/lock/LockActivi
+ty.kt:55:21 
+Unresolved reference 
+'btnPasscode'.
+e: file:///C:/Users/mi
+nod/AndroidStudioProje
+cts/MirrorMood/app/src
+/main/java/com/mirrorm
+ood/ui/lock/LockActivi
+ty.kt:58:21 
+Unresolved reference 
+'btnRetry'.
+e: file:///C:/Users/mi
+nod/AndroidStudioProje
+cts/MirrorMood/app/src
+/main/java/com/mirrorm
+ood/ui/lock/LockActivi
+ty.kt:59:21 
+Unresolved reference 
+'hubBiometric'.
+e: file:///C:/Users/mi
+nod/AndroidStudioProje
+cts/MirrorMood/app/src
+/main/java/com/mirrorm
+ood/ui/lock/LockActivi
+ty.kt:60:21 
+Unresolved reference 
+'tvTapHint'.
+e: file:///C:/Users/mi
+nod/AndroidStudioProje
+cts/MirrorMood/app/src
+/main/java/com/mirrorm
+ood/ui/lock/LockActivi
+ty.kt:63:21 
+Unresolved reference 
+'hubBiometric'.
+e: file:///C:/Users/mi
+nod/AndroidStudioProje
+cts/MirrorMood/app/src
+/main/java/com/mirrorm
+ood/ui/lock/LockActivi
+ty.kt:66:17 
+Unresolved reference 
+'btnRetry'.
+e: file:///C:/Users/mi
+nod/AndroidStudioProje
+cts/MirrorMood/app/src
+/main/java/com/mirrorm
+ood/ui/lock/LockActivi
+ty.kt:67:17 
+Unresolved reference 
+'hubBiometric'.
+e: file:///C:/Users/mi
+nod/AndroidStudioProje
+cts/MirrorMood/app/src
+/main/java/com/mirrorm
+ood/ui/lock/LockActivi
+ty.kt:74:17 
+Unresolved reference 
+'btnPasscode'.
+e: file:///C:/Users/mi
+nod/AndroidStudioProje
+cts/MirrorMood/app/src
+/main/java/com/mirrorm
+ood/ui/lock/LockActivi
+ty.kt:82:17 
+Unresolved reference 
+'btnUnlockPin'.
+e: file:///C:/Users/mi
+nod/AndroidStudioProje
+cts/MirrorMood/app/src
+/main/java/com/mirrorm
+ood/ui/lock/LockActivi
+ty.kt:91:17 
+Unresolved reference 
+'btnEmergencyDisable'.
+e: file:///C:/Users/mi
+nod/AndroidStudioProje
+cts/MirrorMood/app/src
+/main/java/com/mirrorm
+ood/ui/lock/LockActivi
+ty.kt:95:25 
+Unresolved reference 
+'tvTapHint'.
+e: file:///C:/Users/mi
+nod/AndroidStudioProje
+cts/MirrorMood/app/src
+/main/java/com/mirrorm
+ood/ui/lock/LockActivi
+ty.kt:96:25 
+Unresolved reference 
+'btnEmergencyDisable'.
+e: file:///C:/Users/mi
+nod/AndroidStudioProje
+cts/MirrorMood/app/src
+/main/java/com/mirrorm
+ood/ui/lock/LockActivi
+ty.kt:97:25 
+Unresolved reference 
+'btnRetry'.
+e: file:///C:/Users/mi
+nod/AndroidStudioProje
+cts/MirrorMood/app/src
+/main/java/com/mirrorm
+ood/ui/lock/LockActivi
+ty.kt:98:25 
+Unresolved reference 
+'btnPasscode'.
+e: file:///C:/Users/mi
+nod/AndroidStudioProje
+cts/MirrorMood/app/src
+/main/java/com/mirrorm
+ood/ui/lock/LockActivi
+ty.kt:104:25 
+Unresolved reference 
+'pinContainer'.
+e: file:///C:/Users/mi
+nod/AndroidStudioProje
+cts/MirrorMood/app/src
+/main/java/com/mirrorm
+ood/ui/lock/LockActivi
+ty.kt:111:31 
+Unresolved reference 
+'pinContainer'.
+e: file:///C:/Users/mi
+nod/AndroidStudioProje
+cts/MirrorMood/app/src
+/main/java/com/mirrorm
+ood/ui/lock/LockActivi
+ty.kt:112:17 
+Unresolved reference 
+'pinContainer'.
+e: file:///C:/Users/mi
+nod/AndroidStudioProje
+cts/MirrorMood/app/src
+/main/java/com/mirrorm
+ood/ui/lock/LockActivi
+ty.kt:147:29 
+Unresolved reference 
+'pinContainer'.
+e: file:///C:/Users/mi
+nod/AndroidStudioProje
+cts/MirrorMood/app/src
+/main/java/com/mirrorm
+ood/ui/recommendations
+/RecommendationsActivi
+ty.kt:97:55 
+Unresolved reference 
+'chip_default_bg'.
+e: file:///C:/Users/mi
+nod/AndroidStudioProje
+cts/MirrorMood/app/src
+/main/java/com/mirrorm
+ood/ui/recommendations
+/RecommendationsActivi
+ty.kt:100:55 
+Unresolved reference 
+'chip_selected_bg'.
+e: file:///C:/Users/mi
+nod/AndroidStudioProje
+cts/MirrorMood/app/src
+/main/java/com/mirrorm
+ood/ui/settings/Settin
+gsActivity.kt:70:17 
+Unresolved reference 
+'cardLight'.
+e: file:///C:/Users/mi
+nod/AndroidStudioProje
+cts/MirrorMood/app/src
+/main/java/com/mirrorm
+ood/ui/settings/Settin
+gsActivity.kt:71:17 
+Unresolved reference 
+'cardDark'.
+e: file:///C:/Users/mi
+nod/AndroidStudioProje
+cts/MirrorMood/app/src
+/main/java/com/mirrorm
+ood/ui/settings/Settin
+gsActivity.kt:72:17 
+Unresolved reference 
+'cardSystem'.
+e: file:///C:/Users/mi
+nod/AndroidStudioProje
+cts/MirrorMood/app/src
+/main/java/com/mirrorm
+ood/ui/settings/Settin
+gsActivity.kt:77:17 
+Unresolved reference 
+'goalSlider'.
+e: file:///C:/Users/mi
+nod/AndroidStudioProje
+cts/MirrorMood/app/src
+/main/java/com/mirrorm
+ood/ui/settings/Settin
+gsActivity.kt:78:17 
+Unresolved reference 
+'goalSlider'.
+e: file:///C:/Users/mi
+nod/AndroidStudioProje
+cts/MirrorMood/app/src
+/main/java/com/mirrorm
+ood/ui/settings/Settin
+gsActivity.kt:78:50 
+Cannot infer type for 
+this parameter. 
+Specify it explicitly.
+e: file:///C:/Users/mi
+nod/AndroidStudioProje
+cts/MirrorMood/app/src
+/main/java/com/mirrorm
+ood/ui/settings/Settin
+gsActivity.kt:78:53 
+Cannot infer type for 
+this parameter. 
+Specify it explicitly.
+e: file:///C:/Users/mi
+nod/AndroidStudioProje
+cts/MirrorMood/app/src
+/main/java/com/mirrorm
+ood/ui/settings/Settin
+gsActivity.kt:78:60 
+Cannot infer type for 
+this parameter. 
+Specify it explicitly.
+e: file:///C:/Users/mi
+nod/AndroidStudioProje
+cts/MirrorMood/app/src
+/main/java/com/mirrorm
+ood/ui/settings/Settin
+gsActivity.kt:79:17 
+Unresolved reference 
+'not' for operator 
+'!'.
+e: file:///C:/Users/mi
+nod/AndroidStudioProje
+cts/MirrorMood/app/src
+/main/java/com/mirrorm
+ood/ui/settings/Settin
+gsActivity.kt:79:28 
+Return type mismatch: 
+expected 'ERROR 
+CLASS: Cannot infer 
+type variable 
+TypeVariable(_L)', 
+actual 'Unit'.
+e: file:///C:/Users/mi
+nod/AndroidStudioProje
+cts/MirrorMood/app/src
+/main/java/com/mirrorm
+ood/ui/settings/Settin
+gsActivity.kt:87:17 
+Unresolved reference 
+'quietStartValue'.
+e: file:///C:/Users/mi
+nod/AndroidStudioProje
+cts/MirrorMood/app/src
+/main/java/com/mirrorm
+ood/ui/settings/Settin
+gsActivity.kt:88:17 
+Unresolved reference 
+'quietEndValue'.
+e: file:///C:/Users/mi
+nod/AndroidStudioProje
+cts/MirrorMood/app/src
+/main/java/com/mirrorm
+ood/ui/settings/Settin
+gsActivity.kt:92:17 
+Unresolved reference 
+'switchAppLock'.
+e: file:///C:/Users/mi
+nod/AndroidStudioProje
+cts/MirrorMood/app/src
+/main/java/com/mirrorm
+ood/ui/settings/Settin
+gsActivity.kt:92:60 
+Cannot infer type for 
+this parameter. 
+Specify it explicitly.
+e: file:///C:/Users/mi
+nod/AndroidStudioProje
+cts/MirrorMood/app/src
+/main/java/com/mirrorm
+ood/ui/settings/Settin
+gsActivity.kt:92:63 
+Cannot infer type for 
+this parameter. 
+Specify it explicitly.
+e: file:///C:/Users/mi
+nod/AndroidStudioProje
+cts/MirrorMood/app/src
+/main/java/com/mirrorm
+ood/ui/settings/Settin
+gsActivity.kt:93:41 
+Return type mismatch: 
+expected 'ERROR 
+CLASS: Cannot infer 
+type variable 
+TypeVariable(_L)', 
+actual 'Unit'.
+e: file:///C:/Users/mi
+nod/AndroidStudioProje
+cts/MirrorMood/app/src
+/main/java/com/mirrorm
+ood/ui/settings/Settin
+gsActivity.kt:94:17 
+Unresolved reference 
+'not' for operator 
+'!'.
+e: file:///C:/Users/mi
+nod/AndroidStudioProje
+cts/MirrorMood/app/src
+/main/java/com/mirrorm
+ood/ui/settings/Settin
+gsActivity.kt:97:17 
+Return type mismatch: 
+expected 'ERROR 
+CLASS: Cannot infer 
+type variable 
+TypeVariable(_L)', 
+actual 'Unit'.
+e: file:///C:/Users/mi
+nod/AndroidStudioProje
+cts/MirrorMood/app/src
+/main/java/com/mirrorm
+ood/ui/settings/Settin
+gsActivity.kt:102:17 
+Return type mismatch: 
+expected 'ERROR 
+CLASS: Cannot infer 
+type variable 
+TypeVariable(_L)', 
+actual 'Unit'.
+e: file:///C:/Users/mi
+nod/AndroidStudioProje
+cts/MirrorMood/app/src
+/main/java/com/mirrorm
+ood/ui/settings/Settin
+gsActivity.kt:105:21 
+Unresolved reference 
+'switchAppLock'.
+e: file:///C:/Users/mi
+nod/AndroidStudioProje
+cts/MirrorMood/app/src
+/main/java/com/mirrorm
+ood/ui/settings/Settin
+gsActivity.kt:133:25 
+Unresolved reference 
+'switchAppLock'.
+e: file:///C:/Users/mi
+nod/AndroidStudioProje
+cts/MirrorMood/app/src
+/main/java/com/mirrorm
+ood/ui/settings/Settin
+gsActivity.kt:148:17 
+Unresolved reference 
+'pauseToggle'.
+e: file:///C:/Users/mi
+nod/AndroidStudioProje
+cts/MirrorMood/app/src
+/main/java/com/mirrorm
+ood/ui/settings/Settin
+gsActivity.kt:183:21 
+Unresolved reference 
+'pauseIcon'.
+e: file:///C:/Users/mi
+nod/AndroidStudioProje
+cts/MirrorMood/app/src
+/main/java/com/mirrorm
+ood/ui/settings/Settin
+gsActivity.kt:184:21 
+Unresolved reference 
+'pauseLabel'.
+e: file:///C:/Users/mi
+nod/AndroidStudioProje
+cts/MirrorMood/app/src
+/main/java/com/mirrorm
+ood/ui/settings/Settin
+gsActivity.kt:185:21 
+Unresolved reference 
+'pauseSubtitle'.
+e: file:///C:/Users/mi
+nod/AndroidStudioProje
+cts/MirrorMood/app/src
+/main/java/com/mirrorm
+ood/ui/settings/Settin
+gsActivity.kt:187:21 
+Unresolved reference 
+'pauseIcon'.
+e: file:///C:/Users/mi
+nod/AndroidStudioProje
+cts/MirrorMood/app/src
+/main/java/com/mirrorm
+ood/ui/settings/Settin
+gsActivity.kt:188:21 
+Unresolved reference 
+'pauseLabel'.
+e: file:///C:/Users/mi
+nod/AndroidStudioProje
+cts/MirrorMood/app/src
+/main/java/com/mirrorm
+ood/ui/settings/Settin
+gsActivity.kt:189:21 
+Unresolved reference 
+'pauseSubtitle'.
+e: file:///C:/Users/mi
+nod/AndroidStudioProje
+cts/MirrorMood/app/src
+/main/java/com/mirrorm
+ood/ui/settings/Settin
+gsActivity.kt:194:17 
+Unresolved reference 
+'btnExportCsv'.
+e: file:///C:/Users/mi
+nod/AndroidStudioProje
+cts/MirrorMood/app/src
+/main/java/com/mirrorm
+ood/ui/settings/Settin
+gsActivity.kt:194:51 
+Cannot infer type for 
+this parameter. 
+Specify it explicitly.
+e: file:///C:/Users/mi
+nod/AndroidStudioProje
+cts/MirrorMood/app/src
+/main/java/com/mirrorm
+ood/ui/settings/Settin
+gsActivity.kt:195:18 
+Unresolved reference '
+performHapticFeedback'
+.
+e: file:///C:/Users/mi
+nod/AndroidStudioProje
+cts/MirrorMood/app/src
+/main/java/com/mirrorm
+ood/ui/settings/Settin
+gsActivity.kt:282:17 
+Unresolved reference 
+'goalValue'.
+e: file:///C:/Users/mi
+nod/AndroidStudioProje
+cts/MirrorMood/app/src
+/main/java/com/mirrorm
+ood/ui/settings/Settin
+gsActivity.kt:287:17 
+Unresolved reference 
+'quietStartValue'.
+e: file:///C:/Users/mi
+nod/AndroidStudioProje
+cts/MirrorMood/app/src
+/main/java/com/mirrorm
+ood/ui/settings/Settin
+gsActivity.kt:288:17 
+Unresolved reference 
+'quietEndValue'.
+e: file:///C:/Users/mi
+nod/AndroidStudioProje
+cts/MirrorMood/app/src
+/main/java/com/mirrorm
+ood/ui/settings/Settin
+gsActivity.kt:289:17 
+Unresolved reference 
+'switchAppLock'.
+e: file:///C:/Users/mi
+nod/AndroidStudioProje
+cts/MirrorMood/app/src
+/main/java/com/mirrorm
+ood/ui/settings/Settin
+gsActivity.kt:299:33 
+Unresolved reference 
+'cardLightLabel'.
+e: file:///C:/Users/mi
+nod/AndroidStudioProje
+cts/MirrorMood/app/src
+/main/java/com/mirrorm
+ood/ui/settings/Settin
+gsActivity.kt:300:33 
+Unresolved reference 
+'cardDarkLabel'.
+e: file:///C:/Users/mi
+nod/AndroidStudioProje
+cts/MirrorMood/app/src
+/main/java/com/mirrorm
+ood/ui/settings/Settin
+gsActivity.kt:301:33 
+Unresolved reference 
+'cardSystemLabel'.
+e: file:///C:/Users/mi
+nod/AndroidStudioProje
+cts/MirrorMood/app/src
+/main/java/com/mirrorm
+ood/ui/settings/Settin
+gsActivity.kt:303:17 
+Unresolved reference 
+'cardLight'.
+e: file:///C:/Users/mi
+nod/AndroidStudioProje
+cts/MirrorMood/app/src
+/main/java/com/mirrorm
+ood/ui/settings/Settin
+gsActivity.kt:304:17 
+Unresolved reference 
+'cardDark'.
+e: file:///C:/Users/mi
+nod/AndroidStudioProje
+cts/MirrorMood/app/src
+/main/java/com/mirrorm
+ood/ui/settings/Settin
+gsActivity.kt:305:17 
+Unresolved reference 
+'cardSystem'.
+e: file:///C:/Users/mi
+nod/AndroidStudioProje
+cts/MirrorMood/app/src
+/main/java/com/mirrorm
+ood/ui/settings/Settin
+gsActivity.kt:313:17 
+Unresolved reference 
+'goalValue'.
+e: file:///C:/Users/mi
+nod/AndroidStudioProje
+cts/MirrorMood/app/src
+/main/java/com/mirrorm
+ood/ui/settings/Settin
+gsActivity.kt:314:17 
+Unresolved reference 
+'goalSummary'.
+e: file:///C:/Users/mi
+nod/AndroidStudioProje
+cts/MirrorMood/app/src
+/main/java/com/mirrorm
+ood/ui/settings/Settin
+gsActivity.kt:323:25 
+Unresolved reference 
+'quietStartValue'.
+e: file:///C:/Users/mi
+nod/AndroidStudioProje
+cts/MirrorMood/app/src
+/main/java/com/mirrorm
+ood/ui/settings/Settin
+gsActivity.kt:325:25 
+Unresolved reference 
+'quietEndValue'.
+e: file:///C:/Users/mi
+nod/AndroidStudioProje
+cts/MirrorMood/app/src
+/main/java/com/mirrorm
+ood/ui/timeline/Timeli
+neActivity.kt:57:17 
+Unresolved reference 
+'btnAddEntry'.
+e: file:///C:/Users/mi
+nod/AndroidStudioProje
+cts/MirrorMood/app/src
+/main/java/com/mirrorm
+ood/ui/timeline/Timeli
+neActivity.kt:62:17 
+Unresolved reference 
+'btnSettings'.
+e: file:///C:/Users/mi
+nod/AndroidStudioProje
+cts/MirrorMood/app/src
+/main/java/com/mirrorm
+ood/ui/timeline/Timeli
+neActivity.kt:78:33 
+Unresolved reference 
+'tvEmptyTimeline'.
+e: file:///C:/Users/mi
+nod/AndroidStudioProje
+cts/MirrorMood/app/src
+/main/java/com/mirrorm
+ood/ui/timeline/Timeli
+neActivity.kt:83:29 
+Unresolved reference 
+'tvEmptyTimeline'.
+e: file:///C:/Users/mi
+nod/AndroidStudioProje
+cts/MirrorMood/app/src
+/main/java/com/mirrorm
+ood/ui/timeline/Timeli
+neActivity.kt:136:21 
+Unresolved reference 
+'tvArchiveMonth'.
+e: file:///C:/Users/mi
+nod/AndroidStudioProje
+cts/MirrorMood/app/src
+/main/java/com/mirrorm
+ood/ui/timeline/Timeli
+neActivity.kt:137:21 
+Unresolved reference 
+'tvArchiveSummary'.
+e: file:///C:/Users/mi
+nod/AndroidStudioProje
+cts/MirrorMood/app/src
+/main/java/com/mirrorm
+ood/ui/timeline/Timeli
+neActivity.kt:139:21 
+Unresolved reference 
+'tvFeaturedTitle'.
+e: file:///C:/Users/mi
+nod/AndroidStudioProje
+cts/MirrorMood/app/src
+/main/java/com/mirrorm
+ood/ui/timeline/Timeli
+neActivity.kt:140:21 
+Unresolved reference 
+'tvFeaturedMeta'.
+e: file:///C:/Users/mi
+nod/AndroidStudioProje
+cts/MirrorMood/app/src
+/main/java/com/mirrorm
+ood/ui/timeline/Timeli
+neActivity.kt:141:21 
+Unresolved reference 
+'tvFeaturedNote'.
+e: file:///C:/Users/mi
+nod/AndroidStudioProje
+cts/MirrorMood/app/src
+/main/java/com/mirrorm
+ood/ui/timeline/Timeli
+neActivity.kt:153:17 
+Unresolved reference 
+'tvArchiveMonth'.
+e: file:///C:/Users/mi
+nod/AndroidStudioProje
+cts/MirrorMood/app/src
+/main/java/com/mirrorm
+ood/ui/timeline/Timeli
+neActivity.kt:154:17 
+Unresolved reference 
+'tvArchiveSummary'.
+e: file:///C:/Users/mi
+nod/AndroidStudioProje
+cts/MirrorMood/app/src
+/main/java/com/mirrorm
+ood/ui/timeline/Timeli
+neActivity.kt:157:17 
+Unresolved reference 
+'tvFeaturedTitle'.
+e: file:///C:/Users/mi
+nod/AndroidStudioProje
+cts/MirrorMood/app/src
+/main/java/com/mirrorm
+ood/ui/timeline/Timeli
+neActivity.kt:158:17 
+Unresolved reference 
+'tvFeaturedMeta'.
+e: file:///C:/Users/mi
+nod/AndroidStudioProje
+cts/MirrorMood/app/src
+/main/java/com/mirrorm
+ood/ui/timeline/Timeli
+neActivity.kt:160:17 
+Unresolved reference 
+'tvFeaturedNote'.
+e: file:///C:/Users/mi
+nod/AndroidStudioProje
+cts/MirrorMood/app/src
+/main/java/com/mirrorm
+ood/ui/timeline/Timeli
+neActivity.kt:162:17 
+Unresolved reference 
+'chipFeaturedPrimary'.
+e: file:///C:/Users/mi
+nod/AndroidStudioProje
+cts/MirrorMood/app/src
+/main/java/com/mirrorm
+ood/ui/timeline/Timeli
+neActivity.kt:163:17 
+Unresolved reference '
+chipFeaturedSecondary'
+.
+
+FAILURE: Build failed 
+with an exception.
+
+* What went wrong:
+Execution failed for 
+task ':app:compileDebu
+gKotlin'.
+> A failure occurred 
+while executing org.je
+tbrains.kotlin.compile
+rRunner.GradleCompiler
+RunnerWithWorkers$Grad
+leKotlinCompilerWorkAc
+tion
+   > Compilation 
+error. See log for 
+more details
+
+* Try:
+> Run with 
+--stacktrace option 
+to get the stack 
+trace.
+> Run with --info or 
+--debug option to get 
+more log output.
+> Run with --scan to 
+get full insights 
+from a Build Scan 
+(powered by 
+Develocity).
+> Get more help at htt
+ps://help.gradle.org.
+
+BUILD FAILED in 3s
+32 actionable tasks: 1 executed, 31 up-to-date

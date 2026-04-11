@@ -1,0 +1,104 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- ═══ M3 Light Theme ═══ -->
+    <style name="Base.Theme.MirrorMood" parent="Theme.Material3.DayNight.NoActionBar">
+
+        <!-- Primary -->
+        <item name="colorPrimary">@color/md_primary</item>
+        <item name="colorOnPrimary">@color/md_onPrimary</item>
+        <item name="colorPrimaryContainer">@color/md_primaryContainer</item>
+        <item name="colorOnPrimaryContainer">@color/md_onPrimaryContainer</item>
+        <item name="colorPrimaryInverse">@color/md_inversePrimary</item>
+
+        <!-- Secondary -->
+        <item name="colorSecondary">@color/md_secondary</item>
+        <item name="colorOnSecondary">@color/md_onSecondary</item>
+        <item name="colorSecondaryContainer">@color/md_secondaryContainer</item>
+        <item name="colorOnSecondaryContainer">@color/md_onSecondaryContainer</item>
+
+        <!-- Tertiary -->
+        <item name="colorTertiary">@color/md_tertiary</item>
+        <item name="colorOnTertiary">@color/md_onTertiary</item>
+        <item name="colorTertiaryContainer">@color/md_tertiaryContainer</item>
+        <item name="colorOnTertiaryContainer">@color/md_onTertiaryContainer</item>
+
+        <!-- Error -->
+        <item name="colorError">@color/md_error</item>
+        <item name="colorOnError">@color/md_onError</item>
+        <item name="colorErrorContainer">@color/md_errorContainer</item>
+        <item name="colorOnErrorContainer">@color/md_onErrorContainer</item>
+
+        <!-- Surface -->
+        <item name="colorSurface">@color/md_surface</item>
+        <item name="colorOnSurface">@color/md_onSurface</item>
+        <item name="colorSurfaceVariant">@color/md_surfaceVariant</item>
+        <item name="colorOnSurfaceVariant">@color/md_onSurfaceVariant</item>
+        <item name="colorSurfaceInverse">@color/md_inverseSurface</item>
+        <item name="colorOnSurfaceInverse">@color/md_inverseOnSurface</item>
+        <item name="colorSurfaceContainerLowest">@color/md_surfaceContainerLowest</item>
+        <item name="colorSurfaceContainerLow">@color/md_surfaceContainerLow</item>
+        <item name="colorSurfaceContainer">@color/md_surfaceContainer</item>
+        <item name="colorSurfaceContainerHigh">@color/md_surfaceContainerHigh</item>
+        <item name="colorSurfaceContainerHighest">@color/md_surfaceContainerHighest</item>
+
+        <!-- Outline -->
+        <item name="colorOutline">@color/md_outline</item>
+        <item name="colorOutlineVariant">@color/md_outlineVariant</item>
+
+        <!-- Background -->
+        <item name="android:colorBackground">@color/md_background</item>
+        <item name="android:windowBackground">@color/md_background</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:windowLightNavigationBar" tools:targetApi="27">true</item>
+
+        <!-- Global Typography -->
+        <item name="android:fontFamily">@font/inter</item>
+        <item name="fontFamily">@font/inter</item>
+
+        <!-- M3 Type Scale -->
+        <item name="textAppearanceDisplayLarge">@style/MM.Text.Display.Large</item>
+        <item name="textAppearanceDisplayMedium">@style/MM.Text.Display.Medium</item>
+        <item name="textAppearanceDisplaySmall">@style/MM.Text.Display.Small</item>
+        <item name="textAppearanceHeadlineLarge">@style/MM.Text.Headline.Large</item>
+        <item name="textAppearanceHeadlineMedium">@style/MM.Text.Headline.Medium</item>
+        <item name="textAppearanceHeadlineSmall">@style/MM.Text.Headline.Small</item>
+        <item name="textAppearanceTitleLarge">@style/MM.Text.Title.Large</item>
+        <item name="textAppearanceTitleMedium">@style/MM.Text.Title.Medium</item>
+        <item name="textAppearanceTitleSmall">@style/MM.Text.Title.Small</item>
+        <item name="textAppearanceBodyLarge">@style/MM.Text.Body.Large</item>
+        <item name="textAppearanceBodyMedium">@style/MM.Text.Body.Medium</item>
+        <item name="textAppearanceBodySmall">@style/MM.Text.Body.Small</item>
+        <item name="textAppearanceLabelLarge">@style/MM.Text.Label.Large</item>
+        <item name="textAppearanceLabelMedium">@style/MM.Text.Label.Medium</item>
+        <item name="textAppearanceLabelSmall">@style/MM.Text.Label.Small</item>
+
+        <!-- M3 Shape -->
+        <item name="shapeAppearanceSmallComponent">@style/MM.Shape.Small</item>
+        <item name="shapeAppearanceMediumComponent">@style/MM.Shape.Medium</item>
+        <item name="shapeAppearanceLargeComponent">@style/MM.Shape.Large</item>
+
+        <!-- Bottom Nav style -->
+        <item name="bottomNavigationStyle">@style/MM.BottomNav</item>
+
+        <!-- Window Animation style for smooth activity transitions -->
+        <item name="android:windowAnimationStyle">@style/MM.WindowAnimation</item>
+
+    </style>
+
+    <style name="Theme.MirrorMood" parent="Base.Theme.MirrorMood" />
+
+    <!-- ═══ Splash Screen Theme ═══ -->
+    <style name="Theme.MirrorMood.Starting" parent="Theme.SplashScreen">
+        <!-- Background color of the splash screen -->
+        <item name="windowSplashScreenBackground">@color/md_background</item>
+        <!-- The animated icon -->
+        <item name="windowSplashScreenAnimatedIcon">@mipmap/ic_launcher</item>
+        <!-- Duration of animation (if any) -->
+        <item name="windowSplashScreenAnimationDuration">1000</item>
+        <!-- Theme to transition to after splash screen -->
+        <item name="postSplashScreenTheme">@style/Theme.MirrorMood</item>
+    </style>
+
+</resources>

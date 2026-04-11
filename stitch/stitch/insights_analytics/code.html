@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>MirrorMood Insights &amp; Analytics</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+        h1, h2, h3, .headline-font {
+            font-family: 'Manrope', sans-serif;
+        }
+        .glass-card {
+            backdrop-filter: blur(24px);
+            background: rgba(255, 255, 255, 0.7);
+        }
+        .mood-mirror-bg {
+            position: fixed;
+            top: -10%;
+            right: -10%;
+            width: 300px;
+            height: 300px;
+            background: #b7dbfd;
+            filter: blur(60px);
+            opacity: 0.3;
+            z-index: -1;
+            border-radius: 9999px;
+        }
+    </style>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "tertiary-dim": "#615127",
+              "background": "#f8fafa",
+              "tertiary-fixed-dim": "#ecd59f",
+              "on-surface-variant": "#596061",
+              "inverse-on-surface": "#9b9d9e",
+              "surface-variant": "#dde4e4",
+              "primary": "#3f627f",
+              "on-tertiary-fixed-variant": "#6c5c30",
+              "tertiary": "#6e5d32",
+              "error": "#a83836",
+              "secondary-dim": "#335b4d",
+              "primary-dim": "#335673",
+              "primary-fixed": "#b7dbfd",
+              "on-error": "#fff7f6",
+              "on-surface": "#2c3435",
+              "on-secondary-fixed": "#1e4639",
+              "on-secondary-container": "#32594b",
+              "error-container": "#fa746f",
+              "surface": "#f8fafa",
+              "on-primary-container": "#2a4e6a",
+              "on-secondary": "#e5fff2",
+              "primary-fixed-dim": "#a9cdef",
+              "surface-dim": "#d4dbdc",
+              "secondary": "#3f6758",
+              "secondary-fixed": "#c0ecda",
+              "secondary-fixed-dim": "#b3decc",
+              "inverse-primary": "#b7dbfd",
+              "tertiary-fixed": "#fbe3ac",
+              "error-dim": "#67040d",
+              "outline-variant": "#acb3b4",
+              "secondary-container": "#c0ecda",
+              "on-tertiary-container": "#625227",
+              "on-primary": "#f6f9ff",
+              "outline": "#757c7d",
+              "on-tertiary": "#fff8ef",
+              "on-error-container": "#6e0a12",
+              "on-tertiary-fixed": "#4e3f17",
+              "inverse-surface": "#0b0f0f",
+              "surface-tint": "#3f627f",
+              "on-primary-fixed-variant": "#345874",
+              "surface-container": "#eaefef",
+              "surface-container-high": "#e3e9ea",
+              "on-primary-fixed": "#143b56",
+              "tertiary-container": "#fbe3ac",
+              "on-background": "#2c3435",
+              "on-secondary-fixed-variant": "#3c6355",
+              "surface-container-highest": "#dde4e4",
+              "primary-container": "#b7dbfd",
+              "surface-container-low": "#f0f4f4",
+              "surface-bright": "#f8fafa",
+              "surface-container-lowest": "#ffffff"
+            },
+            fontFamily: {
+              "headline": ["Manrope"],
+              "body": ["Inter"],
+              "label": ["Inter"]
+            },
+            borderRadius: {"DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface text-on-surface min-h-screen pb-32">
+<div class="mood-mirror-bg"></div>
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 flex justify-between items-center px-6 h-16 bg-surface/70 backdrop-blur-3xl">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-[#3f627f] active:scale-95 transition-transform duration-200">menu</span>
+<span class="font-['Manrope'] font-bold text-xl tracking-tight text-[#3f627f]">MirrorMood</span>
+</div>
+<div class="w-10 h-10 rounded-full bg-surface-container-highest overflow-hidden active:scale-95 transition-transform duration-200">
+<img alt="Profile" class="w-full h-full object-cover" data-alt="close-up portrait of a smiling woman with soft natural lighting and a minimalist clean background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDwDfXtq4xmhqMgjt0HjIvOgeCffzZkewF9wMherHzh7bw4XsPqTg60Q-ZpTHKMGXZH4dhwwFap8mVelCqyYvqWFRV_0KN9FxmTrl2jyjhJ7JNh9YemXSpsLKP4m13snqMIiAYQAWrlJqbNWSxVIo4mUWQ10SZy_c5RFNs-D_Ui_Q-R-cXpwiI-fMbxzO6EI2IcabTh6xsDpXRL-GmObpEFY4XQpnpPs-KrkuhjCbTFcucONldzT9IlI81qhQr9QP2alpyu56aNeKmp"/>
+</div>
+</header>
+<main class="pt-24 px-6 space-y-10 max-w-lg mx-auto">
+<!-- Header Section -->
+<section class="space-y-2">
+<h1 class="text-4xl font-extrabold text-on-surface tracking-tight">Insights</h1>
+<p class="text-on-surface-variant font-medium">Tracking your emotional resonance through the weeks.</p>
+</section>
+<!-- Dominant Mood Visualization -->
+<section class="relative overflow-hidden bg-gradient-to-br from-primary to-primary-container rounded-xl p-8 text-on-primary shadow-lg active:scale-[0.98] transition-all duration-300">
+<div class="relative z-10 flex items-center gap-6">
+<div class="text-6xl filter drop-shadow-md">🧠</div>
+<div class="space-y-1">
+<p class="text-on-primary/80 font-medium uppercase tracking-widest text-xs">Dominant Today</p>
+<h2 class="text-2xl font-bold">Your dominant mood today was Focused!</h2>
+</div>
+</div>
+<!-- Decorative atmospheric element -->
+<div class="absolute -right-10 -bottom-10 w-40 h-40 bg-white/20 rounded-full blur-3xl"></div>
+</section>
+<!-- Daily Breakdown (Pie/Donut Grid) -->
+<section class="space-y-6">
+<div class="flex justify-between items-end">
+<h3 class="text-2xl font-bold text-on-surface">Daily Breakdown</h3>
+<span class="text-sm font-semibold text-primary">Today, Oct 24</span>
+</div>
+<div class="grid grid-cols-2 gap-4">
+<div class="bg-surface-container-lowest p-6 rounded-lg flex flex-col items-center justify-center space-y-3">
+<div class="relative w-24 h-24 flex items-center justify-center">
+<svg class="w-full h-full transform -rotate-90">
+<circle class="text-surface-container-high" cx="48" cy="48" fill="transparent" r="40" stroke="currentColor" stroke-width="8"></circle>
+<circle class="text-secondary" cx="48" cy="48" fill="transparent" r="40" stroke="currentColor" stroke-dasharray="251.2" stroke-dashoffset="62.8" stroke-width="8"></circle>
+</svg>
+<span class="absolute text-xl font-bold text-on-surface">75%</span>
+</div>
+<p class="font-bold text-on-surface-variant">Positive Resonance</p>
+</div>
+<div class="grid grid-cols-1 gap-4">
+<div class="bg-surface-container-low p-4 rounded-lg flex items-center justify-between">
+<div class="flex items-center gap-2">
+<div class="w-3 h-3 rounded-full bg-primary"></div>
+<span class="text-sm font-semibold">Focused</span>
+</div>
+<span class="text-sm font-bold">40%</span>
+</div>
+<div class="bg-surface-container-low p-4 rounded-lg flex items-center justify-between">
+<div class="flex items-center gap-2">
+<div class="w-3 h-3 rounded-full bg-secondary"></div>
+<span class="text-sm font-semibold">Happy</span>
+</div>
+<span class="text-sm font-bold">35%</span>
+</div>
+</div>
+</div>
+<!-- Tiny Mood Chips Bar -->
+<div class="flex flex-wrap gap-2 pt-2">
+<span class="px-4 py-2 rounded-full bg-secondary-container text-on-secondary-container text-xs font-bold uppercase tracking-wider">Neutral 10%</span>
+<span class="px-4 py-2 rounded-full bg-surface-container-high text-on-surface-variant text-xs font-bold uppercase tracking-wider">Tired 5%</span>
+<span class="px-4 py-2 rounded-full bg-surface-container-high text-on-surface-variant text-xs font-bold uppercase tracking-wider">Bored 5%</span>
+<span class="px-4 py-2 rounded-full bg-error-container/20 text-error text-xs font-bold uppercase tracking-wider">Stressed 5%</span>
+</div>
+</section>
+<!-- Peak Time Analysis -->
+<section class="bg-surface-container-high rounded-xl p-6 space-y-4">
+<h3 class="text-xl font-bold text-on-surface flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">schedule</span>
+                Peak Time Analysis
+            </h3>
+<div class="space-y-3">
+<div class="bg-surface-container-lowest p-4 rounded-lg flex items-center gap-4">
+<div class="w-12 h-12 rounded-full bg-secondary-container flex items-center justify-center text-2xl">☀️</div>
+<div>
+<p class="text-sm font-bold text-on-surface">Happy Peak</p>
+<p class="text-xs text-on-surface-variant font-medium">10:00 AM - 12:00 PM</p>
+</div>
+</div>
+<div class="bg-surface-container-lowest p-4 rounded-lg flex items-center gap-4">
+<div class="w-12 h-12 rounded-full bg-primary-container flex items-center justify-center text-2xl">🌙</div>
+<div>
+<p class="text-sm font-bold text-on-surface">Focused Peak</p>
+<p class="text-xs text-on-surface-variant font-medium">08:00 PM - 10:30 PM</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Monthly Distribution (Stacked Bar) -->
+<section class="space-y-6 pb-8">
+<h3 class="text-2xl font-bold text-on-surface">Monthly Distribution</h3>
+<div class="bg-surface-container-lowest p-6 rounded-lg space-y-8">
+<div class="flex justify-between items-end h-48 gap-4">
+<!-- Week 1 -->
+<div class="flex-1 flex flex-col justify-end gap-1 group">
+<div class="w-full bg-primary rounded-t-sm h-[40%]" title="Focused"></div>
+<div class="w-full bg-secondary h-[30%]" title="Happy"></div>
+<div class="w-full bg-surface-variant h-[20%]" title="Neutral"></div>
+<div class="w-full bg-error-container/40 rounded-b-sm h-[10%]" title="Stressed"></div>
+<p class="text-[10px] font-bold text-center mt-2 text-on-surface-variant">W1</p>
+</div>
+<!-- Week 2 -->
+<div class="flex-1 flex flex-col justify-end gap-1 group">
+<div class="w-full bg-primary rounded-t-sm h-[25%]" title="Focused"></div>
+<div class="w-full bg-secondary h-[45%]" title="Happy"></div>
+<div class="w-full bg-surface-variant h-[20%]" title="Neutral"></div>
+<div class="w-full bg-error-container/40 rounded-b-sm h-[10%]" title="Stressed"></div>
+<p class="text-[10px] font-bold text-center mt-2 text-on-surface-variant">W2</p>
+</div>
+<!-- Week 3 (Active focus) -->
+<div class="flex-1 flex flex-col justify-end gap-1 ring-4 ring-primary/10 rounded-lg p-1">
+<div class="w-full bg-primary rounded-t-sm h-[50%]" title="Focused"></div>
+<div class="w-full bg-secondary h-[25%]" title="Happy"></div>
+<div class="w-full bg-surface-variant h-[15%]" title="Neutral"></div>
+<div class="w-full bg-error-container/40 rounded-b-sm h-[10%]" title="Stressed"></div>
+<p class="text-[10px] font-bold text-center mt-2 text-primary">W3</p>
+</div>
+<!-- Week 4 -->
+<div class="flex-1 flex flex-col justify-end gap-1 group">
+<div class="w-full bg-primary rounded-t-sm h-[35%]" title="Focused"></div>
+<div class="w-full bg-secondary h-[35%]" title="Happy"></div>
+<div class="w-full bg-surface-variant h-[20%]" title="Neutral"></div>
+<div class="w-full bg-error-container/40 rounded-b-sm h-[10%]" title="Stressed"></div>
+<p class="text-[10px] font-bold text-center mt-2 text-on-surface-variant">W4</p>
+</div>
+</div>
+<!-- Legend -->
+<div class="flex flex-wrap justify-center gap-x-6 gap-y-2 pt-4">
+<div class="flex items-center gap-2">
+<div class="w-2 h-2 rounded-full bg-primary"></div>
+<span class="text-[10px] font-bold text-on-surface-variant uppercase tracking-tighter">Focused</span>
+</div>
+<div class="flex items-center gap-2">
+<div class="w-2 h-2 rounded-full bg-secondary"></div>
+<span class="text-[10px] font-bold text-on-surface-variant uppercase tracking-tighter">Happy</span>
+</div>
+<div class="flex items-center gap-2">
+<div class="w-2 h-2 rounded-full bg-surface-variant"></div>
+<span class="text-[10px] font-bold text-on-surface-variant uppercase tracking-tighter">Neutral</span>
+</div>
+<div class="flex items-center gap-2">
+<div class="w-2 h-2 rounded-full bg-error-container/40"></div>
+<span class="text-[10px] font-bold text-on-surface-variant uppercase tracking-tighter">Stressed</span>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 pb-6 pt-3 bg-surface/70 backdrop-blur-3xl rounded-t-[3rem] border-t border-[#acb3b4]/15 shadow-[0_-4px_32px_rgba(44,52,53,0.06)]">
+<button class="flex flex-col items-center justify-center text-slate-500 hover:text-[#3f627f] active:scale-90 transition-all duration-300 ease-out px-5 py-2">
+<span class="material-symbols-outlined" data-icon="home">home</span>
+<span class="font-['Inter'] font-medium text-[10px]">Home</span>
+</button>
+<button class="flex flex-col items-center justify-center bg-[#b7dbfd]/30 text-[#3f627f] rounded-full px-5 py-2 active:scale-90 transition-all duration-300 ease-out">
+<span class="material-symbols-outlined" data-icon="analytics" style="font-variation-settings: 'FILL' 1;">analytics</span>
+<span class="font-['Inter'] font-medium text-[10px]">Insights</span>
+</button>
+<button class="flex flex-col items-center justify-center text-slate-500 hover:text-[#3f627f] active:scale-90 transition-all duration-300 ease-out px-5 py-2">
+<span class="material-symbols-outlined" data-icon="history">history</span>
+<span class="font-['Inter'] font-medium text-[10px]">Timeline</span>
+</button>
+<button class="flex flex-col items-center justify-center text-slate-500 hover:text-[#3f627f] active:scale-90 transition-all duration-300 ease-out px-5 py-2">
+<span class="material-symbols-outlined" data-icon="lightbulb">lightbulb</span>
+<span class="font-['Inter'] font-medium text-[10px]">Tips</span>
+</button>
+</nav>
+</body></html>

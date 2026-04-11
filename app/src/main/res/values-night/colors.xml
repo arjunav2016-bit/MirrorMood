@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- ═══ Material 3 Baseline — Dark ═══ -->
+
+    <!-- Primary (Violet) -->
+    <color name="md_primary">#D0BCFF</color>
+    <color name="md_onPrimary">#381E72</color>
+    <color name="md_primaryContainer">#4F378B</color>
+    <color name="md_onPrimaryContainer">#EADDFF</color>
+    <color name="md_inversePrimary">#6750A4</color>
+
+    <!-- Secondary -->
+    <color name="md_secondary">#CCC2DC</color>
+    <color name="md_onSecondary">#332D41</color>
+    <color name="md_secondaryContainer">#4A4458</color>
+    <color name="md_onSecondaryContainer">#E8DEF8</color>
+
+    <!-- Tertiary -->
+    <color name="md_tertiary">#EFB8C8</color>
+    <color name="md_onTertiary">#492532</color>
+    <color name="md_tertiaryContainer">#633B48</color>
+    <color name="md_onTertiaryContainer">#FFD8E4</color>
+
+    <!-- Error -->
+    <color name="md_error">#F2B8B5</color>
+    <color name="md_onError">#601410</color>
+    <color name="md_errorContainer">#8C1D18</color>
+    <color name="md_onErrorContainer">#F9DEDC</color>
+
+    <!-- Surface hierarchy -->
+    <color name="md_surface">#141218</color>
+    <color name="md_surfaceContainerLowest">#0F0D13</color>
+    <color name="md_surfaceContainerLow">#1D1B20</color>
+    <color name="md_surfaceContainer">#211F26</color>
+    <color name="md_surfaceContainerHigh">#2B2930</color>
+    <color name="md_surfaceContainerHighest">#36343B</color>
+    <color name="md_surfaceVariant">#49454F</color>
+    <color name="md_onSurface">#E6E0E9</color>
+    <color name="md_onSurfaceVariant">#CAC4D0</color>
+
+    <!-- Inverse -->
+    <color name="md_inverseSurface">#E6E0E9</color>
+    <color name="md_inverseOnSurface">#322F35</color>
+
+    <!-- Outline -->
+    <color name="md_outline">#938F99</color>
+    <color name="md_outlineVariant">#49454F</color>
+
+    <!-- Background -->
+    <color name="md_background">#141218</color>
+
+    <!-- Scrim -->
+
+    <!-- Success -->
+    <color name="md_success">#5AB0A8</color>
+
+    <!-- ═══ Mood Accent Colors (same in dark) ═══ -->
+    <color name="mm_mood_happy">#FFD54F</color>
+    <color name="mm_mood_stressed">#E57373</color>
+    <color name="mm_mood_tired">#90CAF9</color>
+    <color name="mm_mood_focused">#80CBC4</color>
+    <color name="mm_mood_bored">#B39DDB</color>
+    <color name="mm_mood_neutral">#CE93D8</color>
+
+    <!-- Chart (dark) -->
+
+    <!-- Widget -->
+    <color name="mm_widget_scrim">#CC141218</color>
+
+    <!-- ═══ Legacy Compat Aliases (for Kotlin code + drawables) ═══ -->
+    <color name="mm_primary">@color/md_primary</color>
+    <color name="mm_on_primary">@color/md_onPrimary</color>
+    <color name="mm_on_surface">@color/md_onSurface</color>
+    <color name="mm_on_surface_secondary">@color/md_onSurfaceVariant</color>
+    <color name="mm_surface_container_high">@color/md_surfaceContainerHigh</color>
+    <color name="mm_calendar_outside_month">@color/md_outline</color>
+    <color name="mm_success">@color/md_success</color>
+    <color name="mm_ghost_outline">@color/md_outlineVariant</color>
+    <color name="mm_surface">@color/md_surface</color>
+
+    <!-- ═══ Floating Bottom Nav ═══ -->
+    <color name="mm_nav_icon_active">#EADDFF</color>
+    <color name="mm_nav_icon_inactive">#938F99</color>
+    <color name="mm_nav_label_active">#EADDFF</color>
+    <color name="mm_nav_label_inactive">#938F99</color>
+
+</resources>
+

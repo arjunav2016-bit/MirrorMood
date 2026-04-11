@@ -1,0 +1,44 @@
+MirrorMood Project Overview
+
+MirrorMood is an Android app that tracks a user's mood in real time by analyzing facial expressions with the device's front camera.
+It uses Google ML Kit face detection and a custom mood classifier to estimate emotional state from signals like smile probability,
+eye openness, blinking, winking, and head movement.
+
+The app is designed around privacy. All processing happens on the device, and mood data is stored locally in a Room database.
+It does not need to send camera frames or mood history to external servers in order to work.
+
+Main purpose:
+- Help users understand how their mood changes over time
+- Provide wellness suggestions based on detected mood
+- Let users keep a private record of mood history and journal entries
+
+Core features:
+- Real-time mood monitoring using the front camera
+- Mood classification into Happy, Stressed, Tired, Focused, Bored, and Neutral
+- Insights and analytics screens for daily and weekly mood patterns
+- Timeline and history views for past mood entries
+- Mood journal for notes linked to emotional state
+- Wellness recommendations based on the current mood
+- Notifications such as reminders, summaries, and weekly digests
+- Home screen widget for quick mood status
+- App lock with biometric authentication
+- Export and delete options for local data management
+
+How the project is structured:
+- Kotlin Android app with XML layouts and ViewBinding
+- MVVM-style architecture with ViewModels and repository classes
+- CameraX for camera access
+- Google ML Kit for face detection
+- Room for local database storage
+- WorkManager and a foreground service for background monitoring and scheduled tasks
+
+Important project areas:
+- MainActivity: main dashboard and mood summary experience
+- detection/: face analysis and mood classification logic
+- data/: database models, DAO, and repository layer
+- ui/: screens for timeline, journal, settings, privacy, lockscreen, and more
+- notification/: reminder and summary scheduling
+- widget/: home screen widget support
+
+In short, MirrorMood is a privacy-focused emotional wellness app that turns on-device facial expression analysis into mood tracking,
+reflection tools, and helpful insights for the user.

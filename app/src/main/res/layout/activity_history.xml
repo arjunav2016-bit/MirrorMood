@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="?attr/colorSurface"
+    android:clipToPadding="false"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingStart="20dp"
+        android:paddingTop="16dp"
+        android:paddingEnd="20dp"
+        android:paddingBottom="32dp">
+
+        <!-- ═══ Top Bar ═══ -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnBack"
+                style="@style/Widget.Material3.Button.IconButton"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                app:icon="@drawable/ic_back"
+                app:iconTint="?attr/colorOnSurface"
+                app:iconSize="24dp" />
+
+            <TextView
+                style="?attr/textAppearanceTitleLarge"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_weight="1"
+                android:text="History"
+                android:textColor="?attr/colorPrimary" />
+        </LinearLayout>
+
+        <TextView
+            style="?attr/textAppearanceBodyMedium"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="Your mood journey"
+            android:textColor="?attr/colorOnSurfaceVariant" />
+
+        <!-- ═══ Month Navigator ═══ -->
+        <com.google.android.material.card.MaterialCardView
+            style="@style/MM.Card.Filled"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnPrevMonth"
+                    style="@style/Widget.Material3.Button.IconButton"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    app:icon="@drawable/ic_back"
+                    app:iconTint="?attr/colorOnSurface"
+                    app:iconSize="20dp" />
+
+                <TextView
+                    android:id="@+id/tvMonthYear"
+                    style="?attr/textAppearanceTitleMedium"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="March 2026" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnNextMonth"
+                    style="@style/Widget.Material3.Button.IconButton"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    app:icon="@drawable/ic_back"
+                    app:iconTint="?attr/colorOnSurface"
+                    app:iconSize="20dp"
+                    android:scaleX="-1" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- ═══ Calendar ═══ -->
+        <com.google.android.material.card.MaterialCardView
+            style="@style/MM.Card.Outlined"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:orientation="horizontal">
+                    <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="S" android:textColor="?attr/colorPrimary" android:textSize="13sp" android:textStyle="bold" android:fontFamily="@font/inter" android:gravity="center" />
+                    <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="M" android:textColor="?attr/colorPrimary" android:textSize="13sp" android:textStyle="bold" android:fontFamily="@font/inter" android:gravity="center" />
+                    <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="T" android:textColor="?attr/colorPrimary" android:textSize="13sp" android:textStyle="bold" android:fontFamily="@font/inter" android:gravity="center" />
+                    <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="W" android:textColor="?attr/colorPrimary" android:textSize="13sp" android:textStyle="bold" android:fontFamily="@font/inter" android:gravity="center" />
+                    <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="T" android:textColor="?attr/colorPrimary" android:textSize="13sp" android:textStyle="bold" android:fontFamily="@font/inter" android:gravity="center" />
+                    <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="F" android:textColor="?attr/colorPrimary" android:textSize="13sp" android:textStyle="bold" android:fontFamily="@font/inter" android:gravity="center" />
+                    <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="S" android:textColor="?attr/colorPrimary" android:textSize="13sp" android:textStyle="bold" android:fontFamily="@font/inter" android:gravity="center" />
+                </LinearLayout>
+
+                <GridLayout
+                    android:id="@+id/calendarGrid"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:columnCount="7"
+                    android:rowCount="6"
+                    android:alignmentMode="alignBounds" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- ═══ Day Detail ═══ -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardDayDetail"
+            style="@style/MM.Card.Elevated"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:visibility="gone">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="20dp">
+
+                <TextView
+                    android:id="@+id/tvDetailDate"
+                    style="?attr/textAppearanceTitleSmall"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:id="@+id/tvDetailEntryCount"
+                    style="?attr/textAppearanceLabelSmall"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:textColor="?attr/colorOnSurfaceVariant" />
+
+                <TextView
+                    style="?attr/textAppearanceLabelSmall"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="DOMINANT MOOD"
+                    android:textColor="?attr/colorPrimary" />
+
+                <TextView
+                    android:id="@+id/tvDetailDominant"
+                    style="?attr/textAppearanceHeadlineSmall"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp" />
+
+                <LinearLayout
+                    android:id="@+id/layoutMoodBreakdown"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:orientation="vertical">
+
+                    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:layout_marginBottom="12dp">
+                        <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical" android:gravity="center">
+                            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="😊" android:textSize="22sp" />
+                            <TextView android:id="@+id/tvDetailHappy" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textColor="?attr/colorPrimary" android:fontFamily="@font/inter" android:textSize="14sp" android:textStyle="bold" />
+                        </LinearLayout>
+                        <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical" android:gravity="center">
+                            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="😐" android:textSize="22sp" />
+                            <TextView android:id="@+id/tvDetailNeutral" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textColor="?attr/colorPrimary" android:fontFamily="@font/inter" android:textSize="14sp" android:textStyle="bold" />
+                        </LinearLayout>
+                        <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical" android:gravity="center">
+                            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="😰" android:textSize="22sp" />
+                            <TextView android:id="@+id/tvDetailStressed" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textColor="?attr/colorPrimary" android:fontFamily="@font/inter" android:textSize="14sp" android:textStyle="bold" />
+                        </LinearLayout>
+                    </LinearLayout>
+                    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal">
+                        <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical" android:gravity="center">
+                            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="😴" android:textSize="22sp" />
+                            <TextView android:id="@+id/tvDetailTired" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textColor="?attr/colorPrimary" android:fontFamily="@font/inter" android:textSize="14sp" android:textStyle="bold" />
+                        </LinearLayout>
+                        <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical" android:gravity="center">
+                            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="🧠" android:textSize="22sp" />
+                            <TextView android:id="@+id/tvDetailFocused" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textColor="?attr/colorPrimary" android:fontFamily="@font/inter" android:textSize="14sp" android:textStyle="bold" />
+                        </LinearLayout>
+                        <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical" android:gravity="center">
+                            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="😒" android:textSize="22sp" />
+                            <TextView android:id="@+id/tvDetailBored" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textColor="?attr/colorPrimary" android:fontFamily="@font/inter" android:textSize="14sp" android:textStyle="bold" />
+                        </LinearLayout>
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- ═══ No Data ═══ -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardNoData"
+            style="@style/MM.Card.Filled"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:visibility="gone">
+
+            <TextView
+                style="?attr/textAppearanceBodyMedium"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="24dp"
+                android:text="No mood data for this day"
+                android:textColor="?attr/colorOnSurfaceVariant" />
+        </com.google.android.material.card.MaterialCardView>
+    </LinearLayout>
+</ScrollView>

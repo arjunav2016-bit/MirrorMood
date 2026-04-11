@@ -1,0 +1,755 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="?attr/colorSurface">
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipToPadding="false"
+        android:fillViewport="true"
+        android:paddingBottom="@dimen/home_content_bottom_padding">
+
+        <LinearLayout
+            android:id="@+id/homeContent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingStart="20dp"
+            android:paddingTop="16dp"
+            android:paddingEnd="20dp"
+            android:paddingBottom="24dp">
+
+            <!-- ═══ Top Bar ═══ -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="?attr/textAppearanceTitleLarge"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="MirrorMood"
+                    android:textColor="?attr/colorPrimary" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnSettings"
+                    style="@style/Widget.Material3.Button.IconButton"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    app:icon="@drawable/ic_settings"
+                    app:iconTint="?attr/colorOnSurfaceVariant"
+                    app:iconSize="24dp" />
+            </LinearLayout>
+
+            <!-- ═══ Greeting ═══ -->
+            <TextView
+                android:id="@+id/tvGreeting"
+                style="?attr/textAppearanceHeadlineMedium"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:text="Good evening" />
+
+            <TextView
+                android:id="@+id/tvSubtitle"
+                style="?attr/textAppearanceBodyLarge"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="Quantitative summary of your emotional data."
+                android:textColor="?attr/colorOnSurfaceVariant" />
+
+            <!-- ═══ Mood Card ═══ -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/moodCard"
+                style="@style/MM.Card.Filled"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:padding="20dp">
+
+                    <!-- Mood Orb -->
+                    <FrameLayout
+                        android:layout_width="64dp"
+                        android:layout_height="64dp">
+
+                        <View
+                            android:layout_width="64dp"
+                            android:layout_height="64dp"
+                            android:background="@drawable/bg_mood_orb" />
+
+                        <TextView
+                            android:id="@+id/tvMoodEmoji"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:text="😐"
+                            android:textSize="30sp" />
+                    </FrameLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/tvStatus"
+                            style="?attr/textAppearanceTitleMedium"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Current: Neutral" />
+
+                        <TextView
+                            android:id="@+id/tvMoodTime"
+                            style="?attr/textAppearanceLabelSmall"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:text="LAST CHECK: NO CHECK-IN YET"
+                            android:textColor="?attr/colorOnSurfaceVariant" />
+
+                        <TextView
+                            android:id="@+id/tvStatusDetail"
+                            style="?attr/textAppearanceBodySmall"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:maxLines="2"
+                            android:text="Start monitoring or log a short note to begin."
+                            android:textColor="?attr/colorOnSurfaceVariant" />
+                    </LinearLayout>
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnToggle"
+                        style="@style/MM.Button.Tonal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="48dp"
+                        android:text="Start" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- ═══ Streak Card ═══ -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/streakCard"
+                style="@style/MM.Card.Elevated"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:id="@+id/tvStreakEmoji"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:background="@drawable/bg_mood_orb"
+                        android:gravity="center"
+                        android:text="🔥"
+                        android:textSize="24sp" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            style="?attr/textAppearanceLabelSmall"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="CONSISTENCY"
+                            android:textColor="?attr/colorOnSurfaceVariant" />
+
+                        <TextView
+                            android:id="@+id/tvStreakCount"
+                            style="?attr/textAppearanceHeadlineSmall"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="2dp"
+                            android:text="0 Days" />
+
+                        <TextView
+                            android:id="@+id/tvStreakTitle"
+                            style="?attr/textAppearanceLabelSmall"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:text="REFLECTION GOAL: 5D"
+                            android:textColor="?attr/colorOnSurfaceVariant" />
+                    </LinearLayout>
+
+                    <com.google.android.material.progressindicator.CircularProgressIndicator
+                        android:id="@+id/streakProgress"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        app:indicatorColor="?attr/colorPrimary"
+                        app:trackColor="?attr/colorSurfaceContainerHighest"
+                        app:trackThickness="5dp"
+                        app:indicatorSize="48dp"
+                        android:max="100"
+                        android:progress="0" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- ═══ Mood Patterns Card ═══ -->
+            <com.google.android.material.card.MaterialCardView
+                style="@style/MM.Card.Filled"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="20dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:src="@drawable/ic_insights"
+                            app:tint="?attr/colorPrimary" />
+
+                        <TextView
+                            style="?attr/textAppearanceLabelSmall"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:layout_weight="1"
+                            android:text="MOOD PATTERNS"
+                            android:textColor="?attr/colorOnSurfaceVariant" />
+
+                        <TextView
+                            android:id="@+id/tvDominantSummary"
+                            style="?attr/textAppearanceLabelSmall"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Stable baseline"
+                            android:textColor="?attr/colorPrimary" />
+                    </LinearLayout>
+
+                    <!-- Segmented Mood Bar -->
+                    <LinearLayout
+                        android:id="@+id/segmentedBarContainer"
+                        android:layout_width="match_parent"
+                        android:layout_height="14dp"
+                        android:layout_marginTop="16dp"
+                        android:clipChildren="true"
+                        android:orientation="horizontal">
+
+                        <View
+                            android:id="@+id/segmentBar1"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:layout_marginEnd="2dp"
+                            android:background="@drawable/bg_segment_bar" />
+
+                        <View
+                            android:id="@+id/segmentBar2"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:layout_marginEnd="2dp"
+                            android:background="@drawable/bg_segment_bar" />
+
+                        <View
+                            android:id="@+id/segmentBar3"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:background="@drawable/bg_segment_bar" />
+                    </LinearLayout>
+
+                    <!-- Mood Legend Row -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="14dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <!-- Mood 1 -->
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal">
+
+                            <View
+                                android:id="@+id/dotMood1"
+                                android:layout_width="8dp"
+                                android:layout_height="8dp"
+                                android:background="@drawable/bg_monitoring_circle" />
+
+                            <TextView
+                                android:id="@+id/tvDistributionMood1"
+                                style="?attr/textAppearanceBodySmall"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="6dp"
+                                android:text="Neutral" />
+
+                            <TextView
+                                android:id="@+id/tvDistributionPercent1"
+                                style="?attr/textAppearanceLabelSmall"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="4dp"
+                                android:text="0%"
+                                android:textColor="?attr/colorOnSurfaceVariant" />
+                        </LinearLayout>
+
+                        <!-- Mood 2 -->
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal">
+
+                            <View
+                                android:id="@+id/dotMood2"
+                                android:layout_width="8dp"
+                                android:layout_height="8dp"
+                                android:background="@drawable/bg_monitoring_circle" />
+
+                            <TextView
+                                android:id="@+id/tvDistributionMood2"
+                                style="?attr/textAppearanceBodySmall"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="6dp"
+                                android:text="Focused" />
+
+                            <TextView
+                                android:id="@+id/tvDistributionPercent2"
+                                style="?attr/textAppearanceLabelSmall"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="4dp"
+                                android:text="0%"
+                                android:textColor="?attr/colorOnSurfaceVariant" />
+                        </LinearLayout>
+
+                        <!-- Mood 3 -->
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal">
+
+                            <View
+                                android:id="@+id/dotMood3"
+                                android:layout_width="8dp"
+                                android:layout_height="8dp"
+                                android:background="@drawable/bg_monitoring_circle" />
+
+                            <TextView
+                                android:id="@+id/tvDistributionMood3"
+                                style="?attr/textAppearanceBodySmall"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="6dp"
+                                android:text="Happy" />
+
+                            <TextView
+                                android:id="@+id/tvDistributionPercent3"
+                                style="?attr/textAppearanceLabelSmall"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="4dp"
+                                android:text="0%"
+                                android:textColor="?attr/colorOnSurfaceVariant" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <!-- Dominant mood summary -->
+                    <TextView
+                        android:id="@+id/tvDominantMood"
+                        style="?attr/textAppearanceBodySmall"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:text="No pattern yet"
+                        android:textColor="?attr/colorOnSurfaceVariant" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- ═══ 7-Day Trend Card ═══ -->
+            <com.google.android.material.card.MaterialCardView
+                style="@style/MM.Card.Outlined"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="20dp">
+
+                    <TextView
+                        style="?attr/textAppearanceLabelSmall"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="7-DAY ACTIVITY"
+                        android:textColor="?attr/colorOnSurfaceVariant" />
+
+                    <!-- Bars -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="80dp"
+                        android:layout_marginTop="16dp"
+                        android:gravity="bottom"
+                        android:orientation="horizontal">
+
+                        <View android:id="@+id/trendBar1" android:layout_width="0dp" android:layout_height="28dp" android:layout_weight="1" android:layout_marginEnd="4dp" android:background="@drawable/bg_monitoring_circle" />
+                        <View android:id="@+id/trendBar2" android:layout_width="0dp" android:layout_height="40dp" android:layout_weight="1" android:layout_marginEnd="4dp" android:background="@drawable/bg_monitoring_circle" />
+                        <View android:id="@+id/trendBar3" android:layout_width="0dp" android:layout_height="32dp" android:layout_weight="1" android:layout_marginEnd="4dp" android:background="@drawable/bg_monitoring_circle" />
+                        <View android:id="@+id/trendBar4" android:layout_width="0dp" android:layout_height="56dp" android:layout_weight="1" android:layout_marginEnd="4dp" android:background="@drawable/bg_monitoring_circle" />
+                        <View android:id="@+id/trendBar5" android:layout_width="0dp" android:layout_height="36dp" android:layout_weight="1" android:layout_marginEnd="4dp" android:background="@drawable/bg_monitoring_circle" />
+                        <View android:id="@+id/trendBar6" android:layout_width="0dp" android:layout_height="20dp" android:layout_weight="1" android:layout_marginEnd="4dp" android:background="@drawable/bg_monitoring_circle" />
+                        <View android:id="@+id/trendBar7" android:layout_width="0dp" android:layout_height="48dp" android:layout_weight="1" android:background="@drawable/bg_monitoring_circle" />
+                    </LinearLayout>
+
+                    <!-- Day labels -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:orientation="horizontal">
+
+                        <TextView android:id="@+id/tvDayLabel1" style="?attr/textAppearanceLabelSmall" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:gravity="center" android:text="M" android:textColor="?attr/colorOnSurfaceVariant" android:layout_marginEnd="4dp" />
+                        <TextView android:id="@+id/tvDayLabel2" style="?attr/textAppearanceLabelSmall" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:gravity="center" android:text="T" android:textColor="?attr/colorOnSurfaceVariant" android:layout_marginEnd="4dp" />
+                        <TextView android:id="@+id/tvDayLabel3" style="?attr/textAppearanceLabelSmall" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:gravity="center" android:text="W" android:textColor="?attr/colorOnSurfaceVariant" android:layout_marginEnd="4dp" />
+                        <TextView android:id="@+id/tvDayLabel4" style="?attr/textAppearanceLabelSmall" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:gravity="center" android:text="T" android:textColor="?attr/colorOnSurfaceVariant" android:layout_marginEnd="4dp" />
+                        <TextView android:id="@+id/tvDayLabel5" style="?attr/textAppearanceLabelSmall" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:gravity="center" android:text="F" android:textColor="?attr/colorOnSurfaceVariant" android:layout_marginEnd="4dp" />
+                        <TextView android:id="@+id/tvDayLabel6" style="?attr/textAppearanceLabelSmall" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:gravity="center" android:text="S" android:textColor="?attr/colorOnSurfaceVariant" android:layout_marginEnd="4dp" />
+                        <TextView android:id="@+id/tvDayLabel7" style="?attr/textAppearanceLabelSmall" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:gravity="center" android:text="S" android:textColor="?attr/colorOnSurfaceVariant" />
+                    </LinearLayout>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- ═══ Quick Note ═══ -->
+            <com.google.android.material.card.MaterialCardView
+                style="@style/MM.Card.Outlined"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:id="@+id/quickNoteHeader"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:padding="16dp">
+
+                        <ImageView
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:src="@drawable/ic_journal"
+                            app:tint="?attr/colorPrimary" />
+
+                        <TextView
+                            style="?attr/textAppearanceTitleSmall"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="12dp"
+                            android:layout_weight="1"
+                            android:text="Quick Note" />
+
+                        <TextView
+                            android:id="@+id/ivQuickNoteChevron"
+                            style="?attr/textAppearanceTitleSmall"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="▾"
+                            android:textColor="?attr/colorOnSurfaceVariant" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/quickNoteContent"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:paddingStart="16dp"
+                        android:paddingEnd="16dp"
+                        android:paddingBottom="16dp"
+                        android:visibility="gone">
+
+                        <TextView
+                            android:id="@+id/tvComposerPrompt"
+                            style="?attr/textAppearanceBodyMedium"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Add a short note about how you feel right now."
+                            android:textColor="?attr/colorOnSurfaceVariant" />
+
+                        <com.google.android.material.chip.ChipGroup
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="12dp"
+                            app:singleSelection="true"
+                            app:selectionRequired="true">
+
+                            <com.google.android.material.chip.Chip
+                                android:id="@+id/chipHappy"
+                                style="@style/Widget.Material3.Chip.Filter"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Happy" />
+
+                            <com.google.android.material.chip.Chip
+                                android:id="@+id/chipNeutral"
+                                style="@style/Widget.Material3.Chip.Filter"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Neutral"
+                                android:checked="true" />
+
+                            <com.google.android.material.chip.Chip
+                                android:id="@+id/chipFocused"
+                                style="@style/Widget.Material3.Chip.Filter"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Focused" />
+
+                            <com.google.android.material.chip.Chip
+                                android:id="@+id/chipTired"
+                                style="@style/Widget.Material3.Chip.Filter"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Tired" />
+
+                            <com.google.android.material.chip.Chip
+                                android:id="@+id/chipStressed"
+                                style="@style/Widget.Material3.Chip.Filter"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Stressed" />
+
+                            <com.google.android.material.chip.Chip
+                                android:id="@+id/chipBored"
+                                style="@style/Widget.Material3.Chip.Filter"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Bored" />
+                        </com.google.android.material.chip.ChipGroup>
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="12dp"
+                            style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+                            android:hint="Write a quick note...">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/etQuickNote"
+                                android:layout_width="match_parent"
+                                android:layout_height="100dp"
+                                android:gravity="top"
+                                android:inputType="textMultiLine|textCapSentences" />
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/btnSaveEntry"
+                            style="@style/MM.Button.Filled"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="12dp"
+                            android:text="Save Note" />
+                    </LinearLayout>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- ═══ Wellness Card ═══ -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/wellnessCard"
+                style="@style/MM.Card.Hero"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:clickable="true"
+                android:focusable="true">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_gradient_advice"
+                    android:orientation="vertical"
+                    android:padding="20dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/tvWellnessMeta"
+                            style="?attr/textAppearanceLabelSmall"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="RECOMMENDED FOR YOU"
+                            android:textColor="?attr/colorOnSecondaryContainer" />
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/btnOpenAdvice"
+                            style="@style/Widget.Material3.Button.IconButton"
+                            android:layout_width="36dp"
+                            android:layout_height="36dp"
+                            app:icon="@drawable/ic_back"
+                            app:iconTint="?attr/colorOnSecondaryContainer"
+                            app:iconSize="18dp"
+                            android:scaleX="-1" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/tvWellnessEmoji"
+                            android:layout_width="56dp"
+                            android:layout_height="56dp"
+                            android:background="@drawable/bg_mood_orb"
+                            android:gravity="center"
+                            android:text="🧘"
+                            android:textSize="28sp" />
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/tvWellnessTitle"
+                                style="?attr/textAppearanceTitleMedium"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Gentle Reset"
+                                android:textColor="?attr/colorOnSecondaryContainer" />
+
+                            <TextView
+                                android:id="@+id/tvWellnessHint"
+                                style="?attr/textAppearanceBodySmall"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="4dp"
+                                android:text="A matched ritual will appear here."
+                                android:textColor="?attr/colorOnSecondaryContainer" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <com.google.android.material.button.MaterialButton
+                        style="@style/Widget.Material3.Button.TonalButton"
+                        android:id="@+id/btnViewAdvice"
+                        android:layout_width="match_parent"
+                        android:layout_height="44dp"
+                        android:layout_marginTop="16dp"
+                        android:text="View All Advice" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- ═══ Recent Logs ═══ -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="?attr/textAppearanceTitleSmall"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Recent Logs" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnViewTimeline"
+                    style="@style/MM.Button.Text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="View Timeline" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tvEchoesEmpty"
+                style="?attr/textAppearanceBodyMedium"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="No notes yet. Your next reflection will show up here."
+                android:textColor="?attr/colorOnSurfaceVariant" />
+
+            <LinearLayout
+                android:id="@+id/recentEchoesContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:orientation="vertical" />
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <!-- ═══ FAB ═══ -->
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/btnOpenJournal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="@dimen/bottom_nav_fab_margin_bottom"
+        android:contentDescription="Open Journal"
+        app:srcCompat="@drawable/ic_journal"
+        app:tint="?attr/colorOnPrimaryContainer"
+        app:backgroundTint="?attr/colorPrimaryContainer" />
+
+    <!-- ═══ Bottom Navigation ═══ -->
+    <include
+        android:id="@+id/includeBottomNav"
+        layout="@layout/layout_bottom_nav" />
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

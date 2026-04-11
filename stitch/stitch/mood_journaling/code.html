@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>MirrorMood - Deep Reflection</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "on-primary": "#f6f9ff",
+              "inverse-on-surface": "#9b9d9e",
+              "surface-container-low": "#f0f4f4",
+              "on-secondary-container": "#32594b",
+              "surface-bright": "#f8fafa",
+              "on-tertiary-fixed-variant": "#6c5c30",
+              "error-container": "#fa746f",
+              "primary": "#3f627f",
+              "inverse-surface": "#0b0f0f",
+              "on-secondary-fixed": "#1e4639",
+              "secondary": "#3f6758",
+              "surface-dim": "#d4dbdc",
+              "surface-container-high": "#e3e9ea",
+              "secondary-dim": "#335b4d",
+              "on-tertiary-container": "#625227",
+              "secondary-container": "#c0ecda",
+              "surface-tint": "#3f627f",
+              "primary-fixed-dim": "#a9cdef",
+              "tertiary": "#6e5d32",
+              "tertiary-container": "#fbe3ac",
+              "tertiary-fixed-dim": "#ecd59f",
+              "on-error": "#fff7f6",
+              "on-error-container": "#6e0a12",
+              "primary-dim": "#335673",
+              "surface": "#f8fafa",
+              "on-surface": "#2c3435",
+              "tertiary-dim": "#615127",
+              "on-primary-fixed": "#143b56",
+              "on-tertiary-fixed": "#4e3f17",
+              "error": "#a83836",
+              "on-surface-variant": "#596061",
+              "on-secondary-fixed-variant": "#3c6355",
+              "surface-variant": "#dde4e4",
+              "on-tertiary": "#fff8ef",
+              "error-dim": "#67040d",
+              "on-background": "#2c3435",
+              "on-secondary": "#e5fff2",
+              "outline-variant": "#acb3b4",
+              "on-primary-container": "#2a4e6a",
+              "surface-container-highest": "#dde4e4",
+              "secondary-fixed-dim": "#b3decc",
+              "outline": "#757c7d",
+              "surface-container-lowest": "#ffffff",
+              "surface-container": "#eaefef",
+              "primary-container": "#b7dbfd",
+              "primary-fixed": "#b7dbfd",
+              "inverse-primary": "#b7dbfd",
+              "tertiary-fixed": "#fbe3ac",
+              "background": "#f8fafa",
+              "secondary-fixed": "#c0ecda",
+              "on-primary-fixed-variant": "#345874"
+            },
+            fontFamily: {
+              "headline": ["Manrope"],
+              "body": ["Inter"],
+              "label": ["Inter"]
+            },
+            borderRadius: {"DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .mood-mirror-bg {
+            position: fixed;
+            top: 20%;
+            left: 50%;
+            transform: translate(-50%, -20%);
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(183, 219, 253, 0.4) 0%, rgba(183, 219, 253, 0) 70%);
+            filter: blur(80px);
+            z-index: -1;
+        }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface font-body text-on-surface selection:bg-primary-container selection:text-on-primary-container">
+<!-- Ambient Background -->
+<div class="mood-mirror-bg"></div>
+<!-- Top Navigation Shell -->
+<header class="flex justify-between items-center px-6 h-16 w-full fixed top-0 z-50 bg-slate-50/70 backdrop-blur-3xl">
+<div class="flex items-center gap-4">
+<button class="hover:opacity-80 transition-opacity active:scale-95 duration-200">
+<span class="material-symbols-outlined text-blue-800">menu</span>
+</button>
+<h1 class="font-manrope font-extrabold text-2xl text-blue-900 tracking-tight">MirrorMood</h1>
+</div>
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full overflow-hidden bg-surface-container-high">
+<img alt="User Profile" class="w-full h-full object-cover" data-alt="Close up portrait of a serene young woman with natural light and soft blurred outdoor background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBEbWAlFj7rAmRxS3K5eON4LZ4QP9yj_RNf-as3Rl0j7g1uU_Ua06VtxW8BoJaTheJ8aZB3cdVc2BPixJOT0-QhIyB_DTGh-NL5e7qz0_84ThedOvjUt6gnOlhZSxNo3vWp1G1P2ddRLT0Crk6X7u1LQP9ejCrnKx2Rzcm4NU_Xo_v56qi0yBS-1mG4YLlCgdAAMS4asnJHJwFdHuaNZhtd_2ZobIVmIOI15kpH1mofTUk4OOPQXB8GzRMyOCxIn_ppvP5GuShmWyPm"/>
+</div>
+</div>
+</header>
+<main class="pt-24 pb-32 px-6 max-w-2xl mx-auto">
+<!-- Header Content -->
+<section class="mb-10 text-center md:text-left">
+<h2 class="font-headline text-display-sm font-bold text-on-surface mb-2 tracking-tight">Deep Reflection</h2>
+<p class="font-body text-on-surface-variant text-lg">How has your heart been today?</p>
+</section>
+<!-- Journaling Area -->
+<div class="space-y-8">
+<!-- Mood Selector -->
+<section class="bg-surface-container-low rounded-lg p-6 flex flex-wrap justify-center md:justify-start gap-4">
+<button class="flex flex-col items-center gap-2 px-4 py-3 rounded-xl bg-surface-container-lowest transition-all hover:bg-primary-fixed-dim/20 active:scale-90">
+<span class="text-3xl">😌</span>
+<span class="font-label text-on-surface-variant font-medium">Calm</span>
+</button>
+<button class="flex flex-col items-center gap-2 px-4 py-3 rounded-xl bg-surface-container-lowest transition-all hover:bg-primary-fixed-dim/20 active:scale-90 border-2 border-primary/20">
+<span class="text-3xl">✨</span>
+<span class="font-label text-primary font-bold">Inspired</span>
+</button>
+<button class="flex flex-col items-center gap-2 px-4 py-3 rounded-xl bg-surface-container-lowest transition-all hover:bg-primary-fixed-dim/20 active:scale-90">
+<span class="text-3xl">☁️</span>
+<span class="font-label text-on-surface-variant font-medium">Neutral</span>
+</button>
+<button class="flex flex-col items-center gap-2 px-4 py-3 rounded-xl bg-surface-container-lowest transition-all hover:bg-primary-fixed-dim/20 active:scale-90">
+<span class="text-3xl">🌊</span>
+<span class="font-label text-on-surface-variant font-medium">Melancholy</span>
+</button>
+<button class="flex flex-col items-center gap-2 px-4 py-3 rounded-xl bg-surface-container-lowest transition-all hover:bg-primary-fixed-dim/20 active:scale-90">
+<span class="text-3xl">🔥</span>
+<span class="font-label text-on-surface-variant font-medium">Energetic</span>
+</button>
+</section>
+<!-- Text Input -->
+<section class="relative">
+<div class="absolute top-4 left-6 text-on-surface-variant/30 pointer-events-none">
+<span class="material-symbols-outlined" style="font-size: 40px;">format_quote</span>
+</div>
+<textarea class="w-full h-80 bg-surface-container-lowest rounded-lg p-8 pt-16 text-on-surface font-body text-lg border-none focus:ring-2 focus:ring-primary-container/50 shadow-[0_4px_40px_rgba(0,0,0,0.02)] placeholder:text-surface-dim resize-none" placeholder="The words are waiting for you..."></textarea>
+<!-- Floating Decorative Element -->
+<div class="absolute bottom-6 right-6 flex items-center gap-2 text-on-surface-variant/40 font-label">
+<span class="material-symbols-outlined text-sm">edit</span>
+<span>142 words</span>
+</div>
+</section>
+<!-- Action Area -->
+<section class="flex flex-col md:flex-row items-center justify-between gap-6 pt-4">
+<div class="flex gap-2">
+<button class="w-12 h-12 flex items-center justify-center rounded-full bg-surface-container-high text-primary hover:opacity-80 transition-opacity">
+<span class="material-symbols-outlined">image</span>
+</button>
+<button class="w-12 h-12 flex items-center justify-center rounded-full bg-surface-container-high text-primary hover:opacity-80 transition-opacity">
+<span class="material-symbols-outlined">mic</span>
+</button>
+<button class="w-12 h-12 flex items-center justify-center rounded-full bg-surface-container-high text-primary hover:opacity-80 transition-opacity">
+<span class="material-symbols-outlined">lock</span>
+</button>
+</div>
+<button class="w-full md:w-auto bg-gradient-to-br from-primary to-primary-dim text-on-primary px-10 py-4 rounded-xl font-headline font-bold text-lg shadow-lg shadow-primary/20 hover:opacity-90 transition-all active:scale-95">
+                    Save Entry
+                </button>
+</section>
+</div>
+<!-- Previous Prompt Suggestions (Asymmetric Card) -->
+<section class="mt-20">
+<h3 class="font-headline text-xl font-bold mb-6 flex items-center gap-2">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+                Gentle Guidance
+            </h3>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<div class="bg-surface-container-high rounded-lg p-6 ml-0 md:mr-8 transition-transform hover:-translate-y-1 cursor-pointer group">
+<span class="font-label text-primary font-bold uppercase tracking-widest text-[10px] block mb-2">Morning Reflection</span>
+<p class="font-body text-on-surface font-medium leading-relaxed group-hover:text-primary transition-colors">What is one thing you're letting go of today to make room for peace?</p>
+</div>
+<div class="bg-tertiary-container/30 rounded-lg p-6 mt-4 md:mt-8 transition-transform hover:-translate-y-1 cursor-pointer group">
+<span class="font-label text-tertiary font-bold uppercase tracking-widest text-[10px] block mb-2">Gratitude Scan</span>
+<p class="font-body text-on-surface font-medium leading-relaxed group-hover:text-tertiary transition-colors">Notice three small sensations that made you feel grounded recently.</p>
+</div>
+</div>
+</section>
+</main>
+<!-- Navigation Shell (Bottom) -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 pb-6 pt-3 bg-white/70 backdrop-blur-3xl shadow-[0_-4px_40px_rgba(0,0,0,0.04)] rounded-t-[3rem] md:hidden">
+<div class="flex flex-col items-center justify-center bg-blue-100/50 text-blue-900 rounded-full px-5 py-2">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">edit_note</span>
+<span class="font-inter text-[10px] font-medium tracking-wide uppercase">Journal</span>
+</div>
+<div class="flex flex-col items-center justify-center text-slate-400 px-5 py-2">
+<span class="material-symbols-outlined">insert_chart</span>
+<span class="font-inter text-[10px] font-medium tracking-wide uppercase">Analytics</span>
+</div>
+<div class="flex flex-col items-center justify-center text-slate-400 px-5 py-2">
+<span class="material-symbols-outlined">shield_person</span>
+<span class="font-inter text-[10px] font-medium tracking-wide uppercase">Privacy</span>
+</div>
+<div class="flex flex-col items-center justify-center text-slate-400 px-5 py-2">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-inter text-[10px] font-medium tracking-wide uppercase">Settings</span>
+</div>
+</nav>
+<!-- Navigation Drawer (Desktop Placeholder Logic) -->
+<aside class="hidden lg:flex fixed inset-y-0 left-0 w-80 z-[60] flex flex-col p-6 bg-slate-50 border-r border-slate-200/50">
+<div class="mb-10 flex items-center gap-4 px-2">
+<div class="w-12 h-12 rounded-full bg-primary-container overflow-hidden">
+<img alt="User Profile" class="w-full h-full object-cover" data-alt="Modern professional woman looking thoughtfully away from camera with soft natural studio lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBEkBcQUktQLaEiFFNYKu7q_FB0yXYKLXINigoHCoEZTfcp77voTdNO3q6G_nYhy9drih3zNUX5X33zjKNdEZveP45Cznnf0DGjE0vLJ1F2eKTaC7NWGjiV8M6UAh2KWzlfLNIsGrN3rOGITDPUUApvlWZCWCWpr9lovjEcUuP6_a7aQ_kYb27CM58hviFwMl2RhLZ5RpLkNXZBXj2FqPkEpkmqWFcsZYmmOx3DXA3BMQFl5wXxDKd64Fi1NzGMR9XYIs3FGhEuNQ6Y"/>
+</div>
+<div>
+<p class="font-manrope font-bold text-blue-900">Deep Breath</p>
+<p class="text-xs text-slate-500">Mindful Journey Day 12</p>
+</div>
+</div>
+<nav class="space-y-2">
+<a class="flex items-center gap-4 bg-blue-50 text-blue-900 font-bold rounded-xl px-4 py-3" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+<span class="font-manrope">Daily Reflection</span>
+</a>
+<a class="flex items-center gap-4 text-slate-600 px-4 py-3 hover:translate-x-1 transition-transform" href="#">
+<span class="material-symbols-outlined">flag</span>
+<span class="font-manrope">Goal Tracking</span>
+</a>
+<a class="flex items-center gap-4 text-slate-600 px-4 py-3 hover:translate-x-1 transition-transform" href="#">
+<span class="material-symbols-outlined">lock</span>
+<span class="font-manrope">Privacy Vault</span>
+</a>
+<a class="flex items-center gap-4 text-slate-600 px-4 py-3 hover:translate-x-1 transition-transform" href="#">
+<span class="material-symbols-outlined">fingerprint</span>
+<span class="font-manrope">Security</span>
+</a>
+<a class="flex items-center gap-4 text-slate-600 px-4 py-3 hover:translate-x-1 transition-transform" href="#">
+<span class="material-symbols-outlined">help_outline</span>
+<span class="font-manrope">Help Center</span>
+</a>
+</nav>
+</aside>
+</body></html>

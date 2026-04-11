@@ -1,0 +1,177 @@
+<resources>
+
+    <!-- ═══ M3 Typography Scale ═══ -->
+    <style name="MM.Text.Display.Large" parent="TextAppearance.Material3.DisplayLarge">
+        <item name="fontFamily">@font/manrope</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+    <style name="MM.Text.Display.Medium" parent="TextAppearance.Material3.DisplayMedium">
+        <item name="fontFamily">@font/manrope</item>
+    </style>
+    <style name="MM.Text.Display.Small" parent="TextAppearance.Material3.DisplaySmall">
+        <item name="fontFamily">@font/manrope</item>
+    </style>
+
+    <style name="MM.Text.Headline.Large" parent="TextAppearance.Material3.HeadlineLarge">
+        <item name="fontFamily">@font/manrope</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+    <style name="MM.Text.Headline.Medium" parent="TextAppearance.Material3.HeadlineMedium">
+        <item name="fontFamily">@font/manrope</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+    <style name="MM.Text.Headline.Small" parent="TextAppearance.Material3.HeadlineSmall">
+        <item name="fontFamily">@font/manrope</item>
+    </style>
+
+    <style name="MM.Text.Title.Large" parent="TextAppearance.Material3.TitleLarge">
+        <item name="fontFamily">@font/manrope</item>
+    </style>
+    <style name="MM.Text.Title.Medium" parent="TextAppearance.Material3.TitleMedium">
+        <item name="fontFamily">@font/manrope</item>
+    </style>
+    <style name="MM.Text.Title.Small" parent="TextAppearance.Material3.TitleSmall">
+        <item name="fontFamily">@font/manrope</item>
+    </style>
+
+    <style name="MM.Text.Body.Large" parent="TextAppearance.Material3.BodyLarge">
+        <item name="fontFamily">@font/inter</item>
+    </style>
+    <style name="MM.Text.Body.Medium" parent="TextAppearance.Material3.BodyMedium">
+        <item name="fontFamily">@font/inter</item>
+    </style>
+    <style name="MM.Text.Body.Small" parent="TextAppearance.Material3.BodySmall">
+        <item name="fontFamily">@font/inter</item>
+    </style>
+
+    <style name="MM.Text.Label.Large" parent="TextAppearance.Material3.LabelLarge">
+        <item name="fontFamily">@font/inter</item>
+    </style>
+    <style name="MM.Text.Label.Medium" parent="TextAppearance.Material3.LabelMedium">
+        <item name="fontFamily">@font/inter</item>
+    </style>
+    <style name="MM.Text.Label.Small" parent="TextAppearance.Material3.LabelSmall">
+        <item name="fontFamily">@font/inter</item>
+    </style>
+
+    <!-- ═══ M3 Shape Scale ═══ -->
+    <style name="MM.Shape.Small" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">8dp</item>
+    </style>
+    <style name="MM.Shape.Medium" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">12dp</item>
+    </style>
+    <style name="MM.Shape.Large" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">16dp</item>
+    </style>
+
+    <!-- ═══ M3 Card Styles ═══ -->
+    <style name="MM.Card.Filled" parent="Widget.Material3.CardView.Filled">
+        <item name="cardCornerRadius">12dp</item>
+    </style>
+    <style name="MM.Card.Elevated" parent="Widget.Material3.CardView.Elevated">
+        <item name="cardCornerRadius">12dp</item>
+    </style>
+    <style name="MM.Card.Outlined" parent="Widget.Material3.CardView.Outlined">
+        <item name="cardCornerRadius">12dp</item>
+    </style>
+    <style name="MM.Card.Hero" parent="Widget.Material3.CardView.Filled">
+        <item name="cardCornerRadius">16dp</item>
+    </style>
+
+    <!-- ═══ M3 Button Styles ═══ -->
+    <style name="MM.Button.Filled" parent="Widget.Material3.Button">
+        <item name="cornerRadius">20dp</item>
+        <item name="android:fontFamily">@font/manrope</item>
+    </style>
+    <style name="MM.Button.Tonal" parent="Widget.Material3.Button.TonalButton">
+        <item name="cornerRadius">20dp</item>
+        <item name="android:fontFamily">@font/manrope</item>
+    </style>
+    <style name="MM.Button.Outlined" parent="Widget.Material3.Button.OutlinedButton">
+        <item name="cornerRadius">20dp</item>
+        <item name="android:fontFamily">@font/manrope</item>
+    </style>
+    <style name="MM.Button.Text" parent="Widget.Material3.Button.TextButton">
+        <item name="android:fontFamily">@font/inter</item>
+    </style>
+
+    <!-- ═══ M3 Bottom Navigation ═══ -->
+    <style name="MM.BottomNav" parent="Widget.Material3.BottomNavigationView">
+        <item name="android:background">?attr/colorSurfaceContainer</item>
+        <item name="itemIconTint">@color/bottom_nav_item_tint</item>
+        <item name="itemTextColor">@color/bottom_nav_label_tint</item>
+        <item name="itemTextAppearanceActive">@style/MM.BottomNav.Label.Active</item>
+        <item name="itemTextAppearanceInactive">@style/MM.BottomNav.Label</item>
+        <item name="itemIconSize">24dp</item>
+        <item name="android:minHeight">64dp</item>
+        <item name="itemPaddingTop">8dp</item>
+        <item name="itemPaddingBottom">8dp</item>
+        <item name="elevation">3dp</item>
+    </style>
+
+
+
+    <style name="MM.BottomNav.Label" parent="TextAppearance.Material3.LabelSmall">
+        <item name="android:fontFamily">@font/inter</item>
+        <item name="android:textSize">11sp</item>
+    </style>
+
+    <style name="MM.BottomNav.Label.Active" parent="TextAppearance.Material3.LabelSmall">
+        <item name="android:fontFamily">@font/inter</item>
+        <item name="android:textSize">11sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <!-- ═══ Window Animation ═══ -->
+    <style name="MM.WindowAnimation" parent="@android:style/Animation.Activity">
+        <item name="android:activityOpenEnterAnimation">@anim/slide_in_right</item>
+        <item name="android:activityOpenExitAnimation">@anim/slide_out_left</item>
+        <item name="android:activityCloseEnterAnimation">@anim/slide_in_left</item>
+        <item name="android:activityCloseExitAnimation">@anim/slide_out_right</item>
+    </style>
+
+    <!-- ═══ Legacy compat styles ═══ -->
+    <style name="MirrorMood.Display" parent="MM.Text.Display.Large" />
+    <style name="MirrorMood.Headline" parent="MM.Text.Headline.Medium" />
+    <style name="MirrorMood.Title" parent="MM.Text.Title.Large" />
+    <style name="MirrorMood.Title.Small" parent="MM.Text.Title.Medium" />
+    <style name="MirrorMood.Subtitle" parent="MM.Text.Label.Small">
+        <item name="android:letterSpacing">0.1</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+    <style name="MirrorMood.Body" parent="MM.Text.Body.Large" />
+    <style name="MirrorMood.Body.Secondary" parent="MM.Text.Body.Medium">
+        <item name="android:textColor">?attr/colorOnSurfaceVariant</item>
+    </style>
+    <style name="MirrorMood.Label" parent="MM.Text.Label.Large" />
+    <style name="MirrorMood.Caption" parent="MM.Text.Body.Small">
+        <item name="android:textColor">?attr/colorOnSurfaceVariant</item>
+    </style>
+    <style name="MirrorMood.NavLabel" parent="MM.Text.Label.Small" />
+    <style name="MirrorMood.Chip" parent="MM.Text.Label.Large">
+        <item name="android:paddingStart">16dp</item>
+        <item name="android:paddingEnd">16dp</item>
+        <item name="android:paddingTop">10dp</item>
+        <item name="android:paddingBottom">10dp</item>
+    </style>
+
+    <style name="MirrorMood.Card" parent="MM.Card.Filled" />
+    <style name="MirrorMood.Card.Section" parent="MM.Card.Filled">
+        <item name="cardCornerRadius">16dp</item>
+    </style>
+    <style name="MirrorMood.Card.Emphasis" parent="MM.Card.Elevated" />
+    <style name="MirrorMood.Card.Glass" parent="MM.Card.Filled">
+        <item name="cardCornerRadius">16dp</item>
+    </style>
+    <style name="MirrorMood.PrimaryButton" parent="MM.Card.Filled">
+        <item name="cardCornerRadius">20dp</item>
+    </style>
+
+</resources>
+
+

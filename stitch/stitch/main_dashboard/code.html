@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>MirrorMood Dashboard</title>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Google Fonts: Manrope & Inter -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Manrope:wght@700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "tertiary-dim": "#615127",
+              "background": "#f8fafa",
+              "tertiary-fixed-dim": "#ecd59f",
+              "on-surface-variant": "#596061",
+              "inverse-on-surface": "#9b9d9e",
+              "surface-variant": "#dde4e4",
+              "primary": "#3f627f",
+              "on-tertiary-fixed-variant": "#6c5c30",
+              "tertiary": "#6e5d32",
+              "error": "#a83836",
+              "secondary-dim": "#335b4d",
+              "primary-dim": "#335673",
+              "primary-fixed": "#b7dbfd",
+              "on-error": "#fff7f6",
+              "on-surface": "#2c3435",
+              "on-secondary-fixed": "#1e4639",
+              "on-secondary-container": "#32594b",
+              "error-container": "#fa746f",
+              "surface": "#f8fafa",
+              "on-primary-container": "#2a4e6a",
+              "on-secondary": "#e5fff2",
+              "primary-fixed-dim": "#a9cdef",
+              "surface-dim": "#d4dbdc",
+              "secondary": "#3f6758",
+              "secondary-fixed": "#c0ecda",
+              "secondary-fixed-dim": "#b3decc",
+              "inverse-primary": "#b7dbfd",
+              "tertiary-fixed": "#fbe3ac",
+              "error-dim": "#67040d",
+              "outline-variant": "#acb3b4",
+              "secondary-container": "#c0ecda",
+              "on-tertiary-container": "#625227",
+              "on-primary": "#f6f9ff",
+              "outline": "#757c7d",
+              "on-tertiary": "#fff8ef",
+              "on-error-container": "#6e0a12",
+              "on-tertiary-fixed": "#4e3f17",
+              "inverse-surface": "#0b0f0f",
+              "surface-tint": "#3f627f",
+              "on-primary-fixed-variant": "#345874",
+              "surface-container": "#eaefef",
+              "surface-container-high": "#e3e9ea",
+              "on-primary-fixed": "#143b56",
+              "tertiary-container": "#fbe3ac",
+              "on-background": "#2c3435",
+              "on-secondary-fixed-variant": "#3c6355",
+              "surface-container-highest": "#dde4e4",
+              "primary-container": "#b7dbfd",
+              "surface-container-low": "#f0f4f4",
+              "surface-bright": "#f8fafa",
+              "surface-container-lowest": "#ffffff"
+            },
+            fontFamily: {
+              "headline": ["Manrope"],
+              "body": ["Inter"],
+              "label": ["Inter"]
+            },
+            borderRadius: {"DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+      .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      }
+      .glass-effect {
+        backdrop-filter: blur(24px);
+        -webkit-backdrop-filter: blur(24px);
+      }
+      .mood-mirror-bg {
+        position: fixed;
+        top: 20%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 300px;
+        height: 300px;
+        background: #b7dbfd;
+        filter: blur(80px);
+        opacity: 0.35;
+        z-index: -1;
+        border-radius: 50%;
+      }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface font-body text-on-surface antialiased min-h-screen pb-24">
+<div class="mood-mirror-bg"></div>
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 flex justify-between items-center px-6 h-16 bg-surface/70 dark:bg-slate-900/70 backdrop-blur-3xl bg-surface_container_low dark:bg-slate-800/50">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-[#3f627f] dark:text-[#b7dbfd]">menu</span>
+<h1 class="font-['Manrope'] font-bold text-xl tracking-tight text-2xl font-extrabold text-[#3f627f] dark:text-[#b7dbfd] tracking-tighter">MirrorMood</h1>
+</div>
+<div class="w-10 h-10 rounded-full overflow-hidden bg-surface-container-high border-2 border-primary-container">
+<img alt="User Profile" class="w-full h-full object-cover" data-alt="Close-up portrait of a serene young woman with soft natural lighting and a clean, minimalist aesthetic background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDO34KfwQ7iI-CHkkylm3_SlVqnwr_j1oao9Snd-8_OFErMRL8BNtXGTnJ_G3-U_u3Gtwk77TzccelcIMRVEeNvFyUSrhosrGBCERuMXHvELUGJ6nOkq7tOzMoeAtIrTUEKK1twDXIHiZQTrn5a5PQKrEucGppJJ25w-qUJoNRPe3GWNpX12SH7wHDh0lGSz1P3YOursDJ_NRDydWN-TXwd7TOtpr2FLNimwLwQM93IIyCJ8M5ritQIYyLocGohXpcrdLck7nAlQ6s-"/>
+</div>
+</header>
+<main class="pt-24 px-6 space-y-8 max-w-md mx-auto">
+<!-- Welcome Section -->
+<section class="space-y-1">
+<p class="text-on-surface-variant font-medium tracking-wide label-md uppercase">Good Morning, Elena</p>
+<h2 class="font-headline text-3xl text-on-surface">How are you feeling right now?</h2>
+</section>
+<!-- Monitoring Trigger Card -->
+<section class="relative overflow-hidden bg-primary-container/40 p-8 rounded-xl flex flex-col items-center justify-center space-y-6 text-center">
+<div class="absolute -top-12 -right-12 w-32 h-32 bg-primary/10 rounded-full blur-2xl"></div>
+<div class="w-20 h-20 bg-primary rounded-full flex items-center justify-center shadow-lg active:scale-95 transition-transform duration-200">
+<span class="material-symbols-outlined text-on-primary text-4xl" data-icon="photo_camera">photo_camera</span>
+</div>
+<div class="space-y-2">
+<h3 class="font-headline text-xl text-on-primary-container">Start Monitoring</h3>
+<p class="text-on-primary-container/70 text-sm px-4">Begin real-time mood reflection via the front camera</p>
+</div>
+</section>
+<!-- Current Mood Bento Grid -->
+<section class="grid grid-cols-2 gap-4">
+<!-- Large Mood Card -->
+<div class="col-span-2 bg-surface-container-lowest p-8 rounded-lg shadow-[0_4px_32px_rgba(44,52,53,0.04)] flex flex-col items-center justify-center space-y-4">
+<div class="text-7xl">😊</div>
+<div class="text-center">
+<h4 class="font-headline text-2xl text-on-surface">Happy</h4>
+<p class="text-on-surface-variant text-sm mt-1">Confidence Score: <span class="text-primary font-bold">94%</span></p>
+</div>
+</div>
+<!-- Streak Card -->
+<div class="bg-secondary-container/30 p-5 rounded-lg flex flex-col justify-between">
+<span class="material-symbols-outlined text-secondary" data-icon="local_fire_department" style="font-variation-settings: 'FILL' 1;">local_fire_department</span>
+<div class="mt-4">
+<p class="text-2xl font-headline text-on-secondary-container">3-day</p>
+<p class="text-xs text-on-secondary-container/80">Happy streak! 🔥</p>
+</div>
+</div>
+<!-- Daily Summary Card -->
+<div class="bg-surface-container-high p-5 rounded-lg flex flex-col justify-between">
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="pie_chart">pie_chart</span>
+<div class="mt-4">
+<p class="text-2xl font-headline text-on-surface">Calm</p>
+<p class="text-xs text-on-surface-variant">Today's Dominant Mood</p>
+</div>
+</div>
+</section>
+<!-- Wellness Tip Section -->
+<section class="bg-tertiary-container/20 p-6 rounded-lg border-l-4 border-tertiary flex gap-4 items-start">
+<span class="material-symbols-outlined text-tertiary mt-1" data-icon="lightbulb">lightbulb</span>
+<div class="space-y-1">
+<p class="font-headline text-on-tertiary-container text-sm">Mindful Moment</p>
+<p class="text-on-tertiary-container/80 text-sm leading-relaxed">
+                    Feeling a bit stressed? Try a quick 2-minute breathing exercise to center your thoughts.
+                </p>
+<button class="mt-3 text-tertiary font-bold text-xs flex items-center gap-1">
+                    START BREATHING <span class="material-symbols-outlined text-sm">arrow_forward</span>
+</button>
+</div>
+</section>
+<!-- Insights Preview -->
+<section class="space-y-4">
+<div class="flex justify-between items-end">
+<h3 class="font-headline text-lg">Weekly Flow</h3>
+<span class="text-xs text-primary font-bold">VIEW ALL</span>
+</div>
+<div class="h-32 w-full bg-surface-container-low rounded-lg overflow-hidden relative">
+<div class="absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-t from-primary/10 to-transparent"></div>
+<!-- Simple Vector Chart Representation -->
+<svg class="w-full h-full" preserveaspectratio="none" viewbox="0 0 400 100">
+<path d="M0 80 Q 50 20, 100 60 T 200 40 T 300 70 T 400 30" fill="none" stroke="#3f627f" stroke-linecap="round" stroke-width="3"></path>
+<circle cx="100" cy="60" fill="#3f627f" r="4"></circle>
+</svg>
+</div>
+</section>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 pb-6 pt-3 bg-surface/70 dark:bg-slate-900/70 backdrop-blur-3xl docked full-width bottom-0 rounded-t-[3rem] border-t border-[#acb3b4]/15 shadow-[0_-4px_32px_rgba(44,52,53,0.06)]">
+<!-- Home (Active) -->
+<div class="flex flex-col items-center justify-center bg-[#b7dbfd]/30 dark:bg-[#3f627f]/30 text-[#3f627f] dark:text-[#b7dbfd] rounded-full px-5 py-2 scale-90 transition-all duration-300 ease-out">
+<span class="material-symbols-outlined text-[#3f627f] dark:text-[#b7dbfd]" data-icon="home" style="font-variation-settings: 'FILL' 1;">home</span>
+<span class="font-['Inter'] font-medium text-[10px]">Home</span>
+</div>
+<!-- Insights -->
+<div class="flex flex-col items-center justify-center text-slate-500 dark:text-slate-400 px-5 py-2 hover:text-[#3f627f] dark:hover:text-[#b7dbfd]">
+<span class="material-symbols-outlined" data-icon="analytics">analytics</span>
+<span class="font-['Inter'] font-medium text-[10px]">Insights</span>
+</div>
+<!-- Timeline -->
+<div class="flex flex-col items-center justify-center text-slate-500 dark:text-slate-400 px-5 py-2 hover:text-[#3f627f] dark:hover:text-[#b7dbfd]">
+<span class="material-symbols-outlined" data-icon="history">history</span>
+<span class="font-['Inter'] font-medium text-[10px]">Timeline</span>
+</div>
+<!-- Tips -->
+<div class="flex flex-col items-center justify-center text-slate-500 dark:text-slate-400 px-5 py-2 hover:text-[#3f627f] dark:hover:text-[#b7dbfd]">
+<span class="material-symbols-outlined" data-icon="lightbulb">lightbulb</span>
+<span class="font-['Inter'] font-medium text-[10px]">Tips</span>
+</div>
+</nav>
+</body></html>

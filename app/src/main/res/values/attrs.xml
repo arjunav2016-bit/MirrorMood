@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Custom theme attributes for mood colors (used in layouts) -->
+    <attr name="mmMoodHappy" format="color" />
+    <attr name="mmMoodStressed" format="color" />
+    <attr name="mmMoodTired" format="color" />
+    <attr name="mmMoodFocused" format="color" />
+    <attr name="mmMoodBored" format="color" />
+    <attr name="mmMoodNeutral" format="color" />
+    <attr name="mmChartBg" format="color" />
+    <attr name="mmChartGrid" format="color" />
+    <attr name="mmChartLine" format="color" />
+    <attr name="mmChartDot" format="color" />
+</resources>

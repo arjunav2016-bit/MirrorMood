@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingTop="@dimen/timeline_entry_spacing_top"
+    android:paddingBottom="@dimen/timeline_entry_spacing_bottom">
+
+    <View
+        android:id="@+id/timelineRailAnchor"
+        android:layout_width="@dimen/timeline_entry_rail_width"
+        android:layout_height="0dp"
+        android:importantForAccessibility="no"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/timelineEntryCard"
+        style="@style/MM.Card.Filled"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/timeline_entry_card_margin_start"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/timelineRailAnchor"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/timeline_entry_content_padding">
+
+            <TextView
+                android:id="@+id/tvEntryTime"
+                style="?attr/textAppearanceLabelSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="?attr/colorOnSurfaceVariant"
+                tools:text="Today &#8226; 09:42 PM" />
+
+            <TextView
+                android:id="@+id/tvEntryMood"
+                style="?attr/textAppearanceTitleMedium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/timeline_entry_mood_margin_top"
+                tools:text="Reflective &amp; Quiet" />
+
+            <TextView
+                android:id="@+id/tvEntryNote"
+                style="?attr/textAppearanceBodySmall"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/timeline_entry_note_margin_top"
+                android:textColor="?attr/colorOnSurfaceVariant"
+                tools:text="A moment from the archive lives here." />
+
+            <com.google.android.material.chip.ChipGroup
+                android:id="@+id/tagsContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/timeline_entry_tags_margin_top"
+                app:chipSpacingHorizontal="@dimen/timeline_entry_chip_spacing"
+                app:chipSpacingVertical="@dimen/timeline_entry_chip_spacing"
+                app:singleLine="false"
+                tools:visibility="visible">
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chipMood"
+                    style="@style/Widget.Material3.Chip.Assist"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:text="Neutral" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chipEmoji"
+                    style="@style/Widget.Material3.Chip.Assist"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:text="&#128578;" />
+            </com.google.android.material.chip.ChipGroup>
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+    <View
+        android:id="@+id/dotIndicator"
+        android:layout_width="@dimen/timeline_entry_dot_size"
+        android:layout_height="@dimen/timeline_entry_dot_size"
+        android:layout_marginTop="@dimen/timeline_entry_dot_offset_top"
+        android:background="@drawable/circle_dot_green"
+        android:importantForAccessibility="no"
+        app:layout_constraintEnd_toEndOf="@id/timelineRailAnchor"
+        app:layout_constraintStart_toStartOf="@id/timelineRailAnchor"
+        app:layout_constraintTop_toTopOf="@id/timelineEntryCard" />
+
+    <View
+        android:layout_width="1dp"
+        android:layout_height="0dp"
+        android:background="?attr/colorOutlineVariant"
+        android:importantForAccessibility="no"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/dotIndicator"
+        app:layout_constraintStart_toStartOf="@id/dotIndicator"
+        app:layout_constraintTop_toBottomOf="@id/dotIndicator" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

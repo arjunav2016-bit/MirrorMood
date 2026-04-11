@@ -1,0 +1,69 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- ═══ M3 Dark Theme ═══ -->
+    <style name="Theme.MirrorMood" parent="Base.Theme.MirrorMood">
+
+        <!-- Primary -->
+        <item name="colorPrimary">@color/md_primary</item>
+        <item name="colorOnPrimary">@color/md_onPrimary</item>
+        <item name="colorPrimaryContainer">@color/md_primaryContainer</item>
+        <item name="colorOnPrimaryContainer">@color/md_onPrimaryContainer</item>
+        <item name="colorPrimaryInverse">@color/md_inversePrimary</item>
+
+        <!-- Secondary -->
+        <item name="colorSecondary">@color/md_secondary</item>
+        <item name="colorOnSecondary">@color/md_onSecondary</item>
+        <item name="colorSecondaryContainer">@color/md_secondaryContainer</item>
+        <item name="colorOnSecondaryContainer">@color/md_onSecondaryContainer</item>
+
+        <!-- Tertiary -->
+        <item name="colorTertiary">@color/md_tertiary</item>
+        <item name="colorOnTertiary">@color/md_onTertiary</item>
+        <item name="colorTertiaryContainer">@color/md_tertiaryContainer</item>
+        <item name="colorOnTertiaryContainer">@color/md_onTertiaryContainer</item>
+
+        <!-- Error -->
+        <item name="colorError">@color/md_error</item>
+        <item name="colorOnError">@color/md_onError</item>
+        <item name="colorErrorContainer">@color/md_errorContainer</item>
+        <item name="colorOnErrorContainer">@color/md_onErrorContainer</item>
+
+        <!-- Surface -->
+        <item name="colorSurface">@color/md_surface</item>
+        <item name="colorOnSurface">@color/md_onSurface</item>
+        <item name="colorSurfaceVariant">@color/md_surfaceVariant</item>
+        <item name="colorOnSurfaceVariant">@color/md_onSurfaceVariant</item>
+        <item name="colorSurfaceInverse">@color/md_inverseSurface</item>
+        <item name="colorOnSurfaceInverse">@color/md_inverseOnSurface</item>
+        <item name="colorSurfaceContainerLowest">@color/md_surfaceContainerLowest</item>
+        <item name="colorSurfaceContainerLow">@color/md_surfaceContainerLow</item>
+        <item name="colorSurfaceContainer">@color/md_surfaceContainer</item>
+        <item name="colorSurfaceContainerHigh">@color/md_surfaceContainerHigh</item>
+        <item name="colorSurfaceContainerHighest">@color/md_surfaceContainerHighest</item>
+
+        <!-- Outline -->
+        <item name="colorOutline">@color/md_outline</item>
+        <item name="colorOutlineVariant">@color/md_outlineVariant</item>
+
+        <!-- Background -->
+        <item name="android:colorBackground">@color/md_background</item>
+        <item name="android:windowBackground">@color/md_background</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@color/md_surface</item>
+        <item name="android:windowLightStatusBar">false</item>
+
+    </style>
+
+    <!-- ═══ Splash Screen Theme ═══ -->
+    <style name="Theme.MirrorMood.Starting" parent="Theme.SplashScreen">
+        <!-- Background color of the splash screen -->
+        <item name="windowSplashScreenBackground">@color/md_background</item>
+        <!-- The animated icon -->
+        <item name="windowSplashScreenAnimatedIcon">@mipmap/ic_launcher</item>
+        <!-- Duration of animation (if any) -->
+        <item name="windowSplashScreenAnimationDuration">1000</item>
+        <!-- Theme to transition to after splash screen -->
+        <item name="postSplashScreenTheme">@style/Theme.MirrorMood</item>
+    </style>
+
+</resources>

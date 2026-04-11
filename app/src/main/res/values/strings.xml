@@ -1,0 +1,197 @@
+<resources>
+    <string name="app_name">MirrorMood</string>
+    <string name="monitoring_started">Mood monitoring started.</string>
+    <string name="monitoring_stopped">Mood monitoring stopped.</string>
+    <string name="camera_permission_required">Camera permission is required to monitor your mood.</string>
+
+    <string name="settings_title">Settings</string>
+    <string name="settings_appearance">Appearance</string>
+    <string name="settings_quiet_hours">Quiet Hours</string>
+    <string name="settings_security">Security</string>
+    <string name="settings_version">MirrorMood version 2.4.0</string>
+    <string name="settings_mode_light">Light</string>
+    <string name="settings_mode_dark">Dark</string>
+    <string name="settings_mode_system">System</string>
+    <string name="settings_monitoring">Monitoring</string>
+    <string name="settings_data">Data</string>
+    <string name="settings_daily_check_in_goal">Daily Check-In Goal</string>
+    <string name="settings_goal_per_day">%1$d check-ins per day</string>
+    <string name="settings_quiet_from">From</string>
+    <string name="settings_quiet_to">To</string>
+    <string name="settings_biometric_lock">Biometric Lock</string>
+    <string name="settings_biometric_summary">Require biometrics to open the app</string>
+    <string name="settings_notifications_title">Notifications</string>
+    <string name="settings_notifications_summary">Receive mood check-in reminders</string>
+    <string name="settings_take_break">Take a Break</string>
+    <string name="settings_take_break_summary">Pause all monitoring and notifications for the day.</string>
+    <string name="settings_pause_today">Pause for Today</string>
+    <string name="settings_resume_monitoring">Resume Monitoring</string>
+    <string name="settings_monitoring_resumed">Monitoring resumed</string>
+    <string name="settings_monitoring_paused_for_day">Monitoring paused for 24 hours</string>
+    <string name="settings_export_csv">Export CSV</string>
+    <string name="settings_delete_all_data">Delete All Data</string>
+    <string name="settings_no_mood_data_export">No mood data to export</string>
+    <string name="settings_share_mood_data">Share mood data</string>
+    <string name="settings_exported_to">Exported to: %1$s</string>
+    <string name="settings_delete_all_title">Delete All Data</string>
+    <string name="settings_delete_all_message">This will permanently erase all your mood entries. This action cannot be undone.</string>
+    <string name="settings_delete_all_confirm">Delete Everything</string>
+    <string name="settings_all_mood_data_deleted">All mood data deleted</string>
+
+    <string name="app_lock_enabled">App lock enabled</string>
+    <string name="app_lock_disabled">App lock disabled</string>
+
+    <string name="insights_no_data">No data yet. Start monitoring to see your patterns.</string>
+    <string name="insights_total_entries">%d mood snapshots recorded today</string>
+    <string name="insights_no_chart_data">Start tracking to see trends</string>
+    <string name="insights_back">Back</string>
+
+    <string name="nav_home">Home</string>
+    <string name="nav_insights">Insights</string>
+    <string name="nav_timeline">Timeline</string>
+    <string name="nav_journal">Advice</string>
+
+    <string name="journal_title">Journal</string>
+    <string name="journal_prompt">How has your heart been today?</string>
+    <string name="journal_choose_mood">Choose your mood</string>
+    <string name="journal_mood_happy">😊 Happy</string>
+    <string name="journal_mood_focused">🧠 Focused</string>
+    <string name="journal_mood_neutral">😐 Neutral</string>
+    <string name="journal_mood_stressed">😰 Stressed</string>
+    <string name="journal_mood_tired">😴 Tired</string>
+    <string name="journal_mood_bored">😒 Bored</string>
+    <string name="journal_hint_waiting">The words are waiting for you...</string>
+    <string name="journal_empty">No reflections yet today. Your next entry can start here.</string>
+    <string name="journal_save_prompt">Write a few words before saving this reflection.</string>
+    <string name="journal_saved">Reflection saved</string>
+    <string name="journal_word_count">%1$d words</string>
+    <string name="journal_save_entry">Save Entry</string>
+    <string name="journal_gentle_guidance">Gentle Guidance</string>
+    <string name="journal_morning_reflection">Morning Reflection</string>
+    <string name="journal_morning_reflection_prompt">What is one thing you are letting go of today to make room for peace?</string>
+    <string name="journal_gratitude_scan">Gratitude Scan</string>
+    <string name="journal_gratitude_scan_prompt">Notice three small sensations that made you feel grounded recently.</string>
+    <string name="journal_today_archive">Today\'s Archive</string>
+    <string name="journal_delete_entry_title">Delete Entry</string>
+    <string name="journal_delete_entry_message">Delete this %1$s entry? This cannot be undone.</string>
+    <string name="journal_delete_confirm">Delete</string>
+    <string name="journal_entry_deleted">Entry deleted</string>
+
+    <string name="timeline_title">Timeline</string>
+    <string name="timeline_calendar_view">Calendar View</string>
+    <string name="timeline_subtitle">Your emotional archive.</string>
+    <string name="timeline_private_archive">Private Archive</string>
+    <string name="timeline_archive_title">Your Archive</string>
+    <string name="timeline_archive_count_total">%1$d entries total</string>
+    <string name="timeline_archive_empty">Your timeline will begin after the first reflection.</string>
+    <string name="timeline_distribution_title">Distribution</string>
+    <string name="timeline_snapshot_title">Today\'s Snapshot</string>
+    <string name="timeline_snapshot_empty">No data yet</string>
+    <string name="timeline_snapshot_empty_detail">Start journaling to build your sanctuary</string>
+    <string name="timeline_add_journal_entry">Add Journal Entry</string>
+    <string name="timeline_all_entries_title">All Entries</string>
+    <string name="timeline_empty">Your timeline will bloom as you log reflections.</string>
+    <string name="timeline_today">Today</string>
+    <string name="timeline_yesterday">Yesterday</string>
+    <string name="timeline_date_time_with_prefix">%1$s - %2$s</string>
+    <string name="timeline_snapshot_date_time">%1$s - %2$s</string>
+    <string name="timeline_distribution_percent">%1$d%%</string>
+    <string name="timeline_distribution_label">%1$s %2$s</string>
+
+    <string name="privacy_title">Privacy</string>
+    <string name="privacy_headline">Your privacy, our absolute priority.</string>
+    <string name="privacy_summary">At MirrorMood, your emotional archive stays personal. Reflection data never leaves your device unless you explicitly choose to share it.</string>
+    <string name="privacy_current_status_title">Current Device Status</string>
+    <string name="privacy_current_status_summary">Live indicators update whenever you return from Android permission settings.</string>
+    <string name="privacy_on_device_title">100% on-device processing</string>
+    <string name="privacy_on_device_summary">Every expression is analyzed directly on your hardware. No facial data is uploaded to external servers.</string>
+    <string name="privacy_camera_title">Camera privacy</string>
+    <string name="privacy_camera_summary">Real-time analysis only. MirrorMood never saves raw video or still images.</string>
+    <string name="privacy_storage_title">Local storage</string>
+    <string name="privacy_storage_summary">Your journal and mood history stay in your phone\'s secure local database.</string>
+    <string name="privacy_cloud_sync_title">No cloud sync</string>
+    <string name="privacy_cloud_sync_summary">We intentionally keep the archive offline-first. If your data is gone with the device, it was never exposed to someone else\'s server.</string>
+    <string name="privacy_mirror_promise_title">The Mirror Promise</string>
+    <string name="privacy_mirror_promise_summary">You own your data. You own your feelings. Mood vectors exist only long enough to support the current reflection, then they are discarded.</string>
+    <string name="privacy_manage_permissions">Manage Permissions</string>
+    <string name="privacy_transparency_report">Full Transparency Report</string>
+    <string name="privacy_report_screen_title">Transparency Report</string>
+    <string name="privacy_report_screen_headline">A readable snapshot of the privacy controls on this device.</string>
+    <string name="privacy_report_screen_summary">This report reflects your current app permissions and local privacy settings right now.</string>
+    <string name="privacy_report_overview_title">Report Overview</string>
+    <string name="privacy_share_report">Share Report</string>
+    <string name="privacy_share_report_chooser">Share transparency report</string>
+    <string name="privacy_open_settings_error">Couldn\'t open app permission settings.</string>
+    <string name="privacy_report_generated_at">Generated</string>
+    <string name="privacy_report_version">App version</string>
+    <string name="privacy_report_permissions">Permissions</string>
+    <string name="privacy_report_data_handling">Data handling</string>
+    <string name="privacy_report_camera">Camera</string>
+    <string name="privacy_report_notifications">Notifications</string>
+    <string name="privacy_report_app_lock">App lock</string>
+    <string name="privacy_report_monitoring_pause">Monitoring pause</string>
+    <string name="privacy_report_processing">Processing</string>
+    <string name="privacy_report_storage">Storage</string>
+    <string name="privacy_report_exports">Exports</string>
+    <string name="privacy_status_granted">Granted</string>
+    <string name="privacy_status_not_granted">Not granted</string>
+    <string name="privacy_status_not_required">Not required on this Android version</string>
+    <string name="privacy_status_enabled">Enabled</string>
+    <string name="privacy_status_disabled">Disabled</string>
+    <string name="privacy_status_unknown">Unknown</string>
+    <string name="privacy_report_processing_value">All face analysis runs on-device.</string>
+    <string name="privacy_report_storage_value">Mood history and reflections stay in the local app database.</string>
+    <string name="privacy_report_exports_value">Data is only shared when you explicitly trigger export.</string>
+    <string name="settings_privacy_policy_title">Privacy Policy</string>
+    <string name="settings_privacy_policy_summary">See how MirrorMood keeps your reflections on-device and under your control.</string>
+
+    <!-- Onboarding -->
+    <string name="onboarding_sanctuary">Sanctuary</string>
+    <string name="onboarding_eyebrow">INTRODUCING MIRRORMOOD</string>
+    <string name="onboarding_headline">Your Private Archive</string>
+    <string name="onboarding_body">A sanctuary for your inner world. Track moods, store reflections, and discover patterns in an encrypted environment built for editorial clarity.</string>
+    <string name="onboarding_hero_badge">ENCRYPTED REFLECTION</string>
+    <string name="onboarding_sparkles">✦  ✦  ✦</string>
+    <string name="onboarding_feature_zero_title">Zero-Knowledge</string>
+    <string name="onboarding_feature_zero_body">Only you hold the keys to your emotional history.</string>
+    <string name="onboarding_feature_curation_title">Curation Logic</string>
+    <string name="onboarding_feature_curation_body">Data visualized as art, not just boring statistics.</string>
+    <string name="onboarding_cta_primary">Get Started</string>
+    <string name="onboarding_cta_secondary">Learn Privacy</string>
+    <string name="onboarding_social_proof">JOINED BY 12K+ CURATORS</string>
+
+    <!-- Calibration -->
+    <string name="calibration_title">Camera calibration</string>
+    <string name="calibration_subtitle">Position your face in the frame so MirrorMood can learn your baseline. Everything stays on-device.</string>
+    <string name="calibration_seek_face">Looking for your face...</string>
+    <string name="calibration_face_detected">Face detected - hold steady</string>
+    <string name="calibration_face_locked">Face locked in</string>
+    <string name="calibration_hint_center">Center your face in the rounded frame.</string>
+    <string name="calibration_hint_hold">Keep a natural expression for a moment.</string>
+    <string name="calibration_hint_ready">You can finish calibration whenever you\'re ready.</string>
+    <string name="calibration_complete">Complete calibration</string>
+    <string name="calibration_skip">Skip for now</string>
+    <string name="calibration_camera_error">Could not start the camera preview.</string>
+
+    <!-- Lock & PIN -->
+    <string name="lock_biometric_title">Unlock MirrorMood</string>
+    <string name="lock_biometric_subtitle">Confirm your identity to open your journal and mood history.</string>
+    <string name="lock_use_pin_instead">Use PIN instead</string>
+    <string name="lock_pin_not_set">No backup PIN on file. Enable App Lock in Settings and create a PIN.</string>
+    <string name="lock_pin_too_short">Enter at least 4 digits.</string>
+    <string name="lock_pin_incorrect">Incorrect PIN.</string>
+    <string name="lock_biometric_failed">Biometric not recognized. Try again or use your PIN.</string>
+    <string name="lock_emergency_title">Turn off app lock?</string>
+    <string name="lock_emergency_message">You can re-enable lock and set a new PIN from Settings. Your mood data stays on this device.</string>
+    <string name="lock_emergency_confirm">Turn off lock</string>
+    <string name="lock_emergency_cancel">Cancel</string>
+    <string name="lock_setup_pin_title">Create a backup PIN</string>
+    <string name="lock_setup_pin_message">If biometrics fail, you can unlock with this PIN. It is stored only on this device as a secure hash.</string>
+    <string name="lock_setup_pin_hint">PIN (4-6 digits)</string>
+    <string name="lock_setup_pin_confirm_hint">Confirm PIN</string>
+    <string name="lock_setup_pin_save">Save</string>
+    <string name="lock_setup_pin_mismatch">PINs must match and be 4-6 digits.</string>
+
+    <!-- Dashboard -->
+</resources>
+

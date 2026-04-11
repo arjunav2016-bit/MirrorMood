@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Scroll content clears the nav bar -->
+    <dimen name="bottom_nav_content_padding">76dp</dimen>
+    <dimen name="home_content_bottom_padding">76dp</dimen>
+    <!-- FAB sits just above the nav bar -->
+    <dimen name="bottom_nav_fab_margin_bottom">68dp</dimen>
+
+    <!-- Timeline entry dimensions -->
+    <dimen name="timeline_entry_spacing_top">6dp</dimen>
+    <dimen name="timeline_entry_spacing_bottom">14dp</dimen>
+    <dimen name="timeline_entry_rail_width">34dp</dimen>
+    <dimen name="timeline_entry_dot_size">14dp</dimen>
+    <dimen name="timeline_entry_dot_offset_top">32dp</dimen>
+    <dimen name="timeline_entry_card_margin_start">12dp</dimen>
+    <dimen name="timeline_entry_content_padding">20dp</dimen>
+    <dimen name="timeline_entry_mood_margin_top">8dp</dimen>
+    <dimen name="timeline_entry_note_margin_top">6dp</dimen>
+    <dimen name="timeline_entry_tags_margin_top">12dp</dimen>
+    <dimen name="timeline_entry_chip_spacing">8dp</dimen>
+</resources>
+

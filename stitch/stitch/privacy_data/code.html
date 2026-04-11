@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>MirrorMood | Privacy &amp; Data</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "on-primary": "#f6f9ff",
+              "inverse-on-surface": "#9b9d9e",
+              "surface-container-low": "#f0f4f4",
+              "on-secondary-container": "#32594b",
+              "surface-bright": "#f8fafa",
+              "on-tertiary-fixed-variant": "#6c5c30",
+              "error-container": "#fa746f",
+              "primary": "#3f627f",
+              "inverse-surface": "#0b0f0f",
+              "on-secondary-fixed": "#1e4639",
+              "secondary": "#3f6758",
+              "surface-dim": "#d4dbdc",
+              "surface-container-high": "#e3e9ea",
+              "secondary-dim": "#335b4d",
+              "on-tertiary-container": "#625227",
+              "secondary-container": "#c0ecda",
+              "surface-tint": "#3f627f",
+              "primary-fixed-dim": "#a9cdef",
+              "tertiary": "#6e5d32",
+              "tertiary-container": "#fbe3ac",
+              "tertiary-fixed-dim": "#ecd59f",
+              "on-error": "#fff7f6",
+              "on-error-container": "#6e0a12",
+              "primary-dim": "#335673",
+              "surface": "#f8fafa",
+              "on-surface": "#2c3435",
+              "tertiary-dim": "#615127",
+              "on-primary-fixed": "#143b56",
+              "on-tertiary-fixed": "#4e3f17",
+              "error": "#a83836",
+              "on-surface-variant": "#596061",
+              "on-secondary-fixed-variant": "#3c6355",
+              "surface-variant": "#dde4e4",
+              "on-tertiary": "#fff8ef",
+              "error-dim": "#67040d",
+              "on-background": "#2c3435",
+              "on-secondary": "#e5fff2",
+              "outline-variant": "#acb3b4",
+              "on-primary-container": "#2a4e6a",
+              "surface-container-highest": "#dde4e4",
+              "secondary-fixed-dim": "#b3decc",
+              "outline": "#757c7d",
+              "surface-container-lowest": "#ffffff",
+              "surface-container": "#eaefef",
+              "primary-container": "#b7dbfd",
+              "primary-fixed": "#b7dbfd",
+              "inverse-primary": "#b7dbfd",
+              "tertiary-fixed": "#fbe3ac",
+              "background": "#f8fafa",
+              "secondary-fixed": "#c0ecda",
+              "on-primary-fixed-variant": "#345874"
+            },
+            fontFamily: {
+              "headline": ["Manrope"],
+              "body": ["Inter"],
+              "label": ["Inter"]
+            },
+            borderRadius: {"DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+      .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      }
+      .glass-effect {
+        backdrop-filter: blur(24px);
+        -webkit-backdrop-filter: blur(24px);
+      }
+      .mood-mirror-bg {
+        filter: blur(60px);
+        background: radial-gradient(circle, rgba(183, 219, 253, 0.4) 0%, rgba(183, 219, 253, 0) 70%);
+      }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface text-on-surface font-body selection:bg-primary-container selection:text-on-primary-container overflow-x-hidden">
+<!-- TopAppBar -->
+<nav class="flex justify-between items-center px-6 h-16 w-full fixed top-0 z-50 bg-slate-50/70 dark:bg-slate-900/70 backdrop-blur-3xl">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-blue-800 dark:text-blue-300 cursor-pointer hover:opacity-80 transition-opacity">menu</span>
+<h1 class="font-manrope font-extrabold text-2xl text-blue-900 dark:text-blue-100">MirrorMood</h1>
+</div>
+<div class="w-10 h-10 rounded-full overflow-hidden border-2 border-primary-container">
+<img alt="User profile" class="w-full h-full object-cover" data-alt="Close-up portrait of a serene woman with natural lighting and a soft teal background representing mindfulness" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDwjLrXIW9v-DN7Mypcf2j685RHBNcTucu6Hf6d_JCrrNfKL12oarnRHOmt3LfCHyo4GDVGivoqcHX96hf2tLGQzO-VnkV0hBB8UTj5aaYNbFK9l2rqeqOya5zHICY-9GNxSStOwlZZxeLlvZqfgpyKYyJ4fkoeNVDs5Zu0qLKH9_JksPOBxl3fmhFatgqaiRcuiUmtGE5opvkbYN_JR3NzGf3LeaQzT010OHkdFufcpYiickGQECOqTwKb8Zz5DVnHQcxvfnJ_Ik5v"/>
+</div>
+</nav>
+<main class="pt-24 pb-32 px-6 max-w-4xl mx-auto relative">
+<!-- Background Mood Mirror Effect -->
+<div class="fixed top-1/4 -right-20 w-96 h-96 mood-mirror-bg -z-10 rounded-full"></div>
+<div class="fixed bottom-1/4 -left-20 w-80 h-80 mood-mirror-bg -z-10 rounded-full opacity-60"></div>
+<!-- Header Section -->
+<header class="mb-12 text-center md:text-left">
+<h2 class="font-headline text-5xl font-extrabold tracking-tight text-on-surface mb-6 leading-tight">
+                Your Privacy, <br/><span class="text-primary">Our Absolute Priority.</span>
+</h2>
+<div class="bg-surface-container-low p-8 rounded-lg max-w-2xl">
+<p class="text-lg leading-relaxed text-on-surface-variant font-medium">
+                    At MirrorMood, we believe your emotional data is the most personal information you possess. Our architecture is built on a foundation of absolute privacy, ensuring your reflections stay exclusively yours.
+                </p>
+</div>
+</header>
+<!-- Bento Grid for Privacy Pillars -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-6 mb-12">
+<!-- Main Hero Card: 100% On-Device -->
+<div class="md:col-span-8 bg-surface-container-lowest p-10 rounded-xl shadow-[0_4px_40px_rgba(0,0,0,0.02)] flex flex-col justify-center relative overflow-hidden group">
+<div class="absolute top-0 right-0 p-8 opacity-10 group-hover:scale-110 transition-transform duration-700">
+<span class="material-symbols-outlined text-[160px] text-primary" style="font-variation-settings: 'FILL' 1;">security</span>
+</div>
+<span class="material-symbols-outlined text-primary text-5xl mb-6" style="font-variation-settings: 'FILL' 1;">precision_manufacturing</span>
+<h3 class="font-headline text-3xl font-bold mb-4">100% On-Device Processing</h3>
+<p class="text-on-surface-variant text-lg leading-relaxed relative z-10 max-w-md">
+                    Every smile, every sigh, and every subtle expression is analyzed directly on your smartphone's neural engine. No facial data ever leaves your hardware.
+                </p>
+</div>
+<!-- Small Card: Camera Privacy -->
+<div class="md:col-span-4 bg-surface-container-high p-8 rounded-xl flex flex-col items-center text-center justify-center border-b-4 border-primary">
+<div class="w-16 h-16 bg-surface-container-lowest rounded-full flex items-center justify-center mb-4">
+<span class="material-symbols-outlined text-primary text-3xl">no_photography</span>
+</div>
+<h4 class="font-headline text-xl font-bold mb-2">Camera Privacy</h4>
+<p class="text-sm text-on-surface-variant">Real-time analysis only. We never save raw video or photos to your gallery.</p>
+</div>
+<!-- Small Card: Local Storage -->
+<div class="md:col-span-4 bg-secondary-container p-8 rounded-xl flex flex-col items-start justify-between">
+<span class="material-symbols-outlined text-on-secondary-container text-4xl" style="font-variation-settings: 'FILL' 1;">database</span>
+<div>
+<h4 class="font-headline text-xl font-bold text-on-secondary-container mb-2">Local Storage</h4>
+<p class="text-sm text-on-secondary-container/80">Your encrypted journal lives in your phone's secure enclave.</p>
+</div>
+</div>
+<!-- Large Info Card: No Cloud Sync -->
+<div class="md:col-span-8 bg-surface-container-low p-10 rounded-xl flex flex-col md:flex-row items-center gap-8">
+<div class="flex-1">
+<h4 class="font-headline text-2xl font-bold mb-4 flex items-center gap-3">
+<span class="material-symbols-outlined text-error">cloud_off</span>
+                        No Cloud Sync
+                    </h4>
+<p class="text-on-surface-variant leading-relaxed">
+                        We purposefully disconnected the cloud. Unlike other mood trackers, MirrorMood has no external servers for your data. If you lose your phone, your data is gone—and that's a security feature we stand by.
+                    </p>
+</div>
+<div class="w-32 h-32 rounded-lg rotate-3 overflow-hidden shadow-lg hidden md:block">
+<img alt="Security concept" class="w-full h-full object-cover" data-alt="Abstract visualization of digital security with soft blue glowing lines and a clean minimalist aesthetic" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCgbCQiBtR9gnk1AeJHIINo6tUMCK23vIJpEF7V45wOaoOc-AnqCoMid74SJYSxdNrIgKhEdEBRaRMhFkNcIWwd6cVRePTLvOsLAs0EMuafOt2tzrnpiaPC4ube-DQn3PhAUmFsMhIV9ngicKc433HqFMKQDmo5081Vn9daXP2PnHzHw_RGDt72z3gj0D_bThPXU5FRvungIsIvK22penB7phYu0xxPtTR4PECkqobHa_igkuW-72HBD3KLuSyojrFdsYjY_gIwQgSq"/>
+</div>
+</div>
+</div>
+<!-- Reassuring Paragraph Section -->
+<section class="mb-16">
+<div class="max-w-3xl mx-auto border-t-2 border-surface-variant pt-12">
+<h3 class="font-headline text-2xl font-bold mb-6 text-center">The Mirror Promise</h3>
+<p class="text-center text-on-surface-variant leading-extra-relaxed italic font-body">
+                    "When you look into MirrorMood, you are looking into a private mirror, not a public window. Our proprietary facial analysis algorithms break down visual cues into mathematical vectors that exist only for the duration of the scan. These temporary markers are instantly discarded after the mood result is calculated, ensuring that your biometric identity remains entirely anonymous and localized. You own your data. You own your feelings."
+                </p>
+</div>
+</section>
+<!-- CTA / Detailed Settings -->
+<div class="flex flex-col md:flex-row gap-4 justify-center items-center">
+<button class="bg-gradient-to-br from-primary to-primary-dim text-on-primary px-10 py-4 rounded-xl font-bold shadow-xl hover:opacity-90 transition-all flex items-center gap-2">
+<span class="material-symbols-outlined">policy</span>
+                Full Transparency Report
+            </button>
+<button class="bg-surface-container-high text-primary px-10 py-4 rounded-xl font-bold hover:bg-surface-container-highest transition-all">
+                Manage Permissions
+            </button>
+</div>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 pb-6 pt-3 bg-white/70 dark:bg-slate-900/70 backdrop-blur-3xl rounded-t-[3rem] shadow-[0_-4px_40px_rgba(0,0,0,0.04)]">
+<a class="flex flex-col items-center justify-center text-slate-400 dark:text-slate-500 px-5 py-2 hover:bg-slate-100/50 dark:hover:bg-slate-800/50 transition-all" href="#">
+<span class="material-symbols-outlined mb-1">edit_note</span>
+<span class="font-inter text-[10px] font-medium tracking-wide uppercase">Journal</span>
+</a>
+<a class="flex flex-col items-center justify-center text-slate-400 dark:text-slate-500 px-5 py-2 hover:bg-slate-100/50 dark:hover:bg-slate-800/50 transition-all" href="#">
+<span class="material-symbols-outlined mb-1">insert_chart</span>
+<span class="font-inter text-[10px] font-medium tracking-wide uppercase">Analytics</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-blue-100/50 dark:bg-blue-900/30 text-blue-900 dark:text-blue-200 rounded-full px-5 py-2" href="#">
+<span class="material-symbols-outlined mb-1">shield_person</span>
+<span class="font-inter text-[10px] font-medium tracking-wide uppercase">Privacy</span>
+</a>
+<a class="flex flex-col items-center justify-center text-slate-400 dark:text-slate-500 px-5 py-2 hover:bg-slate-100/50 dark:hover:bg-slate-800/50 transition-all" href="#">
+<span class="material-symbols-outlined mb-1">settings</span>
+<span class="font-inter text-[10px] font-medium tracking-wide uppercase">Settings</span>
+</a>
+</nav>
+</body></html>

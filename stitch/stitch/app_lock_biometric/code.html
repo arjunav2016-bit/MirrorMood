@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>MirrorMood | Secure Access</title>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Manrope:wght@600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "on-primary": "#f6f9ff",
+              "inverse-on-surface": "#9b9d9e",
+              "surface-container-low": "#f0f4f4",
+              "on-secondary-container": "#32594b",
+              "surface-bright": "#f8fafa",
+              "on-tertiary-fixed-variant": "#6c5c30",
+              "error-container": "#fa746f",
+              "primary": "#3f627f",
+              "inverse-surface": "#0b0f0f",
+              "on-secondary-fixed": "#1e4639",
+              "secondary": "#3f6758",
+              "surface-dim": "#d4dbdc",
+              "surface-container-high": "#e3e9ea",
+              "secondary-dim": "#335b4d",
+              "on-tertiary-container": "#625227",
+              "secondary-container": "#c0ecda",
+              "surface-tint": "#3f627f",
+              "primary-fixed-dim": "#a9cdef",
+              "tertiary": "#6e5d32",
+              "tertiary-container": "#fbe3ac",
+              "tertiary-fixed-dim": "#ecd59f",
+              "on-error": "#fff7f6",
+              "on-error-container": "#6e0a12",
+              "primary-dim": "#335673",
+              "surface": "#f8fafa",
+              "on-surface": "#2c3435",
+              "tertiary-dim": "#615127",
+              "on-primary-fixed": "#143b56",
+              "on-tertiary-fixed": "#4e3f17",
+              "error": "#a83836",
+              "on-surface-variant": "#596061",
+              "on-secondary-fixed-variant": "#3c6355",
+              "surface-variant": "#dde4e4",
+              "on-tertiary": "#fff8ef",
+              "error-dim": "#67040d",
+              "on-background": "#2c3435",
+              "on-secondary": "#e5fff2",
+              "outline-variant": "#acb3b4",
+              "on-primary-container": "#2a4e6a",
+              "surface-container-highest": "#dde4e4",
+              "secondary-fixed-dim": "#b3decc",
+              "outline": "#757c7d",
+              "surface-container-lowest": "#ffffff",
+              "surface-container": "#eaefef",
+              "primary-container": "#b7dbfd",
+              "primary-fixed": "#b7dbfd",
+              "inverse-primary": "#b7dbfd",
+              "tertiary-fixed": "#fbe3ac",
+              "background": "#f8fafa",
+              "secondary-fixed": "#c0ecda",
+              "on-primary-fixed-variant": "#345874"
+            },
+            fontFamily: {
+              "headline": ["Manrope"],
+              "body": ["Inter"],
+              "label": ["Inter"]
+            },
+            borderRadius: {"DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .mood-mirror-blur {
+            filter: blur(80px);
+            opacity: 0.15;
+            z-index: -1;
+        }
+        .glass-effect {
+            backdrop-filter: blur(24px);
+            background-color: rgba(248, 250, 250, 0.7);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface font-body text-on-surface overflow-hidden h-screen w-screen flex flex-col">
+<!-- Atmospheric Backdrop (Mood Mirror) -->
+<div class="fixed top-[-10%] right-[-10%] w-[60%] h-[60%] rounded-full bg-primary-container mood-mirror-blur"></div>
+<div class="fixed bottom-[-10%] left-[-10%] w-[50%] h-[50%] rounded-full bg-secondary-container mood-mirror-blur"></div>
+<!-- Main Content Canvas (Focused Journey) -->
+<main class="flex-1 flex flex-col items-center justify-between px-8 py-16 relative z-10">
+<!-- Branding Header -->
+<header class="flex flex-col items-center gap-4 text-center mt-8">
+<div class="w-16 h-16 bg-primary-container flex items-center justify-center rounded-xl shadow-sm mb-4">
+<span class="material-symbols-outlined text-primary text-4xl" data-icon="lock" style="font-variation-settings: 'FILL' 1;">lock</span>
+</div>
+<h1 class="font-headline font-extrabold text-3xl text-on-primary-fixed tracking-tight">MirrorMood</h1>
+<p class="font-body text-on-surface-variant max-w-[280px] leading-relaxed">
+                Unlock MirrorMood to continue your journey
+            </p>
+</header>
+<!-- Biometric Interaction Hub -->
+<section class="flex flex-col items-center gap-12 w-full max-w-sm">
+<!-- Biometric Visualizer -->
+<div class="relative flex items-center justify-center">
+<!-- Decorative concentric circles -->
+<div class="absolute w-48 h-48 border-2 border-primary/5 rounded-full"></div>
+<div class="absolute w-64 h-64 border border-primary/5 rounded-full"></div>
+<!-- Main Biometric Icon -->
+<div class="group cursor-pointer relative z-20 transition-transform active:scale-90 duration-300">
+<div class="w-32 h-32 bg-surface-container-lowest flex items-center justify-center rounded-full shadow-[0_20px_50px_rgba(0,0,0,0.08)] ring-4 ring-white">
+<span class="material-symbols-outlined text-primary text-6xl" data-icon="fingerprint" data-weight="fill">fingerprint</span>
+</div>
+<!-- Interaction Hint -->
+<div class="absolute -bottom-4 left-1/2 -translate-x-1/2 px-4 py-1.5 bg-primary text-on-primary text-[10px] font-label font-bold uppercase tracking-widest rounded-full opacity-80">
+                        Scan Now
+                    </div>
+</div>
+</div>
+<div class="text-center">
+<p class="font-label text-sm font-medium text-primary">Biometric Identity Required</p>
+<div class="mt-2 flex justify-center gap-1">
+<div class="w-1.5 h-1.5 rounded-full bg-primary/20"></div>
+<div class="w-1.5 h-1.5 rounded-full bg-primary/20"></div>
+<div class="w-1.5 h-1.5 rounded-full bg-primary/20"></div>
+</div>
+</div>
+</section>
+<!-- Fallback Actions -->
+<footer class="w-full max-w-sm flex flex-col gap-4">
+<button class="w-full h-14 bg-gradient-to-br from-primary to-primary-dim text-on-primary font-headline font-bold rounded-xl shadow-lg shadow-primary/20 active:scale-95 transition-transform flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-xl" data-icon="face_retouching_natural">face_retouching_natural</span>
+                Retry Biometrics
+            </button>
+<button class="w-full h-14 bg-surface-container-high text-primary font-headline font-semibold rounded-xl active:scale-95 transition-transform flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-xl" data-icon="password">password</span>
+                Enter Passcode
+            </button>
+<div class="flex justify-between items-center mt-4 px-2">
+<button class="text-on-surface-variant font-label text-xs font-semibold hover:text-primary transition-colors">
+                    Emergency Call
+                </button>
+<button class="text-on-surface-variant font-label text-xs font-semibold hover:text-primary transition-colors">
+                    Reset Access
+                </button>
+</div>
+</footer>
+</main>
+<!-- Content Decorative Card (Editorial Touch) -->
+<div class="absolute bottom-[-5%] left-1/2 -translate-x-1/2 w-[120%] h-[15%] bg-surface-container-low rounded-t-[100%] opacity-40 z-0"></div>
+<!-- Floating Navigation Suppression Check: 
+         This is a task-focused "Locked" state, therefore navigation shells are suppressed. 
+    -->
+</body></html>

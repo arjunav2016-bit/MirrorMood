@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>MirrorMood Wellness Recommendations</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "tertiary-dim": "#615127",
+              "background": "#f8fafa",
+              "tertiary-fixed-dim": "#ecd59f",
+              "on-surface-variant": "#596061",
+              "inverse-on-surface": "#9b9d9e",
+              "surface-variant": "#dde4e4",
+              "primary": "#3f627f",
+              "on-tertiary-fixed-variant": "#6c5c30",
+              "tertiary": "#6e5d32",
+              "error": "#a83836",
+              "secondary-dim": "#335b4d",
+              "primary-dim": "#335673",
+              "primary-fixed": "#b7dbfd",
+              "on-error": "#fff7f6",
+              "on-surface": "#2c3435",
+              "on-secondary-fixed": "#1e4639",
+              "on-secondary-container": "#32594b",
+              "error-container": "#fa746f",
+              "surface": "#f8fafa",
+              "on-primary-container": "#2a4e6a",
+              "on-secondary": "#e5fff2",
+              "primary-fixed-dim": "#a9cdef",
+              "surface-dim": "#d4dbdc",
+              "secondary": "#3f6758",
+              "secondary-fixed": "#c0ecda",
+              "secondary-fixed-dim": "#b3decc",
+              "inverse-primary": "#b7dbfd",
+              "tertiary-fixed": "#fbe3ac",
+              "error-dim": "#67040d",
+              "outline-variant": "#acb3b4",
+              "secondary-container": "#c0ecda",
+              "on-tertiary-container": "#625227",
+              "on-primary": "#f6f9ff",
+              "outline": "#757c7d",
+              "on-tertiary": "#fff8ef",
+              "on-error-container": "#6e0a12",
+              "on-tertiary-fixed": "#4e3f17",
+              "inverse-surface": "#0b0f0f",
+              "surface-tint": "#3f627f",
+              "on-primary-fixed-variant": "#345874",
+              "surface-container": "#eaefef",
+              "surface-container-high": "#e3e9ea",
+              "on-primary-fixed": "#143b56",
+              "tertiary-container": "#fbe3ac",
+              "on-background": "#2c3435",
+              "on-secondary-fixed-variant": "#3c6355",
+              "surface-container-highest": "#dde4e4",
+              "primary-container": "#b7dbfd",
+              "surface-container-low": "#f0f4f4",
+              "surface-bright": "#f8fafa",
+              "surface-container-lowest": "#ffffff"
+            },
+            fontFamily: {
+              "headline": ["Manrope"],
+              "body": ["Inter"],
+              "label": ["Inter"]
+            },
+            borderRadius: {"DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .mood-mirror-bg {
+            position: fixed;
+            top: -10%;
+            right: -10%;
+            width: 600px;
+            height: 600px;
+            background: #b7dbfd;
+            filter: blur(80px);
+            opacity: 0.15;
+            z-index: -1;
+            border-radius: 9999px;
+        }
+        body {
+            background-color: #f8fafa;
+            color: #2c3435;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="font-body selection:bg-primary-container selection:text-on-primary-container">
+<div class="mood-mirror-bg"></div>
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 flex justify-between items-center px-6 h-16 bg-surface/70 backdrop-blur-3xl">
+<div class="flex items-center gap-4">
+<button class="p-2 hover:bg-white/20 transition-colors rounded-full active:scale-95 transition-transform duration-200">
+<span class="material-symbols-outlined text-[#3f627f]">menu</span>
+</button>
+<h1 class="font-['Manrope'] font-bold text-xl tracking-tight text-[#3f627f] text-2xl font-extrabold tracking-tighter">MirrorMood</h1>
+</div>
+<div class="flex items-center gap-2">
+<button class="px-4 py-2 text-[#3f627f] font-headline font-bold flex items-center gap-2 hover:bg-white/20 rounded-full transition-colors active:scale-95 duration-200">
+<span class="material-symbols-outlined">shuffle</span>
+<span class="hidden md:inline">Shuffle Tips</span>
+</button>
+<div class="w-10 h-10 rounded-full bg-surface-container-high overflow-hidden border-2 border-primary-container">
+<img alt="User profile avatar" class="w-full h-full object-cover" data-alt="close-up portrait of a woman with a serene expression against a soft-focus garden background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBHGo0tvjTmgX73OMj4iJgB1AdR18OWzAL6yl70E5Qruusc0OE1X-yUKKnqLGAavoQ3b4xLNygfbfrd7_fYZZUu0asKTUucUavlQP6gwSvS5GlWXZ5CgWSpBXKmFJOKV2IbsIbggGtOG6PMPDRGoxZi9zmKmMfEt5s40SYZRL_P1E90SMglxC2lUQyGu9SVpOlbGnXrzpPTZDJrtbDk9NfFy-yzKmDO6mKWWa1ArkD2yansrPEQ4spgByG8wsjHG9bL1vnB8_d5TFfZ"/>
+</div>
+</div>
+</header>
+<main class="pt-24 pb-32 px-6 max-w-7xl mx-auto">
+<!-- Hero Section -->
+<section class="mb-12">
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-end">
+<div class="lg:col-span-7">
+<span class="font-label text-sm uppercase tracking-widest text-primary mb-4 block">Personalized Sanctuary</span>
+<h2 class="font-headline text-5xl md:text-6xl font-extrabold text-on-surface leading-tight mb-6">Nurture your <br/><span class="text-transparent bg-clip-text bg-gradient-to-r from-primary to-primary-container">inner landscape.</span></h2>
+<p class="text-on-surface-variant text-lg max-w-xl leading-relaxed">Explore a curated library of mindfulness practices designed to restore balance and provide clarity based on your current emotional state.</p>
+</div>
+<div class="lg:col-span-5 flex flex-col gap-4">
+<!-- Current Mood Highlight Card -->
+<div class="bg-gradient-to-br from-primary to-primary-dim p-8 rounded-xl shadow-xl text-on-primary relative overflow-hidden group">
+<div class="absolute -right-8 -top-8 w-32 h-32 bg-white/10 rounded-full blur-2xl group-hover:scale-150 transition-transform duration-700"></div>
+<div class="relative z-10">
+<div class="flex items-center gap-3 mb-4">
+<span class="material-symbols-outlined text-primary-fixed text-3xl" style="font-variation-settings: 'FILL' 1;">colors_spark</span>
+<h3 class="font-headline font-bold text-xl uppercase tracking-wide">For Your Calm State</h3>
+</div>
+<p class="font-body text-primary-fixed/90 mb-6 italic">"You seem reflective today. These practices might resonate with your current flow."</p>
+<div class="bg-white/10 backdrop-blur-md rounded-lg p-4 flex items-center justify-between border border-white/10 hover:bg-white/20 transition-colors">
+<div class="flex flex-col">
+<span class="text-xs uppercase font-bold tracking-tighter text-primary-fixed">Featured Activity</span>
+<span class="font-headline font-bold text-lg">Golden Hour Walk</span>
+</div>
+<span class="material-symbols-outlined">arrow_forward_ios</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Bento Grid Wellness Categories -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+<!-- Breathing Category -->
+<div class="lg:col-span-2 bg-surface-container-low rounded-lg p-8 relative overflow-hidden">
+<div class="flex justify-between items-start mb-12">
+<div>
+<h3 class="font-headline text-3xl font-bold text-on-surface mb-2">Breathing</h3>
+<p class="text-on-surface-variant max-w-xs">Controlled techniques to recalibrate your nervous system.</p>
+</div>
+<span class="material-symbols-outlined text-4xl text-primary/30">air</span>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+<div class="bg-surface-container-lowest p-6 rounded-lg shadow-sm hover:shadow-md transition-shadow cursor-pointer">
+<h4 class="font-headline font-bold text-primary mb-1">Box Breathing</h4>
+<p class="text-sm text-on-surface-variant mb-4">4-4-4-4 rhythm for instant focus and calm.</p>
+<span class="text-xs font-bold text-primary-fixed-variant bg-primary-fixed/20 px-3 py-1 rounded-full uppercase">4 mins</span>
+</div>
+<div class="bg-surface-container-lowest p-6 rounded-lg shadow-sm hover:shadow-md transition-shadow cursor-pointer">
+<h4 class="font-headline font-bold text-primary mb-1">4-7-8 Technique</h4>
+<p class="text-sm text-on-surface-variant mb-4">The natural tranquilizer for the nervous system.</p>
+<span class="text-xs font-bold text-primary-fixed-variant bg-primary-fixed/20 px-3 py-1 rounded-full uppercase">Sleep Aid</span>
+</div>
+</div>
+</div>
+<!-- Mindset Category -->
+<div class="lg:col-span-2 bg-secondary-container/30 rounded-lg p-8">
+<div class="flex justify-between items-start mb-12">
+<div>
+<h3 class="font-headline text-3xl font-bold text-on-secondary-container mb-2">Mindset</h3>
+<p class="text-on-secondary-container/80 max-w-xs">Shift your perspective with gentle cognitive reframing.</p>
+</div>
+<span class="material-symbols-outlined text-4xl text-secondary/40">psychology</span>
+</div>
+<div class="flex flex-col gap-4">
+<div class="bg-surface-container-lowest p-5 rounded-lg flex items-center gap-4 hover:translate-x-2 transition-transform cursor-pointer">
+<div class="w-12 h-12 rounded-full bg-secondary-fixed flex items-center justify-center text-on-secondary-fixed">
+<span class="material-symbols-outlined">auto_awesome</span>
+</div>
+<div>
+<h4 class="font-headline font-bold">The 5-Year Rule</h4>
+<p class="text-sm text-on-surface-variant">Will this matter in five years? If not, let it go.</p>
+</div>
+</div>
+<div class="bg-surface-container-lowest p-5 rounded-lg flex items-center gap-4 hover:translate-x-2 transition-transform cursor-pointer">
+<div class="w-12 h-12 rounded-full bg-secondary-fixed flex items-center justify-center text-on-secondary-fixed">
+<span class="material-symbols-outlined">edit_note</span>
+</div>
+<div>
+<h4 class="font-headline font-bold">Gratitude Flip</h4>
+<p class="text-sm text-on-surface-variant">Turn a frustration into a learning moment.</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Self-Care Category -->
+<div class="lg:col-span-1 bg-surface-container-high rounded-lg p-8 flex flex-col justify-between">
+<div>
+<div class="w-12 h-12 bg-white rounded-full flex items-center justify-center mb-6 shadow-sm">
+<span class="material-symbols-outlined text-primary">spa</span>
+</div>
+<h3 class="font-headline text-2xl font-bold mb-2">Self-Care</h3>
+<ul class="space-y-4">
+<li class="flex items-start gap-3 text-sm text-on-surface-variant font-medium">
+<span class="text-primary mt-1">•</span>
+<span>Digital detox for 30 mins</span>
+</li>
+<li class="flex items-start gap-3 text-sm text-on-surface-variant font-medium">
+<span class="text-primary mt-1">•</span>
+<span>Aromatherapy with lavender</span>
+</li>
+<li class="flex items-start gap-3 text-sm text-on-surface-variant font-medium">
+<span class="text-primary mt-1">•</span>
+<span>Hydrate with ritual tea</span>
+</li>
+</ul>
+</div>
+<button class="mt-8 text-primary font-bold text-sm flex items-center gap-2 group">
+                    View Library <span class="material-symbols-outlined text-sm group-hover:translate-x-1 transition-transform">arrow_forward</span>
+</button>
+</div>
+<!-- Activities Category -->
+<div class="lg:col-span-3 bg-surface-container-low rounded-lg overflow-hidden flex flex-col md:flex-row">
+<div class="md:w-1/2 p-8">
+<h3 class="font-headline text-3xl font-bold mb-4">Active Recovery</h3>
+<p class="text-on-surface-variant mb-8">Movement is a catalyst for emotional processing. Find your flow today.</p>
+<div class="space-y-3">
+<div class="p-4 bg-white/60 rounded-lg flex justify-between items-center hover:bg-white transition-colors cursor-pointer border border-transparent hover:border-primary/10">
+<span class="font-headline font-bold">Unplugged Nature Walk</span>
+<span class="material-symbols-outlined text-primary-dim">nature_people</span>
+</div>
+<div class="p-4 bg-white/60 rounded-lg flex justify-between items-center hover:bg-white transition-colors cursor-pointer border border-transparent hover:border-primary/10">
+<span class="font-headline font-bold">Freeform Journaling</span>
+<span class="material-symbols-outlined text-primary-dim">history_edu</span>
+</div>
+<div class="p-4 bg-white/60 rounded-lg flex justify-between items-center hover:bg-white transition-colors cursor-pointer border border-transparent hover:border-primary/10">
+<span class="font-headline font-bold">Creative Expression</span>
+<span class="material-symbols-outlined text-primary-dim">palette</span>
+</div>
+</div>
+</div>
+<div class="md:w-1/2 relative min-h-[300px]">
+<img alt="Yoga practice" class="absolute inset-0 w-full h-full object-cover" data-alt="high-angle shot of a person practicing yoga in a bright minimalistic studio with soft morning light streaming through large windows" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAp_ZSfQedDZkpV9O01IbYbESkmqLWUntvj2eJsBvW_pVl0stoVeArohYhes_6o7appFVm2LrxreibcWL4jo6je2qRZ3ifN4itLpyPxu4Tq7PqijCVR4mUFIWCMorM_xQ5693XAAKwzFI6fgFR96lPrpN-krSiupuog2Rh-Rg4oEYi2httlmgDYo_hon7wjkQXiWtjQA59djnzGKUPZldav1awja68aeSbRSTWJ3RvdkK1YOds27wgFp3pg1fVsMbYd2SU5mE1Q3y35"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
+<div class="absolute bottom-6 left-6 right-6 text-white">
+<span class="text-xs font-bold uppercase tracking-widest bg-primary/80 backdrop-blur-md px-3 py-1 rounded-full mb-3 inline-block">Popular Choice</span>
+<h4 class="text-2xl font-headline font-bold">Gentle Morning Vinyasa</h4>
+</div>
+</div>
+</div>
+</div>
+<!-- Tips List Section -->
+<section class="mt-16">
+<div class="flex justify-between items-center mb-8">
+<h3 class="font-headline text-2xl font-bold">Quick Wellness Bites</h3>
+<div class="flex gap-2">
+<button class="p-2 rounded-full border border-outline-variant/30 hover:bg-surface-container-high transition-colors">
+<span class="material-symbols-outlined">tune</span>
+</button>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+<div class="p-4 bg-surface-container-lowest rounded-lg shadow-[0_2px_8px_rgba(0,0,0,0.02)] flex items-center gap-4 hover:shadow-md transition-shadow">
+<div class="w-10 h-10 rounded-full bg-tertiary-container flex items-center justify-center text-on-tertiary-container">
+<span class="material-symbols-outlined">bolt</span>
+</div>
+<span class="font-body font-medium">Step away from your screen for 5 mins</span>
+</div>
+<div class="p-4 bg-surface-container-lowest rounded-lg shadow-[0_2px_8px_rgba(0,0,0,0.02)] flex items-center gap-4 hover:shadow-md transition-shadow">
+<div class="w-10 h-10 rounded-full bg-error-container/20 flex items-center justify-center text-error">
+<span class="material-symbols-outlined">favorite</span>
+</div>
+<span class="font-body font-medium">Call a friend just to say hello</span>
+</div>
+<div class="p-4 bg-surface-container-lowest rounded-lg shadow-[0_2px_8px_rgba(0,0,0,0.02)] flex items-center gap-4 hover:shadow-md transition-shadow">
+<div class="w-10 h-10 rounded-full bg-secondary-fixed flex items-center justify-center text-on-secondary-fixed">
+<span class="material-symbols-outlined">wb_sunny</span>
+</div>
+<span class="font-body font-medium">Get 10 minutes of direct sunlight</span>
+</div>
+<div class="p-4 bg-surface-container-lowest rounded-lg shadow-[0_2px_8px_rgba(0,0,0,0.02)] flex items-center gap-4 hover:shadow-md transition-shadow">
+<div class="w-10 h-10 rounded-full bg-primary-fixed flex items-center justify-center text-on-primary-fixed">
+<span class="material-symbols-outlined">headset</span>
+</div>
+<span class="font-body font-medium">Listen to a calming 5-min soundscape</span>
+</div>
+<div class="p-4 bg-surface-container-lowest rounded-lg shadow-[0_2px_8px_rgba(0,0,0,0.02)] flex items-center gap-4 hover:shadow-md transition-shadow border-2 border-primary-container/30">
+<div class="w-10 h-10 rounded-full bg-primary text-on-primary flex items-center justify-center">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+</div>
+<span class="font-body font-medium">Write down 3 things you're proud of today</span>
+</div>
+<div class="p-4 bg-surface-container-lowest rounded-lg shadow-[0_2px_8_rgba(0,0,0,0.02)] flex items-center gap-4 hover:shadow-md transition-shadow">
+<div class="w-10 h-10 rounded-full bg-surface-container-high flex items-center justify-center text-on-surface-variant">
+<span class="material-symbols-outlined">local_florist</span>
+</div>
+<span class="font-body font-medium">Deep clean one small area of your room</span>
+</div>
+</div>
+</section>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 pb-6 pt-3 bg-surface/70 backdrop-blur-3xl border-t border-[#acb3b4]/15 shadow-[0_-4px_32px_rgba(44,52,53,0.06)] rounded-t-[3rem]">
+<div class="flex flex-col items-center justify-center text-slate-500 px-5 py-2 hover:text-[#3f627f] transition-all cursor-pointer">
+<span class="material-symbols-outlined">home</span>
+<span class="font-['Inter'] font-medium text-[10px]">Home</span>
+</div>
+<div class="flex flex-col items-center justify-center text-slate-500 px-5 py-2 hover:text-[#3f627f] transition-all cursor-pointer">
+<span class="material-symbols-outlined">analytics</span>
+<span class="font-['Inter'] font-medium text-[10px]">Insights</span>
+</div>
+<div class="flex flex-col items-center justify-center text-slate-500 px-5 py-2 hover:text-[#3f627f] transition-all cursor-pointer">
+<span class="material-symbols-outlined">history</span>
+<span class="font-['Inter'] font-medium text-[10px]">Timeline</span>
+</div>
+<div class="flex flex-col items-center justify-center bg-[#b7dbfd]/30 text-[#3f627f] rounded-full px-5 py-2 scale-90 transition-all duration-300 ease-out">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">lightbulb</span>
+<span class="font-['Inter'] font-medium text-[10px]">Tips</span>
+</div>
+</nav>
+</body></html>

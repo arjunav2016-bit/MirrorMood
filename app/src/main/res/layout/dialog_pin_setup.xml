@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingStart="24dp"
+    android:paddingTop="8dp"
+    android:paddingEnd="24dp"
+    android:paddingBottom="8dp">
+
+    <EditText
+        android:id="@+id/etPin1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:autofillHints="password"
+        android:hint="@string/lock_setup_pin_hint"
+        android:inputType="numberPassword"
+        android:maxLength="6" />
+
+    <EditText
+        android:id="@+id/etPin2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:autofillHints="password"
+        android:hint="@string/lock_setup_pin_confirm_hint"
+        android:inputType="numberPassword"
+        android:maxLength="6" />
+</LinearLayout>

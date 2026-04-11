@@ -1,0 +1,49 @@
+# 🪞 MirrorMood
+
+**Real-time facial expression-based mood tracking for Android.**
+
+MirrorMood uses your device's front camera and Google ML Kit's face detection to analyze facial expressions in real time, classify your mood, and provide personalized wellness recommendations — all processed entirely on-device for complete privacy.
+
+---
+
+## ✨ Features
+
+### 🎭 Real-Time Mood Detection
+- Continuous mood monitoring via the front-facing camera as a foreground service
+- Multi-signal classification using **smile probability**, **eye openness**, **head rotation** (pitch, yaw, roll), **wink detection**, and **rapid blink detection**
+- Six mood categories: **Happy**, **Stressed**, **Tired**, **Focused**, **Bored**, and **Neutral**
+- Confidence scoring for each mood classification
+
+### 📊 Insights & Analytics
+- **Daily breakdown** with per-mood percentages
+- **Dominant mood** detection with emoji visualization
+- **Peak time analysis** — see when you're happiest or most stressed
+- **Monthly bar chart** with 4-week stacked mood distribution (MPAndroidChart)
+- **Mood correlations** to discover patterns in your emotional data
+
+### 📅 Timeline & History
+- Chronological timeline view of all mood entries
+- Full mood history with detailed logs
+- Streak tracking (e.g., "3-day Happy streak! 🔥")
+
+### 🧘 Wellness Recommendations
+- **40+ curated wellness tips** organized by mood category
+- Categories include Breathing exercises, Activities, Mindset shifts, and Self-Care
+- Contextual wellness card on the home screen that adapts to your current mood
+- Dedicated recommendations screen with shuffled tips
+
+### 📓 Mood Journal
+- Personal journaling to reflect on your mood throughout the day
+- Pairs journal entries with detected mood data
+
+### ⚙️ Settings & Customization
+- **Theme selection**: Light, Dark, or System Default
+- **Quiet hours**: Set start/end times to pause notifications
+- **Daily mood goal**: Target a specific mood at a desired percentage
+- **App lock**: Biometric authentication (fingerprint/face) via AndroidX Biometric
+
+### 🔒 Privacy First
+- **100% on-device processing** — no images or mood data leave your phone
+- Dedicated privacy screen explaining data handling
+- Optional app lock for sensitive mood data
+- Local Room database storage
