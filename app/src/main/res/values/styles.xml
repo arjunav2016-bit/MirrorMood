@@ -135,41 +135,10 @@
     </style>
 
     <!-- ═══ Legacy compat styles ═══ -->
-    <style name="MirrorMood.Display" parent="MM.Text.Display.Large" />
-    <style name="MirrorMood.Headline" parent="MM.Text.Headline.Medium" />
-    <style name="MirrorMood.Title" parent="MM.Text.Title.Large" />
-    <style name="MirrorMood.Title.Small" parent="MM.Text.Title.Medium" />
     <style name="MirrorMood.Subtitle" parent="MM.Text.Label.Small">
         <item name="android:letterSpacing">0.1</item>
         <item name="android:textAllCaps">true</item>
         <item name="android:textStyle">bold</item>
-    </style>
-    <style name="MirrorMood.Body" parent="MM.Text.Body.Large" />
-    <style name="MirrorMood.Body.Secondary" parent="MM.Text.Body.Medium">
-        <item name="android:textColor">?attr/colorOnSurfaceVariant</item>
-    </style>
-    <style name="MirrorMood.Label" parent="MM.Text.Label.Large" />
-    <style name="MirrorMood.Caption" parent="MM.Text.Body.Small">
-        <item name="android:textColor">?attr/colorOnSurfaceVariant</item>
-    </style>
-    <style name="MirrorMood.NavLabel" parent="MM.Text.Label.Small" />
-    <style name="MirrorMood.Chip" parent="MM.Text.Label.Large">
-        <item name="android:paddingStart">16dp</item>
-        <item name="android:paddingEnd">16dp</item>
-        <item name="android:paddingTop">10dp</item>
-        <item name="android:paddingBottom">10dp</item>
-    </style>
-
-    <style name="MirrorMood.Card" parent="MM.Card.Filled" />
-    <style name="MirrorMood.Card.Section" parent="MM.Card.Filled">
-        <item name="cardCornerRadius">16dp</item>
-    </style>
-    <style name="MirrorMood.Card.Emphasis" parent="MM.Card.Elevated" />
-    <style name="MirrorMood.Card.Glass" parent="MM.Card.Filled">
-        <item name="cardCornerRadius">16dp</item>
-    </style>
-    <style name="MirrorMood.PrimaryButton" parent="MM.Card.Filled">
-        <item name="cardCornerRadius">20dp</item>
     </style>
 
 </resources>

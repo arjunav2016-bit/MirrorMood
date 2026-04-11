@@ -72,14 +72,12 @@
 
     <!-- ═══ Legacy Compat Aliases (for Kotlin code + drawables) ═══ -->
     <color name="mm_primary">@color/md_primary</color>
-    <color name="mm_on_primary">@color/md_onPrimary</color>
     <color name="mm_on_surface">@color/md_onSurface</color>
     <color name="mm_on_surface_secondary">@color/md_onSurfaceVariant</color>
     <color name="mm_surface_container_high">@color/md_surfaceContainerHigh</color>
     <color name="mm_calendar_outside_month">@color/md_outline</color>
     <color name="mm_success">@color/md_success</color>
     <color name="mm_ghost_outline">@color/md_outlineVariant</color>
-    <color name="mm_surface">@color/md_surface</color>
 
     <!-- ═══ Floating Bottom Nav ═══ -->
     <color name="mm_nav_icon_active">#4A3780</color>
