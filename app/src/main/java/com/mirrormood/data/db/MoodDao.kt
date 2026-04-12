@@ -11,6 +11,9 @@ interface MoodDao {
     @Insert
     suspend fun insert(entry: MoodEntry)
 
+    @Insert
+    suspend fun insertAll(entries: List<MoodEntry>)
+
     // Get all entries for a specific day
     @Query("SELECT * FROM mood_entries WHERE timestamp BETWEEN :startMs AND :endMs ORDER BY timestamp ASC")
     fun getEntriesForDay(startMs: Long, endMs: Long): Flow<List<MoodEntry>>
@@ -21,6 +24,9 @@ interface MoodDao {
     // Get all entries ever
     @Query("SELECT * FROM mood_entries ORDER BY timestamp DESC")
     fun getAllEntries(): Flow<List<MoodEntry>>
+
+    @Query("SELECT * FROM mood_entries ORDER BY timestamp DESC")
+    suspend fun getAllEntriesOnce(): List<MoodEntry>
 
     // Get the latest single entry (for home screen)
     @Query("SELECT * FROM mood_entries ORDER BY timestamp DESC LIMIT 1")

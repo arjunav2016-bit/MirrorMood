@@ -414,6 +414,26 @@
                     app:iconGravity="textStart" />
 
                 <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnExportBackup"
+                    style="@style/MM.Button.Outlined"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/settings_export_backup"
+                    app:icon="@drawable/ic_export"
+                    app:iconGravity="textStart" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnImportBackup"
+                    style="@style/MM.Button.Outlined"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/settings_import_backup"
+                    app:icon="@drawable/ic_export"
+                    app:iconGravity="textStart" />
+
+                <com.google.android.material.button.MaterialButton
                     android:id="@+id/btnDeleteAll"
                     style="@style/MM.Button.Text"
                     android:layout_width="match_parent"

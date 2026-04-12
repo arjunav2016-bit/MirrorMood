@@ -3,11 +3,13 @@ package com.mirrormood.ui.settings
 import android.app.TimePickerDialog
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
 import android.view.HapticFeedbackConstants
 import android.widget.EditText
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
@@ -23,10 +25,14 @@ import com.mirrormood.security.PinStorage
 import com.mirrormood.ui.privacy.PrivacyActivity
 import com.mirrormood.util.MoodUtils.slideTransition
 import com.mirrormood.util.ThemeHelper
+import com.mirrormood.widget.MoodWidgetProvider
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import org.json.JSONArray
+import org.json.JSONException
+import org.json.JSONObject
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -41,6 +47,23 @@ class SettingsActivity : AppCompatActivity() {
     private val prefs by lazy { getSharedPreferences(MirrorMoodApp.PREFS_NAME, Context.MODE_PRIVATE) }
     private lateinit var repository: MoodRepository
     private var lockSwitchProgrammatic = false
+    private var pendingBackupJson: String? = null
+
+    private val exportBackupLauncher = registerForActivityResult(
+        ActivityResultContracts.CreateDocument("application/json")
+    ) { uri ->
+        if (uri != null) {
+            writeBackupToUri(uri)
+        } else {
+            pendingBackupJson = null
+        }
+    }
+
+    private val importBackupLauncher = registerForActivityResult(
+        ActivityResultContracts.OpenDocument()
+    ) { uri ->
+        if (uri != null) importBackupFromUri(uri)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         ThemeHelper.applyTheme(this)
@@ -172,6 +195,16 @@ class SettingsActivity : AppCompatActivity() {
             exportAsCsv()
         }
 
+        binding.btnExportBackup.setOnClickListener { view ->
+            view.performHapticFeedback(HapticFeedbackConstants.CONTEXT_CLICK)
+            exportBackup()
+        }
+
+        binding.btnImportBackup.setOnClickListener { view ->
+            view.performHapticFeedback(HapticFeedbackConstants.CONTEXT_CLICK)
+            showImportBackupConfirmation()
+        }
+
         binding.btnDeleteAll.setOnClickListener { view ->
             view.performHapticFeedback(HapticFeedbackConstants.CONTEXT_CLICK)
             showDeleteAllConfirmation()
@@ -233,6 +266,131 @@ class SettingsActivity : AppCompatActivity() {
                     }
                 }
             }
+        }
+    }
+
+    private fun exportBackup() {
+        lifecycleScope.launch {
+            val entries = withContext(Dispatchers.IO) {
+                repository.getAllMoodEntries()
+            }
+
+            if (entries.isEmpty()) {
+                Toast.makeText(this@SettingsActivity, R.string.settings_no_mood_data_export, Toast.LENGTH_SHORT).show()
+                return@launch
+            }
+
+            pendingBackupJson = withContext(Dispatchers.IO) {
+                buildBackupJson(entries)
+            }
+            val fileName = "mirrormood_backup_${SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(Date())}.json"
+            exportBackupLauncher.launch(fileName)
+        }
+    }
+
+    private fun writeBackupToUri(uri: Uri) {
+        val backupJson = pendingBackupJson ?: return
+        lifecycleScope.launch {
+            val success = withContext(Dispatchers.IO) {
+                runCatching {
+                    contentResolver.openOutputStream(uri)?.use { output ->
+                        output.writer().use { writer ->
+                            writer.write(backupJson)
+                        }
+                    } ?: error("No output stream")
+                }.isSuccess
+            }
+            pendingBackupJson = null
+            Toast.makeText(
+                this@SettingsActivity,
+                if (success) R.string.settings_backup_exported else R.string.settings_backup_export_failed,
+                Toast.LENGTH_SHORT
+            ).show()
+        }
+    }
+
+    private fun showImportBackupConfirmation() {
+        AlertDialog.Builder(this)
+            .setTitle(R.string.settings_backup_import_title)
+            .setMessage(R.string.settings_backup_import_message)
+            .setPositiveButton(R.string.settings_backup_import_confirm) { _, _ ->
+                importBackupLauncher.launch(arrayOf("application/json", "text/json", "application/octet-stream"))
+            }
+            .setNegativeButton(android.R.string.cancel, null)
+            .show()
+    }
+
+    private fun importBackupFromUri(uri: Uri) {
+        lifecycleScope.launch {
+            val result = withContext(Dispatchers.IO) {
+                runCatching {
+                    val json = contentResolver.openInputStream(uri)?.use { input ->
+                        input.bufferedReader().use { reader -> reader.readText() }
+                    } ?: error("No input stream")
+                    val entries = parseBackupJson(json)
+                    repository.importMoods(entries)
+                }
+            }
+
+            val message = when {
+                result.isFailure && result.exceptionOrNull() is JSONException -> R.string.settings_backup_invalid
+                result.isFailure -> R.string.settings_backup_import_failed
+                result.getOrDefault(0) == 0 -> R.string.settings_backup_import_no_new_entries
+                else -> null
+            }
+
+            if (message != null) {
+                Toast.makeText(this@SettingsActivity, message, Toast.LENGTH_SHORT).show()
+            } else {
+                MoodWidgetProvider.updateAllWidgets(this@SettingsActivity)
+                Toast.makeText(
+                    this@SettingsActivity,
+                    getString(R.string.settings_backup_imported, result.getOrDefault(0)),
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        }
+    }
+
+    private fun buildBackupJson(entries: List<com.mirrormood.data.db.MoodEntry>): String {
+        val entryArray = JSONArray()
+        entries.reversed().forEach { entry ->
+            entryArray.put(
+                JSONObject()
+                    .put("timestamp", entry.timestamp)
+                    .put("mood", entry.mood)
+                    .put("smileScore", entry.smileScore.toDouble())
+                    .put("eyeOpenScore", entry.eyeOpenScore.toDouble())
+                    .put("note", entry.note)
+            )
+        }
+
+        return JSONObject()
+            .put("schemaVersion", 1)
+            .put("exportedAt", System.currentTimeMillis())
+            .put("entries", entryArray)
+            .toString(2)
+    }
+
+    private fun parseBackupJson(json: String): List<com.mirrormood.data.db.MoodEntry> {
+        val root = JSONObject(json)
+        if (root.optInt("schemaVersion", -1) != 1) {
+            throw JSONException("Unsupported MirrorMood backup schema")
+        }
+
+        val entries = root.getJSONArray("entries")
+        return List(entries.length()) { index ->
+            val item = entries.getJSONObject(index)
+            val mood = item.getString("mood").trim()
+            if (mood.isEmpty()) throw JSONException("Missing mood")
+
+            com.mirrormood.data.db.MoodEntry(
+                timestamp = item.getLong("timestamp"),
+                mood = mood,
+                smileScore = item.getDouble("smileScore").toFloat(),
+                eyeOpenScore = item.getDouble("eyeOpenScore").toFloat(),
+                note = if (item.isNull("note")) null else item.getString("note")
+            )
         }
     }
 

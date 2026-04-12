@@ -22,6 +22,21 @@ class MoodRepository(private val moodDao: MoodDao) {
     suspend fun saveMood(entry: MoodEntry) =
         moodDao.insert(entry)
 
+    suspend fun getAllMoodEntries(): List<MoodEntry> =
+        moodDao.getAllEntriesOnce()
+
+    suspend fun importMoods(entries: List<MoodEntry>): Int {
+        val knownKeys = moodDao.getAllEntriesOnce().map { it.backupKey() }.toMutableSet()
+        val newEntries = entries
+            .map { it.copy(id = 0) }
+            .filter { knownKeys.add(it.backupKey()) }
+
+        if (newEntries.isNotEmpty()) {
+            moodDao.insertAll(newEntries)
+        }
+        return newEntries.size
+    }
+
     suspend fun getMoodsForRange(startMs: Long, endMs: Long): List<MoodEntry> =
         moodDao.getEntriesForRange(startMs, endMs)
 
@@ -38,4 +53,22 @@ class MoodRepository(private val moodDao: MoodDao) {
         val cutoff = System.currentTimeMillis() - TimeUnit.DAYS.toMillis(90)
         moodDao.deleteOldEntries(cutoff)
     }
+
+    private fun MoodEntry.backupKey(): BackupKey {
+        return BackupKey(
+            timestamp = timestamp,
+            mood = mood,
+            smileScore = smileScore,
+            eyeOpenScore = eyeOpenScore,
+            note = note
+        )
+    }
+
+    private data class BackupKey(
+        val timestamp: Long,
+        val mood: String,
+        val smileScore: Float,
+        val eyeOpenScore: Float,
+        val note: String?
+    )
 }
