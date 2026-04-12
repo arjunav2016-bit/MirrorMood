@@ -18,5 +18,8 @@
     <dimen name="timeline_entry_note_margin_top">6dp</dimen>
     <dimen name="timeline_entry_tags_margin_top">12dp</dimen>
     <dimen name="timeline_entry_chip_spacing">8dp</dimen>
+
+    <!-- Card shape -->
+    <dimen name="card_corner_radius">12dp</dimen>
 </resources>
 

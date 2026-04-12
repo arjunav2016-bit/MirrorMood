@@ -15,6 +15,7 @@ object MoodNotificationManager {
     const val MORNING_NOTIFICATION_ID = 100
     const val EVENING_NOTIFICATION_ID = 101
     const val WEEKLY_NOTIFICATION_ID = 102
+    const val ANOMALY_NOTIFICATION_ID = 103
 
     fun createNotificationChannel(context: Context) {
         val channel = NotificationChannel(
@@ -38,8 +39,8 @@ object MoodNotificationManager {
         )
 
         val notification = NotificationCompat.Builder(context, CHANNEL_ID)
-            .setSmallIcon(android.R.drawable.ic_menu_camera)
-            .setContentTitle("Good morning! 🌅")
+            .setSmallIcon(com.mirrormood.R.drawable.ic_notification)
+            .setContentTitle("Good morning! \uD83C\uDF05")
             .setContentText("Start tracking your mood today.")
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
             .setContentIntent(pendingIntent)
@@ -60,8 +61,8 @@ object MoodNotificationManager {
         )
 
         val notification = NotificationCompat.Builder(context, CHANNEL_ID)
-            .setSmallIcon(android.R.drawable.ic_menu_camera)
-            .setContentTitle("Your mood today 🌙")
+            .setSmallIcon(com.mirrormood.R.drawable.ic_notification)
+            .setContentTitle("Your mood today \uD83C\uDF19")
             .setContentText(summary)
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
             .setContentIntent(pendingIntent)
@@ -82,8 +83,8 @@ object MoodNotificationManager {
         )
 
         val notification = NotificationCompat.Builder(context, CHANNEL_ID)
-            .setSmallIcon(android.R.drawable.ic_menu_camera)
-            .setContentTitle("Your week in moods 📊")
+            .setSmallIcon(com.mirrormood.R.drawable.ic_notification)
+            .setContentTitle("Your week in moods \uD83D\uDCCA")
             .setContentText(summary)
             .setStyle(NotificationCompat.BigTextStyle().bigText(summary))
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
@@ -93,5 +94,28 @@ object MoodNotificationManager {
 
         val manager = context.getSystemService(NotificationManager::class.java)
         manager.notify(WEEKLY_NOTIFICATION_ID, notification)
+    }
+
+    fun sendAnomalyAlert(context: Context, title: String, message: String) {
+        val intent = Intent(context, MainActivity::class.java).apply {
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        }
+        val pendingIntent = PendingIntent.getActivity(
+            context, 3, intent,
+            PendingIntent.FLAG_IMMUTABLE
+        )
+
+        val notification = NotificationCompat.Builder(context, CHANNEL_ID)
+            .setSmallIcon(com.mirrormood.R.drawable.ic_notification)
+            .setContentTitle(title)
+            .setContentText(message)
+            .setStyle(NotificationCompat.BigTextStyle().bigText(message))
+            .setPriority(NotificationCompat.PRIORITY_HIGH)
+            .setContentIntent(pendingIntent)
+            .setAutoCancel(true)
+            .build()
+
+        val manager = context.getSystemService(NotificationManager::class.java)
+        manager.notify(ANOMALY_NOTIFICATION_ID, notification)
     }
 }

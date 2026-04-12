@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Top-left corner bracket -->
+    <item android:left="24dp" android:top="24dp" android:right="0dp" android:bottom="0dp">
+        <rotate android:fromDegrees="0">
+            <shape android:shape="rectangle">
+                <size android:width="40dp" android:height="40dp" />
+                <stroke android:width="3dp" android:color="#99FFFFFF" />
+                <corners android:radius="8dp" />
+                <solid android:color="@android:color/transparent" />
+            </shape>
+        </rotate>
+    </item>
+
+    <!-- Top-right corner bracket -->
+    <item android:left="0dp" android:top="24dp" android:right="24dp" android:bottom="0dp">
+        <shape android:shape="rectangle">
+            <size android:width="40dp" android:height="40dp" />
+            <stroke android:width="3dp" android:color="#99FFFFFF" />
+            <corners android:radius="8dp" />
+            <solid android:color="@android:color/transparent" />
+        </shape>
+    </item>
+
+    <!-- Bottom-left corner bracket -->
+    <item android:left="24dp" android:top="0dp" android:right="0dp" android:bottom="24dp">
+        <shape android:shape="rectangle">
+            <size android:width="40dp" android:height="40dp" />
+            <stroke android:width="3dp" android:color="#99FFFFFF" />
+            <corners android:radius="8dp" />
+            <solid android:color="@android:color/transparent" />
+        </shape>
+    </item>
+
+    <!-- Bottom-right corner bracket -->
+    <item android:left="0dp" android:top="0dp" android:right="24dp" android:bottom="24dp">
+        <shape android:shape="rectangle">
+            <size android:width="40dp" android:height="40dp" />
+            <stroke android:width="3dp" android:color="#99FFFFFF" />
+            <corners android:radius="8dp" />
+            <solid android:color="@android:color/transparent" />
+        </shape>
+    </item>
+
+</layer-list>

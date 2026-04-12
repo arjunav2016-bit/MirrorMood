@@ -55,13 +55,13 @@
     <!-- Success -->
     <color name="md_success">#5AB0A8</color>
 
-    <!-- ═══ Mood Accent Colors (same in dark) ═══ -->
-    <color name="mm_mood_happy">#FFD54F</color>
-    <color name="mm_mood_stressed">#E57373</color>
-    <color name="mm_mood_tired">#90CAF9</color>
-    <color name="mm_mood_focused">#80CBC4</color>
-    <color name="mm_mood_bored">#B39DDB</color>
-    <color name="mm_mood_neutral">#CE93D8</color>
+    <!-- ═══ Mood Accent Colors (curated, slightly lifted for dark) ═══ -->
+    <color name="mm_mood_happy">#F0D68A</color>
+    <color name="mm_mood_stressed">#E09A93</color>
+    <color name="mm_mood_tired">#9DB5CC</color>
+    <color name="mm_mood_focused">#90BBA8</color>
+    <color name="mm_mood_bored">#B9ABCF</color>
+    <color name="mm_mood_neutral">#C5AFD0</color>
 
     <!-- Chart (dark) -->
 

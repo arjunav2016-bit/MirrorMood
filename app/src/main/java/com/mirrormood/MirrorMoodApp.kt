@@ -67,6 +67,22 @@ class MirrorMoodApp : Application(), Configuration.Provider {
             androidx.work.ExistingPeriodicWorkPolicy.KEEP,
             cleanupWorkRequest
         )
+        
+        val backupConstraints = androidx.work.Constraints.Builder()
+            .setRequiresStorageNotLow(true)
+            .build()
+            
+        val backupWorkRequest = androidx.work.PeriodicWorkRequestBuilder<com.mirrormood.worker.BackupWorker>(
+            7, java.util.concurrent.TimeUnit.DAYS
+        )
+            .setConstraints(backupConstraints)
+            .build()
+            
+        androidx.work.WorkManager.getInstance(this).enqueueUniquePeriodicWork(
+            "AutoBackup",
+            androidx.work.ExistingPeriodicWorkPolicy.KEEP,
+            backupWorkRequest
+        )
     }
 
     private fun migrateLegacyPrefs() {

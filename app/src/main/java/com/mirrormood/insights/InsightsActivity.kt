@@ -32,6 +32,7 @@ import kotlinx.coroutines.withContext
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
+import android.view.animation.DecelerateInterpolator
 
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -62,6 +63,7 @@ class InsightsActivity : AppCompatActivity() {
         setupNavigationCards()
         BottomNavHelper.setup(this, BottomNavTab.INSIGHTS)
         loadTab(Tab.TODAY)
+        playEntranceAnimations()
     }
 
     private fun setupNavigationCards() {
@@ -373,6 +375,25 @@ class InsightsActivity : AppCompatActivity() {
             axisRight.isEnabled = false
             animateY(1200, com.github.mikephil.charting.animation.Easing.EaseInOutQuart)
             invalidate()
+        }
+    }
+    private fun playEntranceAnimations() {
+        val cards = listOf(
+            binding.dominantMoodCard,
+            binding.cardPatterns,
+            binding.cardHistory
+        )
+        val offsetPx = (40 * resources.displayMetrics.density)
+        cards.forEachIndexed { index, view ->
+            view.alpha = 0f
+            view.translationY = offsetPx
+            view.animate()
+                .alpha(1f)
+                .translationY(0f)
+                .setStartDelay((index * 80).toLong())
+                .setDuration(450)
+                .setInterpolator(DecelerateInterpolator(1.8f))
+                .start()
         }
     }
 }

@@ -13,6 +13,7 @@ object NotificationScheduler {
         scheduleMorningNotification(context)
         scheduleEveningNotification(context)
         scheduleWeeklyNotification(context)
+        scheduleAnomalyWorker(context)
     }
 
     private fun scheduleMorningNotification(context: Context) {
@@ -79,5 +80,16 @@ object NotificationScheduler {
             if (before(now)) add(Calendar.WEEK_OF_YEAR, 1)
         }
         return target.timeInMillis - now.timeInMillis
+    }
+
+    private fun scheduleAnomalyWorker(context: Context) {
+        val request = PeriodicWorkRequestBuilder<com.mirrormood.worker.AnomalyWorker>(4, TimeUnit.HOURS)
+            .build()
+            
+        WorkManager.getInstance(context).enqueueUniquePeriodicWork(
+            "AnomalyDetectionObserver",
+            ExistingPeriodicWorkPolicy.KEEP,
+            request
+        )
     }
 }

@@ -24,6 +24,10 @@ import com.mirrormood.detection.CalibrationFaceAnalyzer
 import com.mirrormood.ui.lock.LockActivity
 import com.mirrormood.util.MoodUtils.slideTransition
 import com.mirrormood.util.ThemeHelper
+import com.mirrormood.detection.FaceBaseline
+import org.json.JSONObject
+import android.animation.ObjectAnimator
+import android.view.animation.DecelerateInterpolator
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 
@@ -36,6 +40,7 @@ class CalibrationActivity : AppCompatActivity() {
     private lateinit var cameraExecutor: ExecutorService
     private val mainHandler = Handler(Looper.getMainLooper())
     private var consecutiveFaceFrames = 0
+    private val baselines = mutableListOf<FaceBaseline>()
 
     private val permissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestMultiplePermissions()
@@ -88,8 +93,8 @@ class CalibrationActivity : AppCompatActivity() {
                 it.setSurfaceProvider(binding.previewView.surfaceProvider)
             }
 
-            val analyzer = CalibrationFaceAnalyzer { present ->
-                mainHandler.post { onFacePresence(present) }
+            val analyzer = CalibrationFaceAnalyzer { present, baseline ->
+                mainHandler.post { onFacePresence(present, baseline) }
             }
 
             val imageAnalysis = ImageAnalysis.Builder()
@@ -111,31 +116,67 @@ class CalibrationActivity : AppCompatActivity() {
         }, ContextCompat.getMainExecutor(this))
     }
 
-    private fun onFacePresence(present: Boolean) {
-        if (present) {
+    private fun onFacePresence(present: Boolean, baseline: FaceBaseline?) {
+        if (present && baseline != null) {
+            if (consecutiveFaceFrames < 10) baselines.add(baseline)
             consecutiveFaceFrames++
             if (consecutiveFaceFrames >= 10) {
                 binding.tvStatus.text = getString(R.string.calibration_face_locked)
                 binding.tvHint.text = getString(R.string.calibration_hint_ready)
                 binding.btnComplete.isEnabled = true
                 binding.progressCalibration.isIndeterminate = false
-                binding.progressCalibration.progress = 100
+                animateProgress(100)
             } else {
                 binding.tvStatus.text = getString(R.string.calibration_face_detected)
                 binding.tvHint.text = getString(R.string.calibration_hint_hold)
                 val p = (consecutiveFaceFrames * 100 / 10).coerceAtMost(100)
-                binding.progressCalibration.progress = p
+                animateProgress(p)
             }
         } else {
             consecutiveFaceFrames = 0
+            baselines.clear()
             binding.btnComplete.isEnabled = false
             binding.tvStatus.text = getString(R.string.calibration_seek_face)
             binding.tvHint.text = getString(R.string.calibration_hint_center)
-            binding.progressCalibration.progress = 0
+            animateProgress(0)
+        }
+    }
+
+    private fun animateProgress(targetProgress: Int) {
+        val current = binding.progressCalibration.progress
+        if (current == targetProgress) return
+        ObjectAnimator.ofInt(binding.progressCalibration, "progress", current, targetProgress).apply {
+            duration = 300
+            interpolator = DecelerateInterpolator()
+            start()
         }
     }
 
     private fun completeCalibration() {
+        if (baselines.isNotEmpty()) {
+            val avgSmile = baselines.map { it.smileProb }.average().toFloat()
+            val avgLeft = baselines.map { it.leftEyeOpen }.average().toFloat()
+            val avgRight = baselines.map { it.rightEyeOpen }.average().toFloat()
+            val avgPitch = baselines.map { it.headPitch }.average().toFloat()
+            val avgYaw = baselines.map { it.headYaw }.average().toFloat()
+            val avgRoll = baselines.map { it.headRoll }.average().toFloat()
+            
+            val json = JSONObject().apply {
+                put("smileProb", avgSmile)
+                put("leftEyeOpen", avgLeft)
+                put("rightEyeOpen", avgRight)
+                put("headPitch", avgPitch)
+                put("headYaw", avgYaw)
+                put("headRoll", avgRoll)
+            }.toString()
+            
+            getSharedPreferences(MirrorMoodApp.PREFS_NAME, MODE_PRIVATE).edit()
+                .putString("baseline_metrics", json)
+                .apply()
+                
+            Toast.makeText(this, R.string.calibration_baseline_saved, Toast.LENGTH_SHORT).show()
+        }
+
         getSharedPreferences(MirrorMoodApp.PREFS_NAME, MODE_PRIVATE).edit()
             .putBoolean(MirrorMoodApp.KEY_CALIBRATION_COMPLETED, true)
             .apply()

@@ -29,13 +29,24 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
-        app:cardCornerRadius="40dp">
+        app:cardCornerRadius="16dp">
 
-        <androidx.camera.view.PreviewView
-            android:id="@+id/previewView"
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="320dp"
-            app:scaleType="fillCenter" />
+            android:layout_height="320dp">
+
+            <androidx.camera.view.PreviewView
+                android:id="@+id/previewView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:scaleType="fillCenter" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/bg_face_guide" />
+
+        </FrameLayout>
     </com.google.android.material.card.MaterialCardView>
 
     <com.google.android.material.progressindicator.LinearProgressIndicator

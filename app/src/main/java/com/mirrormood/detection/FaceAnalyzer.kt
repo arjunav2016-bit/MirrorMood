@@ -6,6 +6,7 @@ import androidx.camera.core.ImageProxy
 import com.google.mlkit.vision.common.InputImage
 import com.google.mlkit.vision.face.FaceDetection
 import com.google.mlkit.vision.face.FaceDetectorOptions
+import com.mirrormood.MirrorMoodApp
 import com.mirrormood.data.db.MoodEntry
 import com.mirrormood.data.repository.MoodRepository
 import com.mirrormood.widget.MoodWidgetProvider
@@ -36,9 +37,36 @@ class FaceAnalyzer(
     private val blinkTimestamps = ArrayDeque<Long>()
     private var isCurrentlyBlinking = false
 
+    private var baseline: FaceBaseline? = null
+
+    init {
+        val prefs = context.getSharedPreferences(MirrorMoodApp.PREFS_NAME, Context.MODE_PRIVATE)
+        val json = prefs.getString("baseline_metrics", null)
+        if (json != null) {
+            try {
+                val obj = org.json.JSONObject(json)
+                baseline = FaceBaseline(
+                    smileProb = obj.getDouble("smileProb").toFloat(),
+                    leftEyeOpen = obj.getDouble("leftEyeOpen").toFloat(),
+                    rightEyeOpen = obj.getDouble("rightEyeOpen").toFloat(),
+                    headPitch = obj.getDouble("headPitch").toFloat(),
+                    headYaw = obj.getDouble("headYaw").toFloat(),
+                    headRoll = obj.getDouble("headRoll").toFloat()
+                )
+            } catch (e: Exception) { e.printStackTrace() }
+        }
+    }
+
     companion object {
         private const val SMOOTHING_WINDOW = 5
         private const val CONSENSUS_THRESHOLD = 3 // Must appear >= 3 times in window
+
+        internal fun getConsensusMood(moods: List<MoodResult>): String? {
+            if (moods.size < CONSENSUS_THRESHOLD) return null
+            val counts = moods.groupBy { it.mood }.mapValues { it.value.size }
+            val best = counts.maxByOrNull { it.value } ?: return null
+            return if (best.value >= CONSENSUS_THRESHOLD) best.key else null
+        }
     }
 
     @androidx.camera.core.ExperimentalGetImage
@@ -88,7 +116,7 @@ class FaceAnalyzer(
                     val result = MoodClassifier.classify(
                         smileProb, leftEye, rightEye,
                         headX, headY, headZ,
-                        isWinking, isRapidBlinking
+                        isWinking, isRapidBlinking, baseline
                     )
 
                     // Add to smoothing window
@@ -98,7 +126,7 @@ class FaceAnalyzer(
                     recentMoods.addLast(result)
 
                     // Only save when we have consensus
-                    val consensusMood = getConsensusMood()
+                    val consensusMood = getConsensusMood(recentMoods.toList())
                     if (consensusMood != null && consensusMood != lastSavedMood) {
                         lastSavedMood = consensusMood
                         val avgConfidence = recentMoods
@@ -112,7 +140,8 @@ class FaceAnalyzer(
                                 MoodEntry(
                                     mood = consensusMood,
                                     smileScore = smileProb,
-                                    eyeOpenScore = (leftEye + rightEye) / 2f
+                                    eyeOpenScore = (leftEye + rightEye) / 2f,
+                                    confidence = avgConfidence
                                 )
                             )
                             // Refresh home screen widget
@@ -130,10 +159,5 @@ class FaceAnalyzer(
      * Returns the consensus mood if one mood appears >= CONSENSUS_THRESHOLD
      * times in the recent window. Returns null if no consensus.
      */
-    private fun getConsensusMood(): String? {
-        if (recentMoods.size < CONSENSUS_THRESHOLD) return null
-        val counts = recentMoods.groupBy { it.mood }.mapValues { it.value.size }
-        val best = counts.maxByOrNull { it.value } ?: return null
-        return if (best.value >= CONSENSUS_THRESHOLD) best.key else null
-    }
+    // getConsensusMood is now in Companion
 }

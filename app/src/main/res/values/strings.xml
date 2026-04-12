@@ -56,12 +56,12 @@
     <string name="app_lock_enabled">App lock enabled</string>
     <string name="app_lock_disabled">App lock disabled</string>
 
-    <string name="insights_no_data">No data yet. Start monitoring to see your patterns.</string>
+    <string name="insights_no_data">Your patterns are waiting to emerge ✨ Start a check-in to begin.</string>
     <plurals name="insights_total_entries">
         <item quantity="one">%d mood snapshot recorded</item>
         <item quantity="other">%d mood snapshots recorded</item>
     </plurals>
-    <string name="insights_no_chart_data">Start tracking to see trends</string>
+    <string name="insights_no_chart_data">Your first trend line starts with a single moment 🌱</string>
     <string name="insights_back">Back</string>
     <string name="nav_home">Home</string>
     <string name="nav_insights">Insights</string>
@@ -205,7 +205,7 @@
     <string name="calibration_seek_face">Looking for your face&#8230;</string>
     <string name="calibration_face_detected">Face detected - hold steady</string>
     <string name="calibration_face_locked">Face locked in</string>
-    <string name="calibration_hint_center">Center your face in the rounded frame.</string>
+    <string name="calibration_hint_center">Center your face in the frame.</string>
     <string name="calibration_hint_hold">Keep a natural expression for a moment.</string>
     <string name="calibration_hint_ready">You can finish calibration whenever you\'re ready.</string>
     <string name="calibration_complete">Complete calibration</string>
@@ -250,7 +250,7 @@
     <string name="dashboard_last_check_time">LAST CHECK: %1$s</string>
     <string name="dashboard_mood_patterns">MOOD PATTERNS</string>
     <string name="dashboard_stable_baseline">Stable baseline</string>
-    <string name="dashboard_no_pattern_yet">No pattern yet</string>
+    <string name="dashboard_no_pattern_yet">Patterns emerge with time 🌿</string>
     <string name="dashboard_dominant_pattern">%1$s pattern</string>
     <string name="dashboard_trend_after_checkins">Trend appears after a few check-ins.</string>
     <string name="dashboard_stability_delta">+%1$d%% stability</string>
@@ -274,7 +274,7 @@
     <string name="dashboard_view_all_advice">View All Advice</string>
     <string name="dashboard_recent_logs">Recent Logs</string>
     <string name="dashboard_view_timeline">View Timeline</string>
-    <string name="dashboard_no_notes_yet">No notes yet. Your next reflection will show up here.</string>
+    <string name="dashboard_no_notes_yet">Your story starts with a single check-in ✨</string>
     <string name="dashboard_open_journal">Open Journal</string>
     <string name="dashboard_quoted_note">"%1$s"</string>
     <string name="mood_happy">Happy</string>
@@ -283,5 +283,7 @@
     <string name="mood_tired">Tired</string>
     <string name="mood_stressed">Stressed</string>
     <string name="mood_bored">Bored</string>
+    <string name="dashboard_confidence">%1$d%% confidence</string>
+    <string name="calibration_baseline_saved">Baseline captured ✓</string>
 </resources>
 

@@ -172,7 +172,7 @@ class MoodMonitorService : LifecycleService() {
         return NotificationCompat.Builder(this, CHANNEL_ID)
             .setContentTitle("Mirror Mood")
             .setContentText("Mood monitoring is active")
-            .setSmallIcon(android.R.drawable.ic_menu_camera)
+            .setSmallIcon(com.mirrormood.R.drawable.ic_notification)
             .setPriority(NotificationCompat.PRIORITY_LOW)
             .build()
     }

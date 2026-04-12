@@ -41,6 +41,9 @@ import dagger.hilt.android.AndroidEntryPoint
 import java.util.Calendar
 import kotlinx.coroutines.launch
 import kotlin.math.roundToInt
+import android.view.View
+import android.view.ViewPropertyAnimator
+import android.view.animation.DecelerateInterpolator
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 
 @AndroidEntryPoint
@@ -77,6 +80,7 @@ class MainActivity : AppCompatActivity() {
         setupClickListeners()
         observeViewModel()
         BottomNavHelper.setup(this, BottomNavTab.HOME)
+        playEntranceAnimations()
     }
 
     override fun onResume() {
@@ -224,8 +228,24 @@ class MainActivity : AppCompatActivity() {
         binding.tvSubtitle.text = getString(R.string.dashboard_subtitle)
     }
 
+    private var currentResonanceMood: String? = null
+
     private fun renderResonanceCard(entry: MoodEntry?) {
         val mood = entry?.mood ?: "Neutral"
+        
+        if (currentResonanceMood != null && currentResonanceMood != mood) {
+            val transition = com.google.android.material.transition.MaterialSharedAxis(
+                com.google.android.material.transition.MaterialSharedAxis.Z, true
+            ).apply {
+                duration = 300
+            }
+            androidx.transition.TransitionManager.beginDelayedTransition(binding.moodCard, transition)
+        }
+        currentResonanceMood = mood
+
+        // Dynamic gradient tint based on mood
+        tintMoodCardGradient(mood)
+
         binding.tvMoodEmoji.text = MoodUtils.getEmoji(mood)
         binding.tvStatus.text = getString(R.string.dashboard_current_mood, mood)
         binding.tvMoodTime.text = if (entry == null) {
@@ -233,8 +253,50 @@ class MainActivity : AppCompatActivity() {
         } else {
             getString(R.string.dashboard_last_check_time, MoodUtils.formatTime(entry.timestamp).uppercase())
         }
+        
+        if (entry != null && entry.confidence > 0f) {
+            binding.tvConfidence.visibility = View.VISIBLE
+            val percent = (entry.confidence * 100f).roundToInt()
+            binding.tvConfidence.text = getString(R.string.dashboard_confidence, percent)
+        } else {
+            binding.tvConfidence.visibility = View.GONE
+        }
+        
         binding.tvStatusDetail.text = entry?.note?.takeIf { it.isNotBlank() }
             ?: MoodUtils.getReflectionPrompt(mood)
+    }
+
+    private fun tintMoodCardGradient(mood: String) {
+        val moodColor = ContextCompat.getColor(this, MoodUtils.getColorRes(mood))
+        val endColor = com.google.android.material.color.MaterialColors.getColor(
+            this, com.google.android.material.R.attr.colorSurfaceContainerHigh, moodColor
+        )
+        val gradient = GradientDrawable(
+            GradientDrawable.Orientation.TL_BR,
+            intArrayOf(moodColor, endColor)
+        )
+        gradient.cornerRadius = resources.getDimension(R.dimen.card_corner_radius)
+        binding.moodCardInner.background = gradient
+    }
+
+    private fun playEntranceAnimations() {
+        val cards = listOf(
+            binding.moodCard,
+            binding.streakCard,
+            binding.wellnessCard
+        )
+        val offsetPx = (40 * resources.displayMetrics.density)
+        cards.forEachIndexed { index, view ->
+            view.alpha = 0f
+            view.translationY = offsetPx
+            view.animate()
+                .alpha(1f)
+                .translationY(0f)
+                .setStartDelay((index * 80).toLong())
+                .setDuration(450)
+                .setInterpolator(DecelerateInterpolator(1.8f))
+                .start()
+        }
     }
 
     private fun renderArchiveCard(state: MainViewModel.HomeUiState) {

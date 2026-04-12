@@ -77,8 +77,10 @@
                 android:layout_marginTop="20dp">
 
                 <LinearLayout
+                    android:id="@+id/moodCardInner"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="@drawable/bg_mood_card_gradient"
                     android:gravity="center_vertical"
                     android:orientation="horizontal"
                     android:padding="20dp">
@@ -126,6 +128,16 @@
                             tools:text="@string/dashboard_last_check_never" />
 
                         <TextView
+                            android:id="@+id/tvConfidence"
+                            style="?attr/textAppearanceLabelSmall"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="2dp"
+                            android:textColor="?attr/colorPrimary"
+                            android:visibility="gone"
+                            tools:text="87% confidence" />
+
+                        <TextView
                             android:id="@+id/tvStatusDetail"
                             style="?attr/textAppearanceBodySmall"
                             android:layout_width="match_parent"
@@ -151,7 +163,7 @@
                 style="@style/MM.Card.Elevated"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp">
+                android:layout_marginTop="24dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -219,7 +231,7 @@
                 style="@style/MM.Card.Filled"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp">
+                android:layout_marginTop="24dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -437,13 +449,13 @@
                         android:gravity="bottom"
                         android:orientation="horizontal">
 
-                        <View android:id="@+id/trendBar1" android:layout_width="0dp" android:layout_height="28dp" android:layout_weight="1" android:layout_marginEnd="4dp" android:background="@drawable/bg_monitoring_circle" />
-                        <View android:id="@+id/trendBar2" android:layout_width="0dp" android:layout_height="40dp" android:layout_weight="1" android:layout_marginEnd="4dp" android:background="@drawable/bg_monitoring_circle" />
-                        <View android:id="@+id/trendBar3" android:layout_width="0dp" android:layout_height="32dp" android:layout_weight="1" android:layout_marginEnd="4dp" android:background="@drawable/bg_monitoring_circle" />
-                        <View android:id="@+id/trendBar4" android:layout_width="0dp" android:layout_height="56dp" android:layout_weight="1" android:layout_marginEnd="4dp" android:background="@drawable/bg_monitoring_circle" />
-                        <View android:id="@+id/trendBar5" android:layout_width="0dp" android:layout_height="36dp" android:layout_weight="1" android:layout_marginEnd="4dp" android:background="@drawable/bg_monitoring_circle" />
-                        <View android:id="@+id/trendBar6" android:layout_width="0dp" android:layout_height="20dp" android:layout_weight="1" android:layout_marginEnd="4dp" android:background="@drawable/bg_monitoring_circle" />
-                        <View android:id="@+id/trendBar7" android:layout_width="0dp" android:layout_height="48dp" android:layout_weight="1" android:background="@drawable/bg_monitoring_circle" />
+                        <View android:id="@+id/trendBar1" android:layout_width="0dp" android:layout_height="28dp" android:layout_weight="1" android:layout_marginEnd="4dp" android:background="@drawable/bg_trend_bar" />
+                        <View android:id="@+id/trendBar2" android:layout_width="0dp" android:layout_height="40dp" android:layout_weight="1" android:layout_marginEnd="4dp" android:background="@drawable/bg_trend_bar" />
+                        <View android:id="@+id/trendBar3" android:layout_width="0dp" android:layout_height="32dp" android:layout_weight="1" android:layout_marginEnd="4dp" android:background="@drawable/bg_trend_bar" />
+                        <View android:id="@+id/trendBar4" android:layout_width="0dp" android:layout_height="56dp" android:layout_weight="1" android:layout_marginEnd="4dp" android:background="@drawable/bg_trend_bar" />
+                        <View android:id="@+id/trendBar5" android:layout_width="0dp" android:layout_height="36dp" android:layout_weight="1" android:layout_marginEnd="4dp" android:background="@drawable/bg_trend_bar" />
+                        <View android:id="@+id/trendBar6" android:layout_width="0dp" android:layout_height="20dp" android:layout_weight="1" android:layout_marginEnd="4dp" android:background="@drawable/bg_trend_bar" />
+                        <View android:id="@+id/trendBar7" android:layout_width="0dp" android:layout_height="48dp" android:layout_weight="1" android:background="@drawable/bg_trend_bar" />
                     </LinearLayout>
 
                     <!-- Day labels -->

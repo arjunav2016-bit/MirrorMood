@@ -55,13 +55,13 @@
     <!-- Success (custom — not in baseline M3) -->
     <color name="md_success">#4A8A7A</color>
 
-    <!-- ═══ Mood Accent Colors ═══ -->
-    <color name="mm_mood_happy">#FFD54F</color>
-    <color name="mm_mood_stressed">#E57373</color>
-    <color name="mm_mood_tired">#90CAF9</color>
-    <color name="mm_mood_focused">#80CBC4</color>
-    <color name="mm_mood_bored">#B39DDB</color>
-    <color name="mm_mood_neutral">#CE93D8</color>
+    <!-- ═══ Mood Accent Colors (curated, therapy-inspired) ═══ -->
+    <color name="mm_mood_happy">#E8C97A</color>
+    <color name="mm_mood_stressed">#D4837A</color>
+    <color name="mm_mood_tired">#8BA4BD</color>
+    <color name="mm_mood_focused">#7DAA96</color>
+    <color name="mm_mood_bored">#A899C2</color>
+    <color name="mm_mood_neutral">#B8A0C4</color>
 
     <!-- Mood on-colors (for text on mood bg) -->
 
