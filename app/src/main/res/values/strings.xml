@@ -203,6 +203,7 @@
     <string name="onboarding_social_proof">JOINED BY 12K+ CURATORS</string>
 
     <!-- Calibration -->
+    <string name="calibration_toolbar_title">Calibration</string>
     <string name="calibration_title">Camera calibration</string>
     <string name="calibration_subtitle">Position your face in the frame so MirrorMood can learn your baseline. Everything stays on-device.</string>
     <string name="calibration_seek_face">Looking for your face&#8230;</string>
