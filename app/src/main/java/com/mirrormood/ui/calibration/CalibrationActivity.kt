@@ -66,6 +66,10 @@ class CalibrationActivity : AppCompatActivity() {
 
         cameraExecutor = Executors.newSingleThreadExecutor()
 
+        binding.btnBack.setOnClickListener {
+            finish()
+            slideTransition(forward = false)
+        }
         binding.btnComplete.setOnClickListener { completeCalibration() }
         binding.btnSkip.setOnClickListener { completeCalibration() }
 
@@ -121,14 +125,25 @@ class CalibrationActivity : AppCompatActivity() {
             if (consecutiveFaceFrames < 10) baselines.add(baseline)
             consecutiveFaceFrames++
             if (consecutiveFaceFrames >= 10) {
-                binding.tvStatus.text = getString(R.string.calibration_face_locked)
-                binding.tvHint.text = getString(R.string.calibration_hint_ready)
+                updateStatus(
+                    getString(R.string.calibration_face_locked),
+                    getString(R.string.calibration_hint_ready)
+                )
                 binding.btnComplete.isEnabled = true
                 binding.progressCalibration.isIndeterminate = false
                 animateProgress(100)
+
+                // Pulse the scan overlay as a visual confirmation
+                binding.vScanOverlay.animate()
+                    .alpha(0.5f).setDuration(200)
+                    .withEndAction {
+                        binding.vScanOverlay.animate().alpha(1f).setDuration(200).start()
+                    }.start()
             } else {
-                binding.tvStatus.text = getString(R.string.calibration_face_detected)
-                binding.tvHint.text = getString(R.string.calibration_hint_hold)
+                updateStatus(
+                    getString(R.string.calibration_face_detected),
+                    getString(R.string.calibration_hint_hold)
+                )
                 val p = (consecutiveFaceFrames * 100 / 10).coerceAtMost(100)
                 animateProgress(p)
             }
@@ -136,9 +151,26 @@ class CalibrationActivity : AppCompatActivity() {
             consecutiveFaceFrames = 0
             baselines.clear()
             binding.btnComplete.isEnabled = false
-            binding.tvStatus.text = getString(R.string.calibration_seek_face)
-            binding.tvHint.text = getString(R.string.calibration_hint_center)
+            updateStatus(
+                getString(R.string.calibration_seek_face),
+                getString(R.string.calibration_hint_center)
+            )
             animateProgress(0)
+        }
+    }
+
+    private fun updateStatus(status: String, hint: String) {
+        if (binding.tvStatus.text != status) {
+            binding.tvStatus.animate().alpha(0f).setDuration(120).withEndAction {
+                binding.tvStatus.text = status
+                binding.tvStatus.animate().alpha(1f).setDuration(120).start()
+            }.start()
+        }
+        if (binding.tvHint.text != hint) {
+            binding.tvHint.animate().alpha(0f).setDuration(120).withEndAction {
+                binding.tvHint.text = hint
+                binding.tvHint.animate().alpha(1f).setDuration(120).start()
+            }.start()
         }
     }
 
