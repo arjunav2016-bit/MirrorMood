@@ -155,9 +155,9 @@ com.mirrormood/
 | **Target SDK** | 36 |
 | **DI** | Dagger Hilt |
 | **UI** | XML Layouts + ViewBinding + Material 3 Nav |
-| **Camera** | CameraX 1.3.0 |
+| **Camera** | CameraX 1.4.0 |
 | **Face Detection** | Google ML Kit Face Detection 16.1.7 |
-| **Database** | Room 2.7.0 + KSP |
+| **Database** | Room 2.8.0 + KSP |
 | **Charts** | MPAndroidChart v3.1.0 |
 | **Architecture** | MVVM (ViewModel + StateFlow/Flow) |
 | **Background** | WorkManager 2.9.0 + Foreground Service + Hilt Worker |
@@ -190,7 +190,7 @@ MirrorMood uses a custom "Ethereal Archive" design system instead of Material Yo
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/yourusername/MirrorMood.git
+   git clone https://github.com/arjunav2016-bit/MirrorMood.git
    cd MirrorMood
    ```
 

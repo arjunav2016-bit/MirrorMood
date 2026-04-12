@@ -2,6 +2,7 @@
 <androidx.coordinatorlayout.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="?attr/colorSurface">
@@ -35,7 +36,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="MirrorMood"
+                    android:text="@string/app_name"
                     android:textColor="?attr/colorPrimary" />
 
                 <com.google.android.material.button.MaterialButton
@@ -43,6 +44,7 @@
                     style="@style/Widget.Material3.Button.IconButton"
                     android:layout_width="48dp"
                     android:layout_height="48dp"
+                    android:contentDescription="@string/settings_content_description"
                     app:icon="@drawable/ic_settings"
                     app:iconTint="?attr/colorOnSurfaceVariant"
                     app:iconSize="24dp" />
@@ -55,7 +57,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
-                android:text="Good evening" />
+                tools:text="@string/dashboard_good_evening" />
 
             <TextView
                 android:id="@+id/tvSubtitle"
@@ -63,7 +65,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:text="Quantitative summary of your emotional data."
+                android:text="@string/dashboard_subtitle"
                 android:textColor="?attr/colorOnSurfaceVariant" />
 
             <!-- ═══ Mood Card ═══ -->
@@ -96,8 +98,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:gravity="center"
-                            android:text="😐"
-                            android:textSize="30sp" />
+                            android:textSize="30sp"
+                            tools:text="Neutral" />
                     </FrameLayout>
 
                     <LinearLayout
@@ -112,7 +114,7 @@
                             style="?attr/textAppearanceTitleMedium"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Current: Neutral" />
+                            tools:text="Current: Neutral" />
 
                         <TextView
                             android:id="@+id/tvMoodTime"
@@ -120,8 +122,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="4dp"
-                            android:text="LAST CHECK: NO CHECK-IN YET"
-                            android:textColor="?attr/colorOnSurfaceVariant" />
+                            android:textColor="?attr/colorOnSurfaceVariant"
+                            tools:text="@string/dashboard_last_check_never" />
 
                         <TextView
                             android:id="@+id/tvStatusDetail"
@@ -130,8 +132,8 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="4dp"
                             android:maxLines="2"
-                            android:text="Start monitoring or log a short note to begin."
-                            android:textColor="?attr/colorOnSurfaceVariant" />
+                            android:textColor="?attr/colorOnSurfaceVariant"
+                            tools:text="Start monitoring or log a short note to begin." />
                     </LinearLayout>
 
                     <com.google.android.material.button.MaterialButton
@@ -139,7 +141,7 @@
                         style="@style/MM.Button.Tonal"
                         android:layout_width="wrap_content"
                         android:layout_height="48dp"
-                        android:text="Start" />
+                        android:text="@string/dashboard_start" />
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
@@ -164,8 +166,8 @@
                         android:layout_height="48dp"
                         android:background="@drawable/bg_mood_orb"
                         android:gravity="center"
-                        android:text="🔥"
-                        android:textSize="24sp" />
+                        android:textSize="24sp"
+                        tools:text="Streak" />
 
                     <LinearLayout
                         android:layout_width="0dp"
@@ -178,7 +180,7 @@
                             style="?attr/textAppearanceLabelSmall"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="CONSISTENCY"
+                            android:text="@string/dashboard_consistency"
                             android:textColor="?attr/colorOnSurfaceVariant" />
 
                         <TextView
@@ -187,7 +189,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="2dp"
-                            android:text="0 Days" />
+                            tools:text="0 Days" />
 
                         <TextView
                             android:id="@+id/tvStreakTitle"
@@ -195,8 +197,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="4dp"
-                            android:text="REFLECTION GOAL: 5D"
-                            android:textColor="?attr/colorOnSurfaceVariant" />
+                            android:textColor="?attr/colorOnSurfaceVariant"
+                            tools:text="REFLECTION GOAL: 0/5D" />
                     </LinearLayout>
 
                     <com.google.android.material.progressindicator.CircularProgressIndicator
@@ -234,6 +236,7 @@
                         <ImageView
                             android:layout_width="20dp"
                             android:layout_height="20dp"
+                            android:contentDescription="@null"
                             android:src="@drawable/ic_insights"
                             app:tint="?attr/colorPrimary" />
 
@@ -243,7 +246,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="8dp"
                             android:layout_weight="1"
-                            android:text="MOOD PATTERNS"
+                            android:text="@string/dashboard_mood_patterns"
                             android:textColor="?attr/colorOnSurfaceVariant" />
 
                         <TextView
@@ -251,8 +254,8 @@
                             style="?attr/textAppearanceLabelSmall"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Stable baseline"
-                            android:textColor="?attr/colorPrimary" />
+                            android:textColor="?attr/colorPrimary"
+                            tools:text="@string/dashboard_stable_baseline" />
                     </LinearLayout>
 
                     <!-- Segmented Mood Bar -->
@@ -317,7 +320,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="6dp"
-                                android:text="Neutral" />
+                                tools:text="@string/mood_neutral" />
 
                             <TextView
                                 android:id="@+id/tvDistributionPercent1"
@@ -325,8 +328,8 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="4dp"
-                                android:text="0%"
-                                android:textColor="?attr/colorOnSurfaceVariant" />
+                                android:textColor="?attr/colorOnSurfaceVariant"
+                                tools:text="0%" />
                         </LinearLayout>
 
                         <!-- Mood 2 -->
@@ -349,7 +352,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="6dp"
-                                android:text="Focused" />
+                                tools:text="@string/mood_focused" />
 
                             <TextView
                                 android:id="@+id/tvDistributionPercent2"
@@ -357,8 +360,8 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="4dp"
-                                android:text="0%"
-                                android:textColor="?attr/colorOnSurfaceVariant" />
+                                android:textColor="?attr/colorOnSurfaceVariant"
+                                tools:text="0%" />
                         </LinearLayout>
 
                         <!-- Mood 3 -->
@@ -381,7 +384,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="6dp"
-                                android:text="Happy" />
+                                tools:text="@string/mood_happy" />
 
                             <TextView
                                 android:id="@+id/tvDistributionPercent3"
@@ -389,8 +392,8 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="4dp"
-                                android:text="0%"
-                                android:textColor="?attr/colorOnSurfaceVariant" />
+                                android:textColor="?attr/colorOnSurfaceVariant"
+                                tools:text="0%" />
                         </LinearLayout>
                     </LinearLayout>
 
@@ -401,8 +404,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="12dp"
-                        android:text="No pattern yet"
-                        android:textColor="?attr/colorOnSurfaceVariant" />
+                        android:textColor="?attr/colorOnSurfaceVariant"
+                        tools:text="@string/dashboard_no_pattern_yet" />
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
@@ -423,7 +426,7 @@
                         style="?attr/textAppearanceLabelSmall"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="7-DAY ACTIVITY"
+                        android:text="@string/dashboard_seven_day_activity"
                         android:textColor="?attr/colorOnSurfaceVariant" />
 
                     <!-- Bars -->
@@ -450,13 +453,13 @@
                         android:layout_marginTop="8dp"
                         android:orientation="horizontal">
 
-                        <TextView android:id="@+id/tvDayLabel1" style="?attr/textAppearanceLabelSmall" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:gravity="center" android:text="M" android:textColor="?attr/colorOnSurfaceVariant" android:layout_marginEnd="4dp" />
-                        <TextView android:id="@+id/tvDayLabel2" style="?attr/textAppearanceLabelSmall" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:gravity="center" android:text="T" android:textColor="?attr/colorOnSurfaceVariant" android:layout_marginEnd="4dp" />
-                        <TextView android:id="@+id/tvDayLabel3" style="?attr/textAppearanceLabelSmall" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:gravity="center" android:text="W" android:textColor="?attr/colorOnSurfaceVariant" android:layout_marginEnd="4dp" />
-                        <TextView android:id="@+id/tvDayLabel4" style="?attr/textAppearanceLabelSmall" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:gravity="center" android:text="T" android:textColor="?attr/colorOnSurfaceVariant" android:layout_marginEnd="4dp" />
-                        <TextView android:id="@+id/tvDayLabel5" style="?attr/textAppearanceLabelSmall" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:gravity="center" android:text="F" android:textColor="?attr/colorOnSurfaceVariant" android:layout_marginEnd="4dp" />
-                        <TextView android:id="@+id/tvDayLabel6" style="?attr/textAppearanceLabelSmall" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:gravity="center" android:text="S" android:textColor="?attr/colorOnSurfaceVariant" android:layout_marginEnd="4dp" />
-                        <TextView android:id="@+id/tvDayLabel7" style="?attr/textAppearanceLabelSmall" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:gravity="center" android:text="S" android:textColor="?attr/colorOnSurfaceVariant" />
+                        <TextView android:id="@+id/tvDayLabel1" style="?attr/textAppearanceLabelSmall" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:gravity="center" android:textColor="?attr/colorOnSurfaceVariant" android:layout_marginEnd="4dp" tools:text="M" />
+                        <TextView android:id="@+id/tvDayLabel2" style="?attr/textAppearanceLabelSmall" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:gravity="center" android:textColor="?attr/colorOnSurfaceVariant" android:layout_marginEnd="4dp" tools:text="T" />
+                        <TextView android:id="@+id/tvDayLabel3" style="?attr/textAppearanceLabelSmall" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:gravity="center" android:textColor="?attr/colorOnSurfaceVariant" android:layout_marginEnd="4dp" tools:text="W" />
+                        <TextView android:id="@+id/tvDayLabel4" style="?attr/textAppearanceLabelSmall" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:gravity="center" android:textColor="?attr/colorOnSurfaceVariant" android:layout_marginEnd="4dp" tools:text="T" />
+                        <TextView android:id="@+id/tvDayLabel5" style="?attr/textAppearanceLabelSmall" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:gravity="center" android:textColor="?attr/colorOnSurfaceVariant" android:layout_marginEnd="4dp" tools:text="F" />
+                        <TextView android:id="@+id/tvDayLabel6" style="?attr/textAppearanceLabelSmall" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:gravity="center" android:textColor="?attr/colorOnSurfaceVariant" android:layout_marginEnd="4dp" tools:text="S" />
+                        <TextView android:id="@+id/tvDayLabel7" style="?attr/textAppearanceLabelSmall" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:gravity="center" android:textColor="?attr/colorOnSurfaceVariant" tools:text="S" />
                     </LinearLayout>
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
@@ -484,6 +487,7 @@
                         <ImageView
                             android:layout_width="24dp"
                             android:layout_height="24dp"
+                            android:contentDescription="@null"
                             android:src="@drawable/ic_journal"
                             app:tint="?attr/colorPrimary" />
 
@@ -493,14 +497,14 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="12dp"
                             android:layout_weight="1"
-                            android:text="Quick Note" />
+                            android:text="@string/dashboard_quick_note" />
 
                         <TextView
                             android:id="@+id/ivQuickNoteChevron"
                             style="?attr/textAppearanceTitleSmall"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="▾"
+                            android:text="@string/dashboard_chevron_collapsed"
                             android:textColor="?attr/colorOnSurfaceVariant" />
                     </LinearLayout>
 
@@ -519,7 +523,7 @@
                             style="?attr/textAppearanceBodyMedium"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Add a short note about how you feel right now."
+                            android:text="@string/dashboard_composer_prompt"
                             android:textColor="?attr/colorOnSurfaceVariant" />
 
                         <com.google.android.material.chip.ChipGroup
@@ -534,14 +538,14 @@
                                 style="@style/Widget.Material3.Chip.Filter"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Happy" />
+                                android:text="@string/mood_happy" />
 
                             <com.google.android.material.chip.Chip
                                 android:id="@+id/chipNeutral"
                                 style="@style/Widget.Material3.Chip.Filter"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Neutral"
+                                android:text="@string/mood_neutral"
                                 android:checked="true" />
 
                             <com.google.android.material.chip.Chip
@@ -549,28 +553,28 @@
                                 style="@style/Widget.Material3.Chip.Filter"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Focused" />
+                                android:text="@string/mood_focused" />
 
                             <com.google.android.material.chip.Chip
                                 android:id="@+id/chipTired"
                                 style="@style/Widget.Material3.Chip.Filter"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Tired" />
+                                android:text="@string/mood_tired" />
 
                             <com.google.android.material.chip.Chip
                                 android:id="@+id/chipStressed"
                                 style="@style/Widget.Material3.Chip.Filter"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Stressed" />
+                                android:text="@string/mood_stressed" />
 
                             <com.google.android.material.chip.Chip
                                 android:id="@+id/chipBored"
                                 style="@style/Widget.Material3.Chip.Filter"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Bored" />
+                                android:text="@string/mood_bored" />
                         </com.google.android.material.chip.ChipGroup>
 
                         <com.google.android.material.textfield.TextInputLayout
@@ -578,7 +582,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="12dp"
                             style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
-                            android:hint="Write a quick note...">
+                            android:hint="@string/dashboard_write_quick_note">
 
                             <com.google.android.material.textfield.TextInputEditText
                                 android:id="@+id/etQuickNote"
@@ -594,7 +598,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="12dp"
-                            android:text="Save Note" />
+                            android:text="@string/dashboard_save_note" />
                     </LinearLayout>
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
@@ -628,7 +632,7 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="RECOMMENDED FOR YOU"
+                            android:text="@string/dashboard_recommended_for_you"
                             android:textColor="?attr/colorOnSecondaryContainer" />
 
                         <com.google.android.material.button.MaterialButton
@@ -636,6 +640,7 @@
                             style="@style/Widget.Material3.Button.IconButton"
                             android:layout_width="36dp"
                             android:layout_height="36dp"
+                            android:contentDescription="@string/dashboard_view_all_advice"
                             app:icon="@drawable/ic_back"
                             app:iconTint="?attr/colorOnSecondaryContainer"
                             app:iconSize="18dp"
@@ -655,8 +660,8 @@
                             android:layout_height="56dp"
                             android:background="@drawable/bg_mood_orb"
                             android:gravity="center"
-                            android:text="🧘"
-                            android:textSize="28sp" />
+                            android:textSize="28sp"
+                            tools:text="Wellness" />
 
                         <LinearLayout
                             android:layout_width="0dp"
@@ -670,8 +675,8 @@
                                 style="?attr/textAppearanceTitleMedium"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="Gentle Reset"
-                                android:textColor="?attr/colorOnSecondaryContainer" />
+                                android:textColor="?attr/colorOnSecondaryContainer"
+                                tools:text="@string/dashboard_gentle_reset" />
 
                             <TextView
                                 android:id="@+id/tvWellnessHint"
@@ -679,8 +684,8 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="4dp"
-                                android:text="A matched ritual will appear here."
-                                android:textColor="?attr/colorOnSecondaryContainer" />
+                                android:textColor="?attr/colorOnSecondaryContainer"
+                                tools:text="@string/dashboard_matched_ritual_placeholder" />
                         </LinearLayout>
                     </LinearLayout>
 
@@ -690,7 +695,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="44dp"
                         android:layout_marginTop="16dp"
-                        android:text="View All Advice" />
+                        android:text="@string/dashboard_view_all_advice" />
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
@@ -707,14 +712,14 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Recent Logs" />
+                    android:text="@string/dashboard_recent_logs" />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btnViewTimeline"
                     style="@style/MM.Button.Text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="View Timeline" />
+                    android:text="@string/dashboard_view_timeline" />
             </LinearLayout>
 
             <TextView
@@ -723,7 +728,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:text="No notes yet. Your next reflection will show up here."
+                android:text="@string/dashboard_no_notes_yet"
                 android:textColor="?attr/colorOnSurfaceVariant" />
 
             <LinearLayout
@@ -743,7 +748,7 @@
         android:layout_gravity="bottom|end"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="@dimen/bottom_nav_fab_margin_bottom"
-        android:contentDescription="Open Journal"
+        android:contentDescription="@string/dashboard_open_journal"
         app:srcCompat="@drawable/ic_journal"
         app:tint="?attr/colorOnPrimaryContainer"
         app:backgroundTint="?attr/colorPrimaryContainer" />

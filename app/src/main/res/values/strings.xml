@@ -40,6 +40,7 @@
     <string name="settings_delete_all_message">This will permanently erase all your mood entries. This action cannot be undone.</string>
     <string name="settings_delete_all_confirm">Delete Everything</string>
     <string name="settings_all_mood_data_deleted">All mood data deleted</string>
+    <string name="settings_content_description">Settings</string>
 
     <string name="app_lock_enabled">App lock enabled</string>
     <string name="app_lock_disabled">App lock disabled</string>
@@ -51,7 +52,6 @@
     </plurals>
     <string name="insights_no_chart_data">Start tracking to see trends</string>
     <string name="insights_back">Back</string>
-
     <string name="nav_home">Home</string>
     <string name="nav_insights">Insights</string>
     <string name="nav_timeline">Timeline</string>
@@ -193,6 +193,12 @@
     <string name="lock_pin_too_short">Enter at least 4 digits.</string>
     <string name="lock_pin_incorrect">Incorrect PIN.</string>
     <string name="lock_biometric_failed">Biometric not recognized. Try again or use your PIN.</string>
+    <string name="lock_private_sanctuary">Your private sanctuary</string>
+    <string name="lock_authenticate_to_continue">Authenticate to continue</string>
+    <string name="lock_use_biometrics">Use Biometrics</string>
+    <string name="lock_enter_pin">Enter PIN</string>
+    <string name="lock_enter_your_pin">Enter your PIN</string>
+    <string name="lock_unlock">Unlock</string>
     <string name="lock_emergency_title">Turn off app lock?</string>
     <string name="lock_emergency_message">You can re-enable lock and set a new PIN from Settings. Your mood data stays on this device.</string>
     <string name="lock_emergency_confirm">Turn off lock</string>
@@ -205,5 +211,50 @@
     <string name="lock_setup_pin_mismatch">PINs must match and be 4&#8211;6 digits.</string>
 
     <!-- Dashboard -->
+    <string name="dashboard_subtitle">Quantitative summary of your emotional data.</string>
+    <string name="dashboard_start">Start</string>
+    <string name="dashboard_pause">Pause</string>
+    <string name="dashboard_good_morning">Good morning, Analyst.</string>
+    <string name="dashboard_good_afternoon">Good afternoon, Analyst.</string>
+    <string name="dashboard_good_evening">Good evening, Analyst.</string>
+    <string name="dashboard_good_night">Good night, Analyst.</string>
+    <string name="dashboard_current_mood">Current: %1$s</string>
+    <string name="dashboard_last_check_never">LAST CHECK: NO CHECK-IN YET</string>
+    <string name="dashboard_last_check_time">LAST CHECK: %1$s</string>
+    <string name="dashboard_mood_patterns">MOOD PATTERNS</string>
+    <string name="dashboard_stable_baseline">Stable baseline</string>
+    <string name="dashboard_no_pattern_yet">No pattern yet</string>
+    <string name="dashboard_dominant_pattern">%1$s pattern</string>
+    <string name="dashboard_trend_after_checkins">Trend appears after a few check-ins.</string>
+    <string name="dashboard_stability_delta">+%1$d%% stability</string>
+    <plurals name="dashboard_streak_days">
+        <item quantity="one">%1$d Day</item>
+        <item quantity="other">%1$d Days</item>
+    </plurals>
+    <string name="dashboard_consistency">CONSISTENCY</string>
+    <string name="dashboard_reflection_goal">REFLECTION GOAL: %1$d/5D</string>
+    <string name="dashboard_distribution_percent">%1$d%%</string>
+    <string name="dashboard_seven_day_activity">7-DAY ACTIVITY</string>
+    <string name="dashboard_quick_note">Quick Note</string>
+    <string name="dashboard_chevron_collapsed">&#9662;</string>
+    <string name="dashboard_chevron_expanded">&#9652;</string>
+    <string name="dashboard_composer_prompt">Add a short note about how you feel right now.</string>
+    <string name="dashboard_write_quick_note">Write a quick note&#8230;</string>
+    <string name="dashboard_save_note">Save Note</string>
+    <string name="dashboard_recommended_for_you">RECOMMENDED FOR YOU</string>
+    <string name="dashboard_gentle_reset">Gentle Reset</string>
+    <string name="dashboard_matched_ritual_placeholder">A matched ritual will appear here.</string>
+    <string name="dashboard_view_all_advice">View All Advice</string>
+    <string name="dashboard_recent_logs">Recent Logs</string>
+    <string name="dashboard_view_timeline">View Timeline</string>
+    <string name="dashboard_no_notes_yet">No notes yet. Your next reflection will show up here.</string>
+    <string name="dashboard_open_journal">Open Journal</string>
+    <string name="dashboard_quoted_note">"%1$s"</string>
+    <string name="mood_happy">Happy</string>
+    <string name="mood_neutral">Neutral</string>
+    <string name="mood_focused">Focused</string>
+    <string name="mood_tired">Tired</string>
+    <string name="mood_stressed">Stressed</string>
+    <string name="mood_bored">Bored</string>
 </resources>
 

@@ -77,6 +77,7 @@
                     <ImageView
                         android:layout_width="28dp"
                         android:layout_height="28dp"
+                        android:contentDescription="@null"
                         android:src="@drawable/ic_settings"
                         app:tint="?attr/colorOnSurface" />
                     <TextView
@@ -106,6 +107,7 @@
                     <ImageView
                         android:layout_width="28dp"
                         android:layout_height="28dp"
+                        android:contentDescription="@null"
                         android:src="@drawable/ic_settings"
                         app:tint="?attr/colorOnSurface" />
                     <TextView
@@ -134,6 +136,7 @@
                     <ImageView
                         android:layout_width="28dp"
                         android:layout_height="28dp"
+                        android:contentDescription="@null"
                         android:src="@drawable/ic_settings"
                         app:tint="?attr/colorOnSurface" />
                     <TextView
@@ -230,7 +233,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:focusable="false"
-                            android:text="10:00 PM" />
+                            tools:text="10:00 PM" />
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <com.google.android.material.textfield.TextInputLayout
@@ -245,7 +248,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:focusable="false"
-                            android:text="7:00 AM" />
+                            tools:text="7:00 AM" />
                     </com.google.android.material.textfield.TextInputLayout>
                 </LinearLayout>
             </LinearLayout>

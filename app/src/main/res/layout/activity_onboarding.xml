@@ -26,6 +26,7 @@
             <ImageView
                 android:layout_width="20dp"
                 android:layout_height="20dp"
+                android:contentDescription="@null"
                 android:src="@drawable/ic_privacy"
                 app:tint="?attr/colorOnSurfaceVariant" />
 
@@ -118,6 +119,7 @@
                 <ImageView
                     android:layout_width="28dp"
                     android:layout_height="28dp"
+                    android:contentDescription="@null"
                     android:src="@drawable/ic_privacy"
                     app:tint="?attr/colorPrimary" />
 
@@ -160,6 +162,7 @@
                 <ImageView
                     android:layout_width="28dp"
                     android:layout_height="28dp"
+                    android:contentDescription="@null"
                     android:src="@drawable/ic_insights"
                     app:tint="?attr/colorPrimary" />
 

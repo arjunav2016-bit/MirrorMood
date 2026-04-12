@@ -18,7 +18,7 @@
             style="?attr/textAppearanceHeadlineMedium"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="MirrorMood"
+            android:text="@string/app_name"
             android:textColor="?attr/colorPrimary" />
 
         <TextView
@@ -26,7 +26,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="Your private sanctuary"
+            android:text="@string/lock_private_sanctuary"
             android:textColor="?attr/colorOnSurfaceVariant" />
 
         <!-- ═══ Biometric Orb ═══ -->
@@ -53,6 +53,7 @@
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:layout_gravity="center"
+                    android:contentDescription="@null"
                     android:src="@drawable/ic_privacy"
                     app:tint="?attr/colorOnPrimaryContainer" />
             </FrameLayout>
@@ -63,7 +64,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
-            android:text="Authenticate to continue"
+            android:text="@string/lock_authenticate_to_continue"
             android:textColor="?attr/colorOnSurfaceVariant" />
 
         <!-- ═══ Unlock Button ═══ -->
@@ -73,7 +74,7 @@
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:layout_marginTop="32dp"
-            android:text="Use Biometrics"
+            android:text="@string/lock_use_biometrics"
             app:icon="@drawable/ic_privacy"
             app:iconGravity="textStart"
             app:iconSize="20dp" />
@@ -85,7 +86,7 @@
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:layout_marginTop="12dp"
-            android:text="Enter PIN" />
+            android:text="@string/lock_enter_pin" />
 
         <!-- ═══ PIN Input (hidden by default) ═══ -->
         <com.google.android.material.textfield.TextInputLayout
@@ -95,7 +96,7 @@
             android:layout_marginTop="16dp"
             android:visibility="gone"
             style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
-            android:hint="Enter your PIN">
+            android:hint="@string/lock_enter_your_pin">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etPin"
@@ -112,7 +113,7 @@
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:layout_marginTop="12dp"
-            android:text="Unlock"
+            android:text="@string/lock_unlock"
             android:visibility="gone" />
 
     </LinearLayout>

@@ -19,3 +19,7 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
+
+# Keep ML Kit and local Room model/database types stable in minified release builds.
+-keep class com.google.mlkit.** { *; }
+-keep class com.mirrormood.data.db.** { *; }

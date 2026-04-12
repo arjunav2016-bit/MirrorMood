@@ -206,30 +206,32 @@ class MainActivity : AppCompatActivity() {
         }
         TransitionManager.beginDelayedTransition(binding.root, transition)
         binding.quickNoteContent.visibility = if (expanded) android.view.View.VISIBLE else android.view.View.GONE
-        binding.ivQuickNoteChevron.text = if (expanded) "▴" else "▾"
+        binding.ivQuickNoteChevron.text = getString(
+            if (expanded) R.string.dashboard_chevron_expanded else R.string.dashboard_chevron_collapsed
+        )
     }
 
     private fun renderGreeting() {
         val hour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY)
         val greeting = when {
-            hour < 5  -> "Good night, Analyst."
-            hour < 12 -> "Good morning, Analyst."
-            hour < 17 -> "Good afternoon, Analyst."
-            hour < 21 -> "Good evening, Analyst."
-            else      -> "Good night, Analyst."
+            hour < 5  -> R.string.dashboard_good_night
+            hour < 12 -> R.string.dashboard_good_morning
+            hour < 17 -> R.string.dashboard_good_afternoon
+            hour < 21 -> R.string.dashboard_good_evening
+            else      -> R.string.dashboard_good_night
         }
-        binding.tvGreeting.text = greeting
-        binding.tvSubtitle.text = "Quantitative summary of your emotional data."
+        binding.tvGreeting.text = getString(greeting)
+        binding.tvSubtitle.text = getString(R.string.dashboard_subtitle)
     }
 
     private fun renderResonanceCard(entry: MoodEntry?) {
         val mood = entry?.mood ?: "Neutral"
         binding.tvMoodEmoji.text = MoodUtils.getEmoji(mood)
-        binding.tvStatus.text = "Current: $mood"
+        binding.tvStatus.text = getString(R.string.dashboard_current_mood, mood)
         binding.tvMoodTime.text = if (entry == null) {
-            "LAST CHECK: NO CHECK-IN YET"
+            getString(R.string.dashboard_last_check_never)
         } else {
-            "LAST CHECK: ${MoodUtils.formatTime(entry.timestamp).uppercase()}"
+            getString(R.string.dashboard_last_check_time, MoodUtils.formatTime(entry.timestamp).uppercase())
         }
         binding.tvStatusDetail.text = entry?.note?.takeIf { it.isNotBlank() }
             ?: MoodUtils.getReflectionPrompt(mood)
@@ -237,22 +239,24 @@ class MainActivity : AppCompatActivity() {
 
     private fun renderArchiveCard(state: MainViewModel.HomeUiState) {
         binding.tvDominantMood.text = if (state.archiveCount == 0) {
-            "No pattern yet"
+            getString(R.string.dashboard_no_pattern_yet)
         } else {
-            "${state.dominantMood} pattern"
+            getString(R.string.dashboard_dominant_pattern, state.dominantMood)
         }
         binding.tvDominantSummary.text = if (state.archiveCount == 0) {
-            "Trend appears after a few check-ins."
+            getString(R.string.dashboard_trend_after_checkins)
         } else if (state.stabilityDelta > 0) {
-            "+${state.stabilityDelta}% stability"
+            getString(R.string.dashboard_stability_delta, state.stabilityDelta)
         } else {
-            "Stable baseline"
+            getString(R.string.dashboard_stable_baseline)
         }
         renderTrendBars(state.trendBuckets)
     }
 
     private fun updateMonitoringUI(monitoring: Boolean) {
-        binding.btnToggle.text = if (monitoring) "Pause" else "Start"
+        binding.btnToggle.text = getString(
+            if (monitoring) R.string.dashboard_pause else R.string.dashboard_start
+        )
     }
 
     private fun updateWellnessCard(mood: String) {
@@ -261,7 +265,7 @@ class MainActivity : AppCompatActivity() {
             tvWellnessEmoji.text = tip.emoji
             tvWellnessTitle.text = tip.title
             tvWellnessHint.text = tip.description
-            tvWellnessMeta.text = "RECOMMENDED FOR YOU"
+            tvWellnessMeta.text = getString(R.string.dashboard_recommended_for_you)
         }
     }
 
@@ -294,7 +298,7 @@ class MainActivity : AppCompatActivity() {
             card.findViewById<TextView>(R.id.tvEchoMeta).text =
                 MoodUtils.formatTime(entry.timestamp).uppercase()
             val note = entry.note?.takeIf { it.isNotBlank() } ?: MoodUtils.getReflectionPrompt(entry.mood)
-            card.findViewById<TextView>(R.id.tvEchoNote).text = "\"$note\""
+            card.findViewById<TextView>(R.id.tvEchoNote).text = getString(R.string.dashboard_quoted_note, note)
             card.setOnClickListener { navigateTo(JournalActivity::class.java) }
         }
     }
@@ -303,8 +307,8 @@ class MainActivity : AppCompatActivity() {
         val count = streak?.count ?: 0
         val mood = streak?.mood ?: "Neutral"
         binding.tvStreakEmoji.text = MoodUtils.getEmoji(mood)
-        binding.tvStreakCount.text = "$count Days"
-        binding.tvStreakTitle.text = "REFLECTION GOAL: ${count.coerceAtMost(5)}/5D"
+        binding.tvStreakCount.text = resources.getQuantityString(R.plurals.dashboard_streak_days, count, count)
+        binding.tvStreakTitle.text = getString(R.string.dashboard_reflection_goal, count.coerceAtMost(5))
         binding.streakProgress.progress = ((count.coerceAtMost(5) / 5f) * 100f).roundToInt()
     }
 
@@ -367,11 +371,11 @@ class MainActivity : AppCompatActivity() {
         }
 
         binding.tvDistributionMood1.text = slices[0].mood
-        binding.tvDistributionPercent1.text = "${slices[0].percent}%"
+        binding.tvDistributionPercent1.text = getString(R.string.dashboard_distribution_percent, slices[0].percent)
         binding.tvDistributionMood2.text = slices[1].mood
-        binding.tvDistributionPercent2.text = "${slices[1].percent}%"
+        binding.tvDistributionPercent2.text = getString(R.string.dashboard_distribution_percent, slices[1].percent)
         binding.tvDistributionMood3.text = slices[2].mood
-        binding.tvDistributionPercent3.text = "${slices[2].percent}%"
+        binding.tvDistributionPercent3.text = getString(R.string.dashboard_distribution_percent, slices[2].percent)
     }
 
     private fun renderTrendBars(values: List<Int>) {

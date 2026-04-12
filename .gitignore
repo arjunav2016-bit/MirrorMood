@@ -17,3 +17,16 @@ local.properties
 /unresolved.txt
 /hs_err_pid*.log
 /replay_pid*.log
+
+# One-off cleanup scripts and local screenshots
+/clean_resources.py
+/clean_resources.ps1
+/clean_xmls.ps1
+/clean_night_xmls.ps1
+/fix_typos.ps1
+/inject_theme_helper.ps1
+/remove_bom.ps1
+/replace.ps1
+/replace_colors.py
+/screen.png
+/screen_fixed.png

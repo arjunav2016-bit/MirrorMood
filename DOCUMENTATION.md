@@ -45,7 +45,7 @@ The codebase adheres strongly to modern Android development standards, specifica
 - **Dependency Injection:** Dagger Hilt globally coordinates ViewModels, application scopes, and Worker classes.
 - **User Interface:** XML ViewBinding integrated deeply with a custom semantic color/token system known as *Ethereal Archive*. Activity navigation adheres to Material Design 3 guidelines.
 - **Camera/Perception:** CameraX v1.3.0 combined seamlessly with ML Kit Face Detection v16.1.7.
-- **Local Persistence:** Room Database v2.7.0 combined with Kotlin Symbol Processing (KSP).
+- **Local Persistence:** Room Database v2.8.0 combined with Kotlin Symbol Processing (KSP).
 - **Background Tasks:** AndroidX WorkManager handles resilient deferred jobs.
 - **Other Notables:** AndroidX Core SplashScreen API and Biometric Prompt API.
 
