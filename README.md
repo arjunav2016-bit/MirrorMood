@@ -41,14 +41,18 @@ MirrorMood uses your device's front camera and Google ML Kit's face detection to
 
 ### 📓 Mood Journal
 - Personal journaling with mood tagging
+- **Search** entries by note content or mood keyword
+- **Mood filter chips** — filter archive by Happy, Focused, Neutral, Stressed, Tired, or Bored
+- Full archive view showing all entries (not just today)
 - Pair journal entries with detected mood data
 - **Long-press to delete** entries with confirmation dialog
 - Editable notes with inline save
 
 ### 🔔 Smart Notifications
 - **Morning reminder** (8:00 AM) to start mood tracking
-- **Evening summary** (9:00 PM) with your day's mood recap and happy-percentage
-- **Weekly digest** (Sunday 10:00 AM) with dominant mood, tracking days, and streak info
+- **Evening summary** (9:00 PM) with day's mood recap, **yesterday comparison** (↑/↓ delta), and wellness tip
+- **Weekly digest** (Sunday 10:00 AM) with dominant mood, **week-over-week trend** comparison, tracking days, and streak info
+- **Anomaly alerts** — notified when 75%+ of recent readings show stress/fatigue
 - **Quiet hours** support — disable notifications during set time windows
 - Powered by WorkManager for reliable scheduling
 
@@ -69,6 +73,7 @@ MirrorMood uses your device's front camera and Google ML Kit's face detection to
 ### 🔒 Privacy First
 - **100% on-device processing** — no images or mood data leave your phone
 - Dedicated privacy screen explaining data handling
+- [Full Privacy Policy](PRIVACY_POLICY.md)
 - Optional biometric app lock for sensitive mood data
 - Local Room database storage only
 

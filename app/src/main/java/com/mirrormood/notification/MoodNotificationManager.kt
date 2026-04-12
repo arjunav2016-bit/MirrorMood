@@ -64,6 +64,7 @@ object MoodNotificationManager {
             .setSmallIcon(com.mirrormood.R.drawable.ic_notification)
             .setContentTitle("Your mood today \uD83C\uDF19")
             .setContentText(summary)
+            .setStyle(NotificationCompat.BigTextStyle().bigText(summary))
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
             .setContentIntent(pendingIntent)
             .setAutoCancel(true)

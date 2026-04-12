@@ -50,6 +50,8 @@ class JournalActivity : AppCompatActivity() {
             dateLabel = currentJournalDateLabel(),
             onBackClicked = { finishWithTransition() },
             onSaveClicked = { mood, note -> saveEntry(mood, note) },
+            onSearchChanged = { query -> viewModel.setSearchQuery(query) },
+            onFilterChanged = { mood -> viewModel.setMoodFilter(mood) },
             formatWordCount = { count ->
                 resources.getQuantityString(R.plurals.journal_word_count, count, count)
             },
@@ -144,6 +146,8 @@ class JournalActivity : AppCompatActivity() {
         private val dateLabel: String,
         private val onBackClicked: () -> Unit,
         private val onSaveClicked: (String, String) -> Boolean,
+        private val onSearchChanged: (String) -> Unit,
+        private val onFilterChanged: (String?) -> Unit,
         private val formatWordCount: (Int) -> String,
         private val countWords: (String) -> Int
     ) : RecyclerView.Adapter<JournalHeaderAdapter.ViewHolder>() {
@@ -175,9 +179,19 @@ class JournalActivity : AppCompatActivity() {
         fun setArchiveEmpty(isEmpty: Boolean) {
             if (isArchiveEmpty != isEmpty) {
                 isArchiveEmpty = isEmpty
-                notifyItemChanged(0)
+                attachedHolder?.updateEmptyState(isEmpty)
             }
         }
+
+        private val filterChipMoodMap = mapOf(
+            R.id.chipFilterAll to null,
+            R.id.chipFilterHappy to "Happy",
+            R.id.chipFilterFocused to "Focused",
+            R.id.chipFilterNeutral to "Neutral",
+            R.id.chipFilterStressed to "Stressed",
+            R.id.chipFilterTired to "Tired",
+            R.id.chipFilterBored to "Bored"
+        )
 
         private inner class ViewHolder(
             private val binding: ItemJournalHeaderBinding
@@ -220,12 +234,36 @@ class JournalActivity : AppCompatActivity() {
                         bindComposerState()
                     }
                 }
+
+                // Search bar
+                binding.etSearch.doAfterTextChanged { editable ->
+                    onSearchChanged(editable?.toString().orEmpty())
+                }
+
+                // Filter chips
+                binding.chipGroupFilter.setOnCheckedStateChangeListener { _, checkedIds ->
+                    val checkedId = checkedIds.firstOrNull()
+                    if (checkedId == null || checkedId == R.id.chipFilterAll) {
+                        // No chip or "All" chip selected -> clear filter
+                        if (checkedId == null) {
+                            // Re-select "All" when everything is deselected
+                            binding.chipGroupFilter.check(R.id.chipFilterAll)
+                        }
+                        onFilterChanged(null)
+                    } else {
+                        onFilterChanged(filterChipMoodMap[checkedId])
+                    }
+                }
             }
 
             fun bind() {
                 binding.tvJournalDate.text = dateLabel
-                binding.tvEmpty.visibility = if (isArchiveEmpty) View.VISIBLE else View.GONE
+                updateEmptyState(isArchiveEmpty)
                 bindComposerState()
+            }
+
+            fun updateEmptyState(isEmpty: Boolean) {
+                binding.tvEmpty.visibility = if (isEmpty) View.VISIBLE else View.GONE
             }
 
             private fun bindComposerState() {
@@ -259,6 +297,8 @@ class JournalActivity : AppCompatActivity() {
             Locale.getDefault()
         )
 
+        private val dateTimeFormatter = SimpleDateFormat("MMM d, h:mm a", Locale.getDefault())
+
         private val differ = androidx.recyclerview.widget.AsyncListDiffer(
             this,
             object : DiffUtil.ItemCallback<MoodEntry>() {
@@ -287,7 +327,7 @@ class JournalActivity : AppCompatActivity() {
 
         override fun onBindViewHolder(holder: ViewHolder, position: Int) {
             val entry = differ.currentList[position]
-            holder.bind(entry, timeFormatter)
+            holder.bind(entry, dateTimeFormatter)
         }
 
         override fun getItemCount(): Int = differ.currentList.size
@@ -325,11 +365,11 @@ class JournalActivity : AppCompatActivity() {
                 }
             }
 
-            fun bind(entry: MoodEntry, timeFormatter: java.text.DateFormat) {
+            fun bind(entry: MoodEntry, dateFormatter: SimpleDateFormat) {
                 currentEntry = entry
                 binding.tvEmoji.text = MoodUtils.getEmoji(entry.mood)
                 binding.tvMood.text = entry.mood
-                binding.tvTime.text = timeFormatter.format(Date(entry.timestamp))
+                binding.tvTime.text = dateFormatter.format(Date(entry.timestamp))
 
                 val desiredNote = entry.note.orEmpty()
                 if (binding.etNote.text?.toString() != desiredNote) {

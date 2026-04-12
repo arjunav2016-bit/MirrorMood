@@ -91,7 +91,10 @@
     <string name="journal_morning_reflection_prompt">What is one thing you are letting go of today to make room for peace?</string>
     <string name="journal_gratitude_scan">Gratitude Scan</string>
     <string name="journal_gratitude_scan_prompt">Notice three small sensations that made you feel grounded recently.</string>
-    <string name="journal_today_archive">Today\'s Archive</string>
+    <string name="journal_today_archive">Your Archive</string>
+    <string name="journal_search_hint">Search entries…</string>
+    <string name="journal_filter_all">All</string>
+    <string name="journal_no_results">No entries match your filter.</string>
     <string name="journal_delete_entry_title">Delete Entry</string>
     <string name="journal_delete_entry_message">Delete this %1$s entry? This cannot be undone.</string>
     <string name="journal_delete_confirm">Delete</string>

@@ -7,37 +7,76 @@ import com.mirrormood.data.repository.MoodRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
-import java.util.Calendar
 
 @HiltViewModel
 class JournalViewModel @Inject constructor(
     private val repository: MoodRepository
 ) : ViewModel() {
-    
-    private val _entries = MutableStateFlow<List<MoodEntry>>(emptyList())
-    val entries: StateFlow<List<MoodEntry>> = _entries.asStateFlow()
 
-    init {
-        loadTodayEntries()
-    }
+    /** Raw stream of all entries, newest first. */
+    private val _allEntries = MutableStateFlow<List<MoodEntry>>(emptyList())
 
-    private fun loadTodayEntries() {
-        val cal = Calendar.getInstance()
-        cal.set(Calendar.HOUR_OF_DAY, 0)
-        cal.set(Calendar.MINUTE, 0)
-        cal.set(Calendar.SECOND, 0)
-        cal.set(Calendar.MILLISECOND, 0)
-        val startOfDay = cal.timeInMillis
-        val endOfDay = startOfDay + 24 * 60 * 60 * 1000
+    /** Active mood filter — null means "show all". */
+    private val _moodFilter = MutableStateFlow<String?>(null)
+    val moodFilter: StateFlow<String?> = _moodFilter.asStateFlow()
 
-        viewModelScope.launch {
-            repository.getMoodsForDayNewestFirst(startOfDay, endOfDay).collect { moodList ->
-                _entries.value = moodList
+    /** Free-text search query. */
+    private val _searchQuery = MutableStateFlow("")
+    val searchQuery: StateFlow<String> = _searchQuery.asStateFlow()
+
+    /** Filtered entries exposed to the UI. */
+    val entries: StateFlow<List<MoodEntry>> = combine(
+        _allEntries,
+        _moodFilter,
+        _searchQuery
+    ) { all, filter, query ->
+        var result = all
+
+        // Apply mood filter
+        if (filter != null) {
+            result = result.filter { it.mood == filter }
+        }
+
+        // Apply text search (case-insensitive, matches note content)
+        if (query.isNotBlank()) {
+            val lowerQuery = query.lowercase()
+            result = result.filter { entry ->
+                entry.note?.lowercase()?.contains(lowerQuery) == true ||
+                entry.mood.lowercase().contains(lowerQuery)
             }
         }
+
+        result
+    }.stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.WhileSubscribed(5_000),
+        initialValue = emptyList()
+    )
+
+    init {
+        loadAllEntries()
+    }
+
+    private fun loadAllEntries() {
+        viewModelScope.launch {
+            repository.getAllMoods().collect { moodList ->
+                _allEntries.value = moodList
+            }
+        }
+    }
+
+    fun setMoodFilter(mood: String?) {
+        _moodFilter.value = mood
+    }
+
+    fun setSearchQuery(query: String) {
+        _searchQuery.value = query
     }
 
     fun updateNote(entryId: Int, note: String) {

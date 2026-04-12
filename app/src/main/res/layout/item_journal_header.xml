@@ -243,6 +243,89 @@
         android:layout_marginTop="28dp"
         android:text="@string/journal_today_archive" />
 
+    <!-- Search bar -->
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        app:startIconDrawable="@drawable/ic_search"
+        app:startIconContentDescription="Search"
+        app:boxCornerRadiusTopStart="12dp"
+        app:boxCornerRadiusTopEnd="12dp"
+        app:boxCornerRadiusBottomStart="12dp"
+        app:boxCornerRadiusBottomEnd="12dp">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etSearch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/journal_search_hint"
+            android:inputType="text"
+            android:imeOptions="actionSearch"
+            android:maxLines="1" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <!-- Mood filter chips -->
+    <com.google.android.material.chip.ChipGroup
+        android:id="@+id/chipGroupFilter"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        app:selectionRequired="false"
+        app:singleSelection="true">
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chipFilterAll"
+            style="@style/Widget.Material3.Chip.Filter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:text="@string/journal_filter_all" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chipFilterHappy"
+            style="@style/Widget.Material3.Chip.Filter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/journal_mood_happy" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chipFilterFocused"
+            style="@style/Widget.Material3.Chip.Filter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/journal_mood_focused" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chipFilterNeutral"
+            style="@style/Widget.Material3.Chip.Filter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/journal_mood_neutral" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chipFilterStressed"
+            style="@style/Widget.Material3.Chip.Filter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/journal_mood_stressed" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chipFilterTired"
+            style="@style/Widget.Material3.Chip.Filter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/journal_mood_tired" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chipFilterBored"
+            style="@style/Widget.Material3.Chip.Filter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/journal_mood_bored" />
+    </com.google.android.material.chip.ChipGroup>
+
     <TextView
         android:id="@+id/tvEmpty"
         style="?attr/textAppearanceBodyMedium"
