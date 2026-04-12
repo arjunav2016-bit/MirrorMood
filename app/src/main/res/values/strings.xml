@@ -121,6 +121,22 @@
     <string name="timeline_distribution_percent">%1$d%%</string>
     <string name="timeline_distribution_label">%1$s %2$s</string>
 
+    <string name="history_heatmap_title">MOOD HEAT-MAP</string>
+    <string name="history_heatmap_hint">Darker days mean more check-ins. Color follows the day\'s dominant mood.</string>
+    <string name="history_heatmap_no_data">No mood data this month</string>
+    <string name="history_heatmap_dominant">%1$s %2$s leads this month</string>
+    <plurals name="history_heatmap_tracked_days">
+        <item quantity="one">%1$d tracked day</item>
+        <item quantity="other">%1$d tracked days</item>
+    </plurals>
+    <string name="history_heatmap_tracked_days_empty">No tracked days yet</string>
+    <string name="history_heatmap_peak_day">Busiest: day %1$d (%2$s)</string>
+    <plurals name="history_heatmap_peak_day_entries">
+        <item quantity="one">%1$d entry</item>
+        <item quantity="other">%1$d entries</item>
+    </plurals>
+    <string name="history_heatmap_peak_day_empty">No busy day yet</string>
+
     <string name="privacy_title">Privacy</string>
     <string name="privacy_headline">Your privacy, our absolute priority.</string>
     <string name="privacy_summary">At MirrorMood, your emotional archive stays personal. Reflection data never leaves your device unless you explicitly choose to share it.</string>

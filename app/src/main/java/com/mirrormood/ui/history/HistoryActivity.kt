@@ -106,10 +106,12 @@ class HistoryActivity : AppCompatActivity() {
     private var cachedFirstDayOfWeek = 0
     private var cachedDaysInMonth = 0
     private var cachedTodayDay = -1
+    private var cachedMaxEntryCount = 0
 
     private fun buildCalendarGrid() {
         binding.calendarGrid.removeAllViews()
         dayViews.clear()
+        renderMonthSummary()
 
         val cal = displayedMonth.clone() as Calendar
         cal.set(Calendar.DAY_OF_MONTH, 1)
@@ -127,6 +129,7 @@ class HistoryActivity : AppCompatActivity() {
         val daysInPrevMonth = prevCal.getActualMaximum(Calendar.DAY_OF_MONTH)
 
         val totalCells = 42
+        cachedMaxEntryCount = currentMonthData.values.maxOfOrNull { it.size } ?: 0
 
         for (i in 0 until totalCells) {
             val dayView = CalendarDayView(this)
@@ -134,7 +137,15 @@ class HistoryActivity : AppCompatActivity() {
             when {
                 i < cachedFirstDayOfWeek -> {
                     val prevDay = daysInPrevMonth - cachedFirstDayOfWeek + i + 1
-                    dayView.bind(prevDay, currentMonth = false, today = false, dominantMood = null, selected = false)
+                    dayView.bind(
+                        day = prevDay,
+                        currentMonth = false,
+                        today = false,
+                        dominantMood = null,
+                        entryCount = 0,
+                        maxEntryCount = cachedMaxEntryCount,
+                        selected = false
+                    )
                 }
                 i < cachedFirstDayOfWeek + cachedDaysInMonth -> {
                     val day = i - cachedFirstDayOfWeek + 1
@@ -144,12 +155,28 @@ class HistoryActivity : AppCompatActivity() {
                     val isSelectedDay = day == selectedDay
                     val isTodayCell = day == cachedTodayDay
 
-                    dayView.bind(day, currentMonth = true, today = isTodayCell, dominantMood = dominant, selected = isSelectedDay)
+                    dayView.bind(
+                        day = day,
+                        currentMonth = true,
+                        today = isTodayCell,
+                        dominantMood = dominant,
+                        entryCount = dayEntries?.size ?: 0,
+                        maxEntryCount = cachedMaxEntryCount,
+                        selected = isSelectedDay
+                    )
                     dayView.setOnClickListener { onDayClicked(day) }
                 }
                 else -> {
                     val nextDay = i - cachedFirstDayOfWeek - cachedDaysInMonth + 1
-                    dayView.bind(nextDay, currentMonth = false, today = false, dominantMood = null, selected = false)
+                    dayView.bind(
+                        day = nextDay,
+                        currentMonth = false,
+                        today = false,
+                        dominantMood = null,
+                        entryCount = 0,
+                        maxEntryCount = cachedMaxEntryCount,
+                        selected = false
+                    )
                 }
             }
 
@@ -177,7 +204,15 @@ class HistoryActivity : AppCompatActivity() {
                     val prevEntries = currentMonthData[prevSelected]
                     val prevDominant = prevEntries?.groupBy { it.mood }
                         ?.maxByOrNull { it.value.size }?.key
-                    prevView.bind(prevSelected, currentMonth = true, today = prevSelected == cachedTodayDay, dominantMood = prevDominant, selected = false)
+                    prevView.bind(
+                        day = prevSelected,
+                        currentMonth = true,
+                        today = prevSelected == cachedTodayDay,
+                        dominantMood = prevDominant,
+                        entryCount = prevEntries?.size ?: 0,
+                        maxEntryCount = cachedMaxEntryCount,
+                        selected = false
+                    )
                 }
             }
             // Rebind the newly selected day
@@ -188,7 +223,15 @@ class HistoryActivity : AppCompatActivity() {
                     val newEntries = currentMonthData[day]
                     val newDominant = newEntries?.groupBy { it.mood }
                         ?.maxByOrNull { it.value.size }?.key
-                    newView.bind(day, currentMonth = true, today = day == cachedTodayDay, dominantMood = newDominant, selected = true)
+                    newView.bind(
+                        day = day,
+                        currentMonth = true,
+                        today = day == cachedTodayDay,
+                        dominantMood = newDominant,
+                        entryCount = newEntries?.size ?: 0,
+                        maxEntryCount = cachedMaxEntryCount,
+                        selected = true
+                    )
                 }
             }
         }
@@ -242,5 +285,41 @@ class HistoryActivity : AppCompatActivity() {
         val dominant = moodCounts.maxByOrNull { it.value.size }?.key ?: "Neutral"
         val emoji = MoodUtils.getEmoji(dominant)
         binding.tvDetailDominant.text = "$emoji $dominant"
+    }
+
+    private fun renderMonthSummary() {
+        val entries = currentMonthData.values.flatten()
+        if (entries.isEmpty()) {
+            binding.tvHeatMapDominant.text = getString(R.string.history_heatmap_no_data)
+            binding.tvHeatMapTrackedDays.text = getString(R.string.history_heatmap_tracked_days_empty)
+            binding.tvHeatMapPeakDay.text = getString(R.string.history_heatmap_peak_day_empty)
+            return
+        }
+
+        val trackedDays = currentMonthData.count { it.value.isNotEmpty() }
+        val dominantMood = entries.groupBy { it.mood }.maxByOrNull { it.value.size }?.key ?: "Neutral"
+        val peakDay = currentMonthData.maxByOrNull { it.value.size }
+        val peakDayText = if (peakDay != null) {
+            val entryCountText = resources.getQuantityString(
+                R.plurals.history_heatmap_peak_day_entries,
+                peakDay.value.size,
+                peakDay.value.size
+            )
+            getString(R.string.history_heatmap_peak_day, peakDay.key, entryCountText)
+        } else {
+            getString(R.string.history_heatmap_peak_day_empty)
+        }
+
+        binding.tvHeatMapDominant.text = getString(
+            R.string.history_heatmap_dominant,
+            MoodUtils.getEmoji(dominantMood),
+            dominantMood
+        )
+        binding.tvHeatMapTrackedDays.text = resources.getQuantityString(
+            R.plurals.history_heatmap_tracked_days,
+            trackedDays,
+            trackedDays
+        )
+        binding.tvHeatMapPeakDay.text = peakDayText
     }
 }

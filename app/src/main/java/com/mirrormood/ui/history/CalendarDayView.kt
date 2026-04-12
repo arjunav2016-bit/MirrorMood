@@ -1,12 +1,16 @@
 package com.mirrormood.ui.history
 
 import android.content.Context
+import android.graphics.Color
+import android.graphics.drawable.GradientDrawable
 import android.util.TypedValue
 import android.view.Gravity
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.core.graphics.ColorUtils
 import androidx.core.content.ContextCompat
 import com.mirrormood.R
+import com.mirrormood.util.MoodUtils
 
 class CalendarDayView(context: Context) : LinearLayout(context) {
 
@@ -57,6 +61,8 @@ class CalendarDayView(context: Context) : LinearLayout(context) {
         currentMonth: Boolean,
         today: Boolean,
         dominantMood: String?,
+        entryCount: Int,
+        maxEntryCount: Int,
         selected: Boolean
     ) {
         dayOfMonth = day
@@ -72,7 +78,7 @@ class CalendarDayView(context: Context) : LinearLayout(context) {
         }
 
         tvDayNumber.text = day.toString()
-        tvMoodEmoji.text = if (dominantMood != null) com.mirrormood.util.MoodUtils.getEmoji(dominantMood) else ""
+        tvMoodEmoji.text = if (dominantMood != null) MoodUtils.getEmoji(dominantMood) else ""
 
         if (currentMonth) {
             // Both mm_on_surface and mm_calendar_outside_month now have night overrides
@@ -82,14 +88,58 @@ class CalendarDayView(context: Context) : LinearLayout(context) {
             tvMoodEmoji.text = ""
         }
 
-        // Use ContextCompat.getDrawable (non-deprecated) for calendar cell backgrounds
-        background = when {
-            selected && currentMonth -> ContextCompat.getDrawable(context, R.drawable.bg_calendar_day_selected)
-            today && currentMonth    -> ContextCompat.getDrawable(context, R.drawable.bg_calendar_today)
-            else                    -> null
-        }
+        background = buildHeatMapBackground(currentMonth, today, selected, dominantMood, entryCount, maxEntryCount)
 
         isClickable = currentMonth && day > 0
         isFocusable = isClickable
+    }
+
+    private fun buildHeatMapBackground(
+        currentMonth: Boolean,
+        today: Boolean,
+        selected: Boolean,
+        dominantMood: String?,
+        entryCount: Int,
+        maxEntryCount: Int
+    ): GradientDrawable? {
+        if (!currentMonth) return null
+
+        val radius = TypedValue.applyDimension(
+            TypedValue.COMPLEX_UNIT_DIP, 8f, resources.displayMetrics
+        )
+        val shape = GradientDrawable().apply {
+            cornerRadius = radius
+        }
+
+        if (dominantMood != null && entryCount > 0) {
+            val moodColor = ContextCompat.getColor(context, MoodUtils.getColorRes(dominantMood))
+            val intensity = if (maxEntryCount > 0) {
+                entryCount.toFloat() / maxEntryCount.toFloat()
+            } else {
+                0f
+            }
+            val alpha = (58 + (112 * intensity)).toInt().coerceIn(58, 170)
+            shape.setColor(ColorUtils.setAlphaComponent(moodColor, alpha))
+        } else {
+            shape.setColor(Color.TRANSPARENT)
+        }
+
+        when {
+            selected -> {
+                val strokeColor = ContextCompat.getColor(context, R.color.mm_primary)
+                shape.setStroke(dp(2f), strokeColor)
+            }
+            today -> {
+                val strokeColor = ContextCompat.getColor(context, R.color.mm_ghost_outline)
+                shape.setStroke(dp(1f), strokeColor)
+            }
+        }
+        return shape
+    }
+
+    private fun dp(value: Float): Int {
+        return TypedValue.applyDimension(
+            TypedValue.COMPLEX_UNIT_DIP, value, resources.displayMetrics
+        ).toInt()
     }
 }
