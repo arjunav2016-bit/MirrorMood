@@ -20,6 +20,54 @@ object WellnessRepository {
         return getRecommendations(mood).first()
     }
 
+    fun getContextualTip(
+        mood: String,
+        repeatedTrigger: String? = null,
+        streakMood: String? = null,
+        streakCount: Int = 0,
+        hourOfDay: Int = 12
+    ): WellnessRecommendation {
+        val tips = when (mood) {
+            "Stressed" -> stressedTips
+            "Tired" -> tiredTips
+            "Bored" -> boredTips
+            "Happy" -> happyTips
+            "Focused" -> focusedTips
+            else -> neutralTips
+        }
+
+        val preferredCategory = when {
+            repeatedTrigger == "Sleep" && mood in setOf("Tired", "Stressed", "Neutral") -> "Self-Care"
+            repeatedTrigger == "Work" && mood in setOf("Stressed", "Focused", "Bored") -> "Mindset"
+            repeatedTrigger == "Exercise" && mood in setOf("Happy", "Focused", "Neutral") -> "Activity"
+            repeatedTrigger == "Health" -> "Self-Care"
+            mood == "Stressed" -> "Breathing"
+            mood == "Focused" -> "Mindset"
+            mood == "Happy" && streakMood == "Happy" && streakCount >= 2 -> "Mindset"
+            mood == "Tired" && hourOfDay >= 20 -> "Self-Care"
+            mood == "Neutral" && hourOfDay < 12 -> "Mindset"
+            else -> null
+        }
+
+        val pool = preferredCategory?.let { category ->
+            tips.filter { it.category == category }
+        }.orEmpty().ifEmpty { tips }
+
+        val selectionKey = buildString {
+            append(mood)
+            append('|')
+            append(repeatedTrigger ?: "")
+            append('|')
+            append(streakMood ?: "")
+            append('|')
+            append(streakCount)
+            append('|')
+            append(hourOfDay / 6)
+        }
+        val index = selectionKey.hashCode().mod(pool.size)
+        return pool[index]
+    }
+
     // ── Stressed ────────────────────────────────────────────────
     private val stressedTips = listOf(
         WellnessRecommendation(

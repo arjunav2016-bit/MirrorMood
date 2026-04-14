@@ -70,4 +70,36 @@ class WellnessRepositoryTest {
             )
         }
     }
+
+    @Test
+    fun `contextual tip is deterministic for same inputs`() {
+        val first = WellnessRepository.getContextualTip(
+            mood = "Stressed",
+            repeatedTrigger = "Work",
+            streakMood = "Stressed",
+            streakCount = 2,
+            hourOfDay = 10
+        )
+        val second = WellnessRepository.getContextualTip(
+            mood = "Stressed",
+            repeatedTrigger = "Work",
+            streakMood = "Stressed",
+            streakCount = 2,
+            hourOfDay = 10
+        )
+
+        assertEquals(first.title, second.title)
+        assertEquals(first.category, second.category)
+    }
+
+    @Test
+    fun `contextual tip prefers self care for sleep related tired mood`() {
+        val tip = WellnessRepository.getContextualTip(
+            mood = "Tired",
+            repeatedTrigger = "Sleep",
+            hourOfDay = 22
+        )
+
+        assertEquals("Self-Care", tip.category)
+    }
 }

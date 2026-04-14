@@ -6,10 +6,12 @@ import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.mirrormood.MirrorMoodApp
+import com.mirrormood.data.WellnessRecommendation
 import com.mirrormood.data.db.MoodEntry
 import com.mirrormood.data.repository.AchievementRepository
 import com.mirrormood.data.repository.MoodRepository
 import com.mirrormood.data.repository.PromptEngine
+import com.mirrormood.data.repository.WellnessRepository
 import com.mirrormood.health.HealthConnectManager
 import com.mirrormood.health.HealthSnapshot
 import com.mirrormood.util.MoodUtils
@@ -147,6 +149,7 @@ class MainViewModel @Inject constructor(
         val distribution: List<MoodDistribution> = emptyList(),
         val trendBuckets: List<Int> = List(7) { 0 },
         val stabilityDelta: Int = 0,
+        val wellnessTip: WellnessRecommendation = WellnessRepository.getContextualTip("Neutral"),
         val smartAction: SmartActionState? = null
     )
 
@@ -179,6 +182,7 @@ class MainViewModel @Inject constructor(
                 return HomeUiState(
                     trendBuckets = List(7) { 0 },
                     reflectionPrompt = buildReflectionPrompt("Neutral", emptyList()),
+                    wellnessTip = buildWellnessTip(emptyList(), "Neutral"),
                     smartAction = buildSmartActionState(emptyList())
                 )
             }
@@ -222,6 +226,7 @@ class MainViewModel @Inject constructor(
                 } else {
                     0
                 },
+                wellnessTip = buildWellnessTip(entries, dominantMood),
                 smartAction = buildSmartActionState(entries)
             )
         }
@@ -323,6 +328,30 @@ class MainViewModel @Inject constructor(
                 currentMood = currentMood,
                 recentEntries = recentEntries
             ).firstOrNull() ?: MoodUtils.getReflectionPrompt(currentMood)
+        }
+
+        @JvmStatic
+        @VisibleForTesting
+        internal fun buildWellnessTip(
+            entries: List<MoodEntry>,
+            fallbackMood: String = entries.firstOrNull()?.mood ?: "Neutral"
+        ): WellnessRecommendation {
+            val repeatedTrigger = findRepeatedTrigger(entries)
+            val streak = buildStreakState(entries)
+            val latestMood = entries.firstOrNull()?.mood ?: fallbackMood
+            val moodForTip = when {
+                latestMood == "Neutral" && repeatedTrigger == "Sleep" -> "Tired"
+                latestMood == "Neutral" && repeatedTrigger == "Work" -> "Focused"
+                else -> latestMood
+            }
+
+            return WellnessRepository.getContextualTip(
+                mood = moodForTip,
+                repeatedTrigger = repeatedTrigger,
+                streakMood = streak?.mood,
+                streakCount = streak?.count ?: 0,
+                hourOfDay = Calendar.getInstance().get(Calendar.HOUR_OF_DAY)
+            )
         }
 
         @JvmStatic

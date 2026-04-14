@@ -427,6 +427,22 @@
     <string name="settings_high_contrast_summary">Increase contrast for better readability</string>
 
     <!-- Health Connect Dashboard -->
+    <string name="health_card_metrics_unavailable">Metrics unavailable</string>
+    <string name="correlations_sleep_insight_value">Your mood is generally better aligned with 7+ hours of quality sleep.</string>
+    <string name="correlations_activity_insight_value">Active days show a 23%% increase in positive journal entries.</string>
+    <string name="correlations_title">Correlations</string>
+    <string name="correlations_subtitle">See how sleep, steps, and your mood patterns move together.</string>
+    <string name="correlations_health_linked">Health Connect linked</string>
+    <string name="correlations_health_desc">Recent sleep and activity data is available for pattern matching.</string>
+    <string name="correlations_sleep_section">Sleep</string>
+    <string name="correlations_avg_sleep">Average Sleep</string>
+    <string name="correlations_quality">Quality</string>
+    <string name="correlations_mood_sleep_title">Mood and Sleep</string>
+    <string name="correlations_activity_section">Activity</string>
+    <string name="correlations_avg_steps">Average Steps</string>
+    <string name="correlations_happy_day_steps">Best Mood Days</string>
+    <string name="correlations_not_linked_title">Link Health Connect</string>
+    <string name="correlations_not_linked_desc">Connect sleep and step data to unlock health correlations.</string>
     <string name="health_card_title">HEALTH SNAPSHOT</string>
     <string name="health_card_steps">%1$s steps</string>
     <string name="health_card_sleep">%1$.1f hrs sleep</string>

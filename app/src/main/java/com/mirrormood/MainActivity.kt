@@ -22,8 +22,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.chip.Chip
 import com.google.android.material.color.DynamicColors
+import com.mirrormood.data.WellnessRecommendation
 import com.mirrormood.data.db.MoodEntry
-import com.mirrormood.data.repository.WellnessRepository
 import com.mirrormood.databinding.ActivityMainBinding
 import com.mirrormood.notification.MoodNotificationManager
 import com.mirrormood.notification.NotificationScheduler
@@ -209,7 +209,7 @@ class MainActivity : AppCompatActivity() {
                 renderArchiveCard(state)
                 renderDistributionCard(state)
                 renderRecentEchoes(state.recentEntries)
-                updateWellnessCard(state.dominantMood)
+                updateWellnessCard(state.wellnessTip)
                 binding.tvComposerPrompt.text = state.reflectionPrompt
             }
         }
@@ -472,8 +472,7 @@ class MainActivity : AppCompatActivity() {
         )
     }
 
-    private fun updateWellnessCard(mood: String) {
-        val tip = WellnessRepository.getQuickTip(mood)
+    private fun updateWellnessCard(tip: WellnessRecommendation) {
         with(binding) {
             tvWellnessEmoji.text = tip.emoji
             tvWellnessTitle.text = tip.title

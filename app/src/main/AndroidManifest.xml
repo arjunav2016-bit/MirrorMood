@@ -168,6 +168,19 @@
                 tools:node="remove" />
         </provider>
 
+        <!-- Wear OS Sync Service -->
+        <service
+            android:name=".wear.WearDataReceiverService"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.google.android.gms.wearable.DATA_CHANGED" />
+                <data
+                    android:host="*"
+                    android:pathPrefix="/quick_log"
+                    android:scheme="wear" />
+            </intent-filter>
+        </service>
+
     </application>
 
 </manifest>

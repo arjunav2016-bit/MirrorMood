@@ -172,6 +172,20 @@ class MainViewModelLogicTest {
     }
 
     @Test
+    fun `wellness tip leans toward focused guidance for repeated work trigger`() {
+        val entries = listOf(
+            entry("Neutral", hoursAgo = 1).copy(triggers = "Work"),
+            entry("Neutral", hoursAgo = 2).copy(triggers = "Work"),
+            entry("Focused", hoursAgo = 4).copy(triggers = "Work")
+        )
+
+        val tip = MainViewModel.buildWellnessTip(entries)
+
+        assertTrue(tip.title.isNotBlank())
+        assertTrue(tip.category in setOf("Mindset", "Activity", "Self-Care", "Breathing"))
+    }
+
+    @Test
     fun `stabilityDelta is zero when only one mood exists`() {
         val entries = listOf(
             entry("Happy", hoursAgo = 1),

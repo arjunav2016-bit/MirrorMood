@@ -104,4 +104,7 @@ dependencies {
 
     // TFLite for on-device mood ML model
     implementation("org.tensorflow:tensorflow-lite:2.16.1")
+
+    // Wear OS Data Layer API
+    implementation("com.google.android.gms:play-services-wearable:18.1.0")
 }

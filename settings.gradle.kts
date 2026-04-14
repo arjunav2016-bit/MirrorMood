@@ -27,3 +27,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "MirrorMood"
 include(":app")
+include(":wear")
