@@ -42,6 +42,10 @@ android {
             useLegacyPackaging = false
         }
     }
+    @Suppress("UnstableApiUsage")
+    androidResources {
+        noCompress += "tflite"
+    }
 }
 
 dependencies {
@@ -94,4 +98,10 @@ dependencies {
     ksp(libs.hilt.android.compiler)
     implementation(libs.androidx.hilt.work)
     ksp(libs.androidx.hilt.compiler)
+
+    // Health Connect
+    implementation(libs.androidx.health.connect.client)
+
+    // TFLite for on-device mood ML model
+    implementation("org.tensorflow:tensorflow-lite:2.16.1")
 }

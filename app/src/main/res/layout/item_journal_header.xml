@@ -150,18 +150,45 @@
                     android:gravity="top"
                     android:inputType="textMultiLine|textCapSentences" />
             </com.google.android.material.textfield.TextInputLayout>
-
-            <TextView
-                android:id="@+id/tvWordCount"
-                style="?attr/textAppearanceLabelSmall"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="end"
                 android:layout_marginTop="8dp"
-                android:textColor="?attr/colorOnSurfaceVariant"
-                tools:text="0 words" />
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tvWordCount"
+                    style="?attr/textAppearanceLabelSmall"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textColor="?attr/colorOnSurfaceVariant"
+                    tools:text="0 words" />
+
+                <!-- Voice journaling button -->
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnVoiceJournal"
+                    style="@style/Widget.Material3.Button.IconButton.Filled.Tonal"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:contentDescription="@string/voice_journal_start"
+                    app:icon="@drawable/ic_mic"
+                    app:iconSize="22dp" />
+            </LinearLayout>
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>
+
+    <!-- Voice status hint -->
+    <TextView
+        android:id="@+id/tvVoiceStatus"
+        style="?attr/textAppearanceLabelSmall"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:text="@string/voice_journal_info"
+        android:textColor="?attr/colorOnSurfaceVariant"
+        android:visibility="gone" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnSaveEntry"
@@ -170,6 +197,23 @@
         android:layout_height="56dp"
         android:layout_marginTop="16dp"
         android:text="@string/journal_save_entry" />
+
+    <!-- AI Smart Prompts -->
+    <TextView
+        style="?attr/textAppearanceTitleSmall"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="28dp"
+        android:text="@string/journal_gentle_guidance" />
+
+    <!-- Dynamic AI prompt chips — populated programmatically -->
+    <com.google.android.material.chip.ChipGroup
+        android:id="@+id/chipGroupSmartPrompts"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        app:singleSelection="true"
+        app:selectionRequired="false" />
 
     <TextView
         style="?attr/textAppearanceTitleSmall"

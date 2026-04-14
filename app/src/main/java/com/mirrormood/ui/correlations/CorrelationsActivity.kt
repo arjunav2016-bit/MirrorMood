@@ -44,16 +44,18 @@ class CorrelationsActivity : AppCompatActivity() {
             slideTransition(forward = false)
         }
 
+        val healthConnectManager = com.mirrormood.health.HealthConnectManager(this)
+
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.entries.collect { entries ->
-                    analyzePatterns(entries)
+                    analyzePatterns(entries, healthConnectManager)
                 }
             }
         }
     }
 
-    private fun analyzePatterns(entries: List<MoodEntry>) {
+    private fun analyzePatterns(entries: List<MoodEntry>, healthConnectManager: com.mirrormood.health.HealthConnectManager) {
         if (entries.isEmpty()) {
             binding.tvTimePattern.text = "Not enough data yet. Keep tracking!"
             return
@@ -78,6 +80,35 @@ class CorrelationsActivity : AppCompatActivity() {
             }.get(Calendar.DAY_OF_YEAR)
         }.size
         binding.tvDataSummary.text = "${entries.size} readings across $totalDays days"
+
+        // 5. Health Connect data
+        lifecycleScope.launch {
+            val prefs = getSharedPreferences(com.mirrormood.MirrorMoodApp.PREFS_NAME, android.content.Context.MODE_PRIVATE)
+            if (prefs.getBoolean("health_connect_enabled", false) && healthConnectManager.hasAllPermissions()) {
+                val now = java.time.Instant.now()
+                val startTime = now.minus(java.time.Duration.ofDays(7))
+                
+                val sleepSecs = healthConnectManager.readSleepDuration(startTime, now)
+                val steps = healthConnectManager.readSteps(startTime, now)
+                
+                val sleepHours = sleepSecs / 3600f
+                val lines = mutableListOf<String>()
+                if (sleepHours > 0) {
+                    lines.add("😴 Avg Sleep (last 7 days): ${String.format("%.1f", sleepHours / 7f)} hours/day")
+                }
+                if (steps > 0) {
+                    lines.add("🚶 Avg Steps (last 7 days): ${steps / 7}/day")
+                }
+                
+                if (lines.isEmpty()) {
+                    binding.tvHealthPattern.text = "No recent data found in Health Connect."
+                } else {
+                    binding.tvHealthPattern.text = lines.joinToString("\n")
+                }
+            } else {
+                binding.tvHealthPattern.text = "Link Health Connect in Settings to see sleep and step correlations."
+            }
+        }
     }
 
     private fun findTimePatterns(entries: List<MoodEntry>): String {

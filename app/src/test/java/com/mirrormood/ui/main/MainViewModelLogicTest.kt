@@ -97,7 +97,78 @@ class MainViewModelLogicTest {
             entry("Focused", hoursAgo = 2),
         )
         val state = MainViewModel.buildHomeUiState(entries)
-        assertEquals(MoodUtils.getReflectionPrompt("Focused"), state.reflectionPrompt)
+        assertEquals(
+            MainViewModel.buildReflectionPrompt("Focused", entries),
+            state.reflectionPrompt
+        )
+    }
+
+    @Test
+    fun `reflection prompt uses streak-aware prompt when recent moods repeat`() {
+        val entries = listOf(
+            entry("Stressed", hoursAgo = 1),
+            entry("Stressed", hoursAgo = 2),
+            entry("Stressed", hoursAgo = 3),
+        )
+
+        val prompt = MainViewModel.buildReflectionPrompt("Stressed", entries)
+
+        assertEquals(
+            "You've been feeling stressed for a while. What's the biggest thing weighing on you?",
+            prompt
+        )
+    }
+
+    @Test
+    fun `reflection prompt for empty history still returns a useful prompt`() {
+        val prompt = MainViewModel.buildReflectionPrompt("Neutral", emptyList())
+
+        assertTrue(prompt.isNotBlank())
+    }
+
+    @Test
+    fun `smart action returns breathing flow for stressed work pattern`() {
+        val entries = listOf(
+            entry("Stressed", hoursAgo = 1, note = "Crunching", confidence = 0.9f).copy(triggers = "Work"),
+            entry("Stressed", hoursAgo = 3, note = "More meetings", confidence = 0.8f).copy(triggers = "Work"),
+            entry("Focused", hoursAgo = 5, confidence = 0.7f).copy(triggers = "Work")
+        )
+
+        val state = MainViewModel.buildSmartActionState(entries)
+
+        assertTrue(state.isBreatheMode)
+        assertEquals("Work Reset", state.title)
+        assertEquals("Take one calm minute before the next task.", state.subtitle)
+    }
+
+    @Test
+    fun `smart action protects focus when work trigger repeats`() {
+        val entries = listOf(
+            entry("Focused", hoursAgo = 1).copy(triggers = "Work"),
+            entry("Focused", hoursAgo = 2).copy(triggers = "Work"),
+            entry("Happy", hoursAgo = 4).copy(triggers = "Exercise")
+        )
+
+        val state = MainViewModel.buildSmartActionState(entries)
+
+        assertFalse(state.isBreatheMode)
+        assertEquals("Protect This Focus", state.title)
+        assertTrue(state.quoteText.contains("25-minute block"))
+    }
+
+    @Test
+    fun `smart action captures good on happy streak`() {
+        val entries = listOf(
+            entry("Happy", daysAgo = 0),
+            entry("Happy", daysAgo = 1),
+            entry("Happy", daysAgo = 2)
+        )
+
+        val state = MainViewModel.buildSmartActionState(entries)
+
+        assertFalse(state.isBreatheMode)
+        assertEquals("Capture the Good", state.title)
+        assertTrue(state.quoteText.contains("Write down what is helping"))
     }
 
     @Test

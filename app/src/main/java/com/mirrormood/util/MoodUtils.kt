@@ -1,6 +1,7 @@
 package com.mirrormood.util
 
 import android.app.Activity
+import android.content.Context
 import android.os.Build
 import com.mirrormood.R
 import com.mirrormood.data.db.MoodEntry
@@ -142,6 +143,10 @@ object MoodUtils {
 
     @Suppress("DEPRECATION")
     fun Activity.slideTransition(forward: Boolean) {
+        // Respect reduced motion preference
+        val prefs = getSharedPreferences("mirrormood_prefs", Context.MODE_PRIVATE)
+        if (prefs.getBoolean("reduced_motion", false)) return
+
         if (forward) {
             if (Build.VERSION.SDK_INT >= 34) {
                 overrideActivityTransition(

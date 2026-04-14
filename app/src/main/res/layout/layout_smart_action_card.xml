@@ -16,7 +16,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <!-- ═══ Breathe Mode UI ═══ -->
         <LinearLayout
             android:id="@+id/breatheContainer"
             android:layout_width="match_parent"
@@ -28,8 +27,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center_vertical">
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
 
                 <TextView
                     android:id="@+id/tvSmartBreatheEmoji"
@@ -38,7 +37,7 @@
                     android:background="@drawable/bg_mood_orb"
                     android:gravity="center"
                     android:textSize="20sp"
-                    tools:text="🫧" />
+                    tools:text="&#x1F62E;&#x200D;&#x1F4A8;" />
 
                 <LinearLayout
                     android:layout_width="0dp"
@@ -85,8 +84,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:textColor="?attr/colorPrimaryDark"
-                    android:text="Tap to Start" />
+                    android:text="@string/dashboard_smart_action_tap_to_start"
+                    android:textColor="?attr/colorPrimaryDark" />
 
             </FrameLayout>
 
@@ -96,11 +95,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:layout_marginTop="8dp"
-                android:text="Start 1-Min Pause" />
+                android:text="@string/dashboard_smart_action_start_pause" />
 
         </LinearLayout>
 
-        <!-- ═══ Quote Mode UI ═══ -->
         <LinearLayout
             android:id="@+id/quoteContainer"
             android:layout_width="match_parent"
@@ -114,8 +112,8 @@
                 style="?attr/textAppearanceLabelMedium"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="?attr/colorPrimary"
-                android:text="DAILY QUOTE" />
+                android:text="@string/dashboard_smart_action_daily_quote"
+                android:textColor="?attr/colorPrimary" />
 
             <TextView
                 android:id="@+id/tvSmartQuoteText"
@@ -123,9 +121,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:textColor="?attr/colorOnSurface"
                 android:lineSpacingExtra="4dp"
-                tools:text="&quot;Whatever you can do or dream you can, begin it.&quot;" />
+                android:textColor="?attr/colorOnSurface"
+                tools:text="Whatever you can do or dream you can, begin it." />
 
             <TextView
                 android:id="@+id/tvSmartQuoteAuthor"
@@ -134,7 +132,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
                 android:textColor="?attr/colorOnSurfaceVariant"
-                tools:text="— Johann Wolfgang von Goethe" />
+                tools:text="Johann Wolfgang von Goethe" />
 
         </LinearLayout>
     </FrameLayout>

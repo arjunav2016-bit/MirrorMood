@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="?attr/colorSurface">
+
+    <!-- Gradient overlay -->
+    <View
+        android:id="@+id/viewGradientBg"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:alpha="0.3"
+        android:importantForAccessibility="no" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center_horizontal">
+
+        <!-- Top bar -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:paddingHorizontal="16dp"
+            android:paddingTop="16dp">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnClose"
+                style="@style/Widget.Material3.Button.IconButton"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:contentDescription="@string/nav_close"
+                app:icon="@drawable/ic_back"
+                app:iconTint="?attr/colorOnSurface" />
+
+            <TextView
+                android:id="@+id/tvSessionType"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="?attr/colorOnSurface"
+                android:gravity="center"
+                android:text="@string/wellness_breathing_title" />
+
+            <View
+                android:layout_width="48dp"
+                android:layout_height="1dp"
+                android:importantForAccessibility="no" />
+        </LinearLayout>
+
+        <!-- Session emoji -->
+        <TextView
+            android:id="@+id/tvSessionEmoji"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:textSize="48sp"
+            android:text="🫧"
+            android:importantForAccessibility="no" />
+
+        <!-- Breathing ring area -->
+        <FrameLayout
+            android:id="@+id/frameRingArea"
+            android:layout_width="220dp"
+            android:layout_height="220dp"
+            android:layout_marginTop="32dp"
+            android:contentDescription="@string/wellness_ring_desc">
+
+            <!-- Outer ring -->
+            <View
+                android:id="@+id/viewOuterRing"
+                android:layout_width="220dp"
+                android:layout_height="220dp"
+                android:layout_gravity="center"
+                android:background="@drawable/bg_breathing_ring_outer"
+                android:importantForAccessibility="no" />
+
+            <!-- Inner ring (animated) -->
+            <View
+                android:id="@+id/viewInnerRing"
+                android:layout_width="160dp"
+                android:layout_height="160dp"
+                android:layout_gravity="center"
+                android:background="@drawable/bg_breathing_ring_inner"
+                android:importantForAccessibility="no" />
+
+            <!-- Center instruction -->
+            <TextView
+                android:id="@+id/tvInstruction"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="?attr/colorPrimary"
+                android:text="@string/wellness_tap_to_start" />
+        </FrameLayout>
+
+        <!-- Step description -->
+        <TextView
+            android:id="@+id/tvStepDescription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:layout_marginHorizontal="40dp"
+            android:textSize="15sp"
+            android:textColor="?attr/colorOnSurfaceVariant"
+            android:gravity="center"
+            android:text="@string/wellness_breathe_desc" />
+
+        <!-- Timer -->
+        <TextView
+            android:id="@+id/tvTimer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:textSize="14sp"
+            android:textColor="?attr/colorOnSurfaceVariant"
+            android:visibility="gone" />
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:importantForAccessibility="no" />
+
+        <!-- Session type selector -->
+        <com.google.android.material.chip.ChipGroup
+            android:id="@+id/chipGroupSession"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            app:singleSelection="true"
+            app:selectionRequired="true">
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chipBreathing"
+                style="@style/Widget.Material3.Chip.Filter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/wellness_chip_breathing"
+                android:checked="true" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chipBodyScan"
+                style="@style/Widget.Material3.Chip.Filter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/wellness_chip_body_scan" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chipGratitude"
+                style="@style/Widget.Material3.Chip.Filter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/wellness_chip_gratitude" />
+        </com.google.android.material.chip.ChipGroup>
+
+        <!-- Action button -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnStartSession"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginHorizontal="32dp"
+            android:layout_marginBottom="32dp"
+            android:text="@string/wellness_start_session"
+            android:textSize="16sp"
+            app:cornerRadius="16dp" />
+
+    </LinearLayout>
+</FrameLayout>

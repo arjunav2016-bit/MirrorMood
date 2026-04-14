@@ -7,12 +7,19 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.mirrormood.MirrorMoodApp
 import com.mirrormood.data.db.MoodEntry
+import com.mirrormood.data.repository.AchievementRepository
 import com.mirrormood.data.repository.MoodRepository
+import com.mirrormood.data.repository.PromptEngine
+import com.mirrormood.health.HealthConnectManager
+import com.mirrormood.health.HealthSnapshot
 import com.mirrormood.util.MoodUtils
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import java.util.Calendar
@@ -21,7 +28,8 @@ import kotlin.math.roundToInt
 @HiltViewModel
 class MainViewModel @Inject constructor(
     application: Application,
-    private val repository: MoodRepository
+    private val repository: MoodRepository,
+    private val achievementRepository: AchievementRepository
 ) : AndroidViewModel(application) {
 
     private val _latestMood = MutableStateFlow<MoodEntry?>(null)
@@ -36,9 +44,55 @@ class MainViewModel @Inject constructor(
     private val _isMonitoring = MutableStateFlow(false)
     val isMonitoring: StateFlow<Boolean> = _isMonitoring.asStateFlow()
 
+    private val _healthState = MutableStateFlow<HealthSnapshot?>(null)
+    val healthState: StateFlow<HealthSnapshot?> = _healthState.asStateFlow()
+
+    private val _newlyUnlocked = MutableSharedFlow<String>()
+    val newlyUnlocked: SharedFlow<String> = _newlyUnlocked.asSharedFlow()
+
     init {
         observeArchive()
         refreshMonitoringFromPrefs()
+        loadHealthData()
+        seedAchievements()
+    }
+
+    private fun loadHealthData() {
+        viewModelScope.launch {
+            try {
+                val prefs = getApplication<Application>().getSharedPreferences(
+                    MirrorMoodApp.PREFS_NAME, Context.MODE_PRIVATE
+                )
+                if (!prefs.getBoolean("health_connect_enabled", false)) return@launch
+
+                val manager = HealthConnectManager(getApplication())
+                if (!manager.isAvailable()) return@launch
+                _healthState.value = manager.getTodaySnapshot()
+            } catch (_: Exception) {
+                // Health Connect unavailable; no card shown.
+            }
+        }
+    }
+
+    fun refreshHealthData() {
+        loadHealthData()
+    }
+
+    private fun seedAchievements() {
+        viewModelScope.launch {
+            achievementRepository.seedAchievements()
+        }
+    }
+
+    private fun checkAchievements(entries: List<MoodEntry>) {
+        viewModelScope.launch {
+            val newlyUnlockedIds = achievementRepository.checkAndUnlock(
+                entries, getApplication()
+            )
+            newlyUnlockedIds.forEach { id ->
+                _newlyUnlocked.emit(id)
+            }
+        }
     }
 
     fun refreshMonitoringFromPrefs() {
@@ -78,6 +132,7 @@ class MainViewModel @Inject constructor(
                 _latestMood.value = sorted.firstOrNull()
                 _homeUiState.value = buildHomeUiState(sorted)
                 _streakState.value = buildStreakState(sorted)
+                checkAchievements(sorted)
             }
         }
     }
@@ -123,7 +178,8 @@ class MainViewModel @Inject constructor(
             if (entries.isEmpty()) {
                 return HomeUiState(
                     trendBuckets = List(7) { 0 },
-                    smartAction = buildSmartActionState("Neutral")
+                    reflectionPrompt = buildReflectionPrompt("Neutral", emptyList()),
+                    smartAction = buildSmartActionState(emptyList())
                 )
             }
 
@@ -158,7 +214,7 @@ class MainViewModel @Inject constructor(
                 dominantMood = dominantMood,
                 dominantPercent = dominantPercent,
                 archiveCount = entries.size,
-                reflectionPrompt = MoodUtils.getReflectionPrompt(dominantMood),
+                reflectionPrompt = buildReflectionPrompt(dominantMood, entries),
                 distribution = distribution,
                 trendBuckets = buildTrendBuckets(entries),
                 stabilityDelta = if (sourceEntries.isNotEmpty()) {
@@ -166,39 +222,107 @@ class MainViewModel @Inject constructor(
                 } else {
                     0
                 },
-                smartAction = buildSmartActionState(entries.firstOrNull()?.mood ?: "Neutral")
+                smartAction = buildSmartActionState(entries)
             )
         }
 
         @JvmStatic
         @VisibleForTesting
-        internal fun buildSmartActionState(latestMood: String): SmartActionState {
-            return when (latestMood) {
-                "Stressed", "Tired", "Bored" -> {
-                    SmartActionState(
-                        isBreatheMode = true,
-                        title = "Take a Breath",
-                        subtitle = "Recenter your focus.",
-                        emoji = "🫧"
-                    )
+        internal fun buildSmartActionState(entries: List<MoodEntry>): SmartActionState {
+            val latestMood = entries.firstOrNull()?.mood ?: "Neutral"
+            val repeatedTrigger = findRepeatedTrigger(entries)
+            val streak = buildStreakState(entries)
+            val hour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY)
+
+            if (latestMood == "Stressed" || latestMood == "Tired") {
+                val (title, subtitle) = when {
+                    repeatedTrigger == "Work" -> "Work Reset" to "Take one calm minute before the next task."
+                    repeatedTrigger == "Sleep" -> "Ease Into Rest" to "A slower breath now can make tonight gentler."
+                    hour >= 21 || hour < 6 -> "Quiet Reset" to "Give your nervous system a softer landing."
+                    else -> "Take a Breath" to "Recenter before the next thing asks for you."
                 }
-                else -> {
-                    val quotes = listOf(
-                        Pair("Whatever you can do or dream you can, begin it.", "Johann Wolfgang von Goethe"),
-                        Pair("Act as if what you do makes a difference. It does.", "William James"),
-                        Pair("Success is not final, failure is not fatal: it is the courage to continue that counts.", "Winston Churchill"),
-                        Pair("Believe you can and you're halfway there.", "Theodore Roosevelt")
-                    )
-                    val quote = quotes.random()
-                    SmartActionState(
-                        isBreatheMode = false,
-                        quoteText = quote.first,
-                        quoteAuthor = quote.second,
-                        title = "Daily Inspiration",
-                        emoji = "✨"
-                    )
-                }
+                return SmartActionState(
+                    isBreatheMode = true,
+                    title = title,
+                    subtitle = subtitle,
+                    emoji = MoodUtils.getEmoji(latestMood)
+                )
             }
+
+            if (latestMood == "Bored") {
+                val body = when (repeatedTrigger) {
+                    "Work" -> "You have checked in with work a lot lately. Change your input for ten minutes, then come back fresh."
+                    "Social" -> "A quick message or short call might shift the tone of the day."
+                    else -> "Break the autopilot. Pick one small thing that feels new, curious, or slightly playful."
+                }
+                return SmartActionState(
+                    isBreatheMode = false,
+                    title = "Change the Pace",
+                    quoteText = body,
+                    quoteAuthor = repeatedTrigger?.let { "Matched to your recent $it check-ins" }.orEmpty(),
+                    emoji = MoodUtils.getEmoji(latestMood)
+                )
+            }
+
+            if (latestMood == "Focused") {
+                val body = when {
+                    repeatedTrigger == "Work" -> "Your attention is lining up. Protect one 25-minute block and stay with a single task."
+                    streak?.mood == "Focused" && streak.count >= 2 -> "This focus has been showing up for a few days. Capture what is making it possible."
+                    else -> "You have some traction right now. Choose the next meaningful task before distractions choose for you."
+                }
+                return SmartActionState(
+                    isBreatheMode = false,
+                    title = "Protect This Focus",
+                    quoteText = body,
+                    quoteAuthor = if (repeatedTrigger == "Work") "Based on your recent work check-ins" else "",
+                    emoji = MoodUtils.getEmoji(latestMood)
+                )
+            }
+
+            if (latestMood == "Happy") {
+                val body = when {
+                    streak?.mood == "Happy" && streak.count >= 2 ->
+                        "You have been feeling lighter for a few days. Write down what is helping so you can find it again."
+                    repeatedTrigger != null ->
+                        "There is something worth remembering here. Note what about $repeatedTrigger is supporting you."
+                    else ->
+                        "You are in a good pocket. Capture one thing that made today feel easier or brighter."
+                }
+                return SmartActionState(
+                    isBreatheMode = false,
+                    title = "Capture the Good",
+                    quoteText = body,
+                    quoteAuthor = "",
+                    emoji = MoodUtils.getEmoji(latestMood)
+                )
+            }
+
+            val body = when {
+                repeatedTrigger == "Sleep" -> "Your recent notes keep circling sleep. A short reflection now may reveal what your energy needs."
+                repeatedTrigger == "Health" -> "Health has been on your mind. Check in with your body before you push into the next part of the day."
+                hour < 12 -> "Start with a simple read on yourself. What kind of day are you heading into?"
+                hour < 18 -> "Pause for a clean midpoint check-in. What has shifted since this morning?"
+                else -> "Let the day settle a little. What do you want to carry forward, and what can stay here?"
+            }
+            return SmartActionState(
+                isBreatheMode = false,
+                title = "Reflect for a Minute",
+                quoteText = body,
+                quoteAuthor = repeatedTrigger?.let { "Pattern spotted: $it" }.orEmpty(),
+                emoji = MoodUtils.getEmoji(latestMood)
+            )
+        }
+
+        @JvmStatic
+        @VisibleForTesting
+        internal fun buildReflectionPrompt(
+            currentMood: String,
+            recentEntries: List<MoodEntry>
+        ): String {
+            return PromptEngine.generatePrompts(
+                currentMood = currentMood,
+                recentEntries = recentEntries
+            ).firstOrNull() ?: MoodUtils.getReflectionPrompt(currentMood)
         }
 
         @JvmStatic
@@ -295,6 +419,18 @@ class MainViewModel @Inject constructor(
                 null
             }
         }
+
+        private fun findRepeatedTrigger(entries: List<MoodEntry>): String? {
+            return entries.take(5)
+                .mapNotNull { it.triggers }
+                .flatMap { triggers -> triggers.split(",") }
+                .map { it.trim() }
+                .filter { it.isNotEmpty() }
+                .groupingBy { it }
+                .eachCount()
+                .maxByOrNull { it.value }
+                ?.takeIf { it.value >= 2 }
+                ?.key
+        }
     }
 }
-

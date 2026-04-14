@@ -225,6 +225,25 @@ class MainActivity : AppCompatActivity() {
                 updateMonitoringUI(monitoring)
             }
         }
+
+        // Achievement unlock notifications
+        lifecycleScope.launch {
+            viewModel.newlyUnlocked.collect { achievementId ->
+                Toast.makeText(
+                    this@MainActivity,
+                    getString(R.string.achievements_new_unlock),
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        }
+
+        // Health snapshot — log availability
+        lifecycleScope.launch {
+            viewModel.healthState.collect { snapshot ->
+                // Health card rendering handled by layout visibility
+                // This data is available for the Correlations screen
+            }
+        }
     }
 
     private fun setQuickComposerExpanded(expanded: Boolean) {
@@ -285,7 +304,8 @@ class MainActivity : AppCompatActivity() {
                 scaleX = 1f
                 scaleY = 1f
             }
-            findViewById<TextView>(R.id.tvBreathingInstruction)?.text = "Tap to Start"
+            findViewById<TextView>(R.id.tvBreathingInstruction)?.text =
+                getString(R.string.dashboard_smart_action_tap_to_start)
             
             findViewById<View>(R.id.btnStartBreathing)?.setOnClickListener {
                 startBreathingAnimation()
@@ -298,8 +318,11 @@ class MainActivity : AppCompatActivity() {
             quoteContainer.visibility = View.VISIBLE
             
             findViewById<TextView>(R.id.tvSmartQuoteLabel)?.text = state.title
-            findViewById<TextView>(R.id.tvSmartQuoteText)?.text = "\"${state.quoteText}\""
-            findViewById<TextView>(R.id.tvSmartQuoteAuthor)?.text = "— ${state.quoteAuthor}"
+            findViewById<TextView>(R.id.tvSmartQuoteText)?.text = state.quoteText
+            findViewById<TextView>(R.id.tvSmartQuoteAuthor)?.apply {
+                text = state.quoteAuthor
+                visibility = if (state.quoteAuthor.isBlank()) View.GONE else View.VISIBLE
+            }
         }
     }
 
@@ -329,16 +352,16 @@ class MainActivity : AppCompatActivity() {
                     elapsed < 4000f -> {
                         val subFraction = elapsed / 4000f
                         scale = 1f + (1.5f * easeInOut(subFraction))
-                        text.text = "Inhale..."
+                        text.text = getString(R.string.wellness_inhale)
                     }
                     elapsed < 11000f -> {
                         scale = 2.5f
-                        text.text = "Hold..."
+                        text.text = getString(R.string.wellness_hold)
                     }
                     else -> {
                         val subFraction = (elapsed - 11000f) / 8000f
                         scale = 2.5f - (1.5f * easeInOut(subFraction))
-                        text.text = "Exhale..."
+                        text.text = getString(R.string.wellness_exhale)
                     }
                 }
                 
@@ -347,7 +370,7 @@ class MainActivity : AppCompatActivity() {
             }
             addListener(object : android.animation.AnimatorListenerAdapter() {
                 override fun onAnimationEnd(animation: android.animation.Animator) {
-                    text.text = "Session Complete"
+                    text.text = getString(R.string.wellness_session_complete)
                     btn.isEnabled = true
                     ring.animate().scaleX(1f).scaleY(1f).setDuration(500).start()
                 }
@@ -650,3 +673,4 @@ class MainActivity : AppCompatActivity() {
         Toast.makeText(this, getString(R.string.monitoring_stopped), Toast.LENGTH_SHORT).show()
     }
 }
+

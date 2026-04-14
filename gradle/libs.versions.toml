@@ -24,9 +24,11 @@ hiltWork = "1.2.0"
 mockk = "1.13.12"
 coroutinesTest = "1.7.3"
 turbine = "1.1.0"
+healthConnectClient = "1.1.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
+androidx-health-connect-client = { group = "androidx.health.connect", name = "connect-client", version.ref = "healthConnectClient" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }

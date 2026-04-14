@@ -126,5 +126,30 @@
                 android:padding="20dp"
                 android:text="Analyzing…" />
         </com.google.android.material.card.MaterialCardView>
+
+        <!-- ═══ Health Connect ═══ -->
+        <TextView
+            style="?attr/textAppearanceLabelSmall"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="HEALTH CORRELATIONS"
+            android:textColor="?attr/colorPrimary" />
+
+        <com.google.android.material.card.MaterialCardView
+            style="@style/MM.Card.Filled"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp">
+
+            <TextView
+                android:id="@+id/tvHealthPattern"
+                style="?attr/textAppearanceBodyMedium"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:lineSpacingMultiplier="1.5"
+                android:padding="20dp"
+                android:text="Link Health Connect in Settings to see sleep and step correlations." />
+        </com.google.android.material.card.MaterialCardView>
     </LinearLayout>
 </ScrollView>

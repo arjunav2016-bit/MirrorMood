@@ -8,6 +8,14 @@
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_CAMERA" />
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <uses-permission android:name="android.permission.health.READ_STEPS" />
+    <uses-permission android:name="android.permission.health.READ_SLEEP" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+
+    <!-- Check for Health Connect app -->
+    <queries>
+        <package android:name="com.google.android.apps.healthdata" />
+    </queries>
 
     <application
         android:name=".MirrorMoodApp"
@@ -28,6 +36,9 @@
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+            <meta-data
+                android:name="android.app.shortcuts"
+                android:resource="@xml/shortcuts" />
         </activity>
 
         <!-- Camera calibration (first-run) -->
@@ -92,6 +103,16 @@
             android:name=".ui.settings.SettingsActivity"
             android:launchMode="singleTop"
             android:exported="false" />
+        <!-- Achievements Activity -->
+        <activity
+            android:name=".ui.achievements.AchievementsActivity"
+            android:launchMode="singleTop"
+            android:exported="false" />
+        <!-- Guided Wellness Sessions -->
+        <activity
+            android:name=".ui.wellness.WellnessSessionActivity"
+            android:launchMode="singleTop"
+            android:exported="false" />
 
 
         <!-- Background Mood Monitor Service -->
@@ -99,6 +120,18 @@
             android:name=".service.MoodMonitorService"
             android:foregroundServiceType="camera"
             android:exported="false" />
+
+        <!-- Quick Settings Tile -->
+        <service
+            android:name=".service.MoodTileService"
+            android:icon="@drawable/ic_journal"
+            android:label="MirrorMood Tracking"
+            android:permission="android.permission.BIND_QUICK_SETTINGS_TILE"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.service.quicksettings.action.QS_TILE" />
+            </intent-filter>
+        </service>
 
         <!-- Mood Widget -->
         <receiver
@@ -138,3 +171,4 @@
     </application>
 
 </manifest>
+

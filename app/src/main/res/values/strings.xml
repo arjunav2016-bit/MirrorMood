@@ -56,12 +56,12 @@
     <string name="app_lock_enabled">App lock enabled</string>
     <string name="app_lock_disabled">App lock disabled</string>
 
-    <string name="insights_no_data">Your patterns are waiting to emerge ✨ Start a check-in to begin.</string>
+    <string name="insights_no_data">Your patterns are waiting to emerge. Start a check-in to begin.</string>
     <plurals name="insights_total_entries">
         <item quantity="one">%d mood snapshot recorded</item>
         <item quantity="other">%d mood snapshots recorded</item>
     </plurals>
-    <string name="insights_no_chart_data">Your first trend line starts with a single moment 🌱</string>
+    <string name="insights_no_chart_data">Your first trend line starts with a single moment.</string>
     <string name="insights_back">Back</string>
     <string name="nav_home">Home</string>
     <string name="nav_insights">Insights</string>
@@ -71,12 +71,12 @@
     <string name="journal_title">Journal</string>
     <string name="journal_prompt">How has your heart been today?</string>
     <string name="journal_choose_mood">Choose your mood</string>
-    <string name="journal_mood_happy">😊 Happy</string>
-    <string name="journal_mood_focused">🧠 Focused</string>
-    <string name="journal_mood_neutral">😐 Neutral</string>
-    <string name="journal_mood_stressed">😰 Stressed</string>
-    <string name="journal_mood_tired">😴 Tired</string>
-    <string name="journal_mood_bored">😒 Bored</string>
+    <string name="journal_mood_happy">Happy</string>
+    <string name="journal_mood_focused">Focused</string>
+    <string name="journal_mood_neutral">Neutral</string>
+    <string name="journal_mood_stressed">Stressed</string>
+    <string name="journal_mood_tired">Tired</string>
+    <string name="journal_mood_bored">Bored</string>
     <string name="journal_hint_waiting">The words are waiting for you&#8230;</string>
     <string name="journal_empty">No reflections yet today. Your next entry can start here.</string>
     <string name="journal_save_prompt">Write a few words before saving this reflection.</string>
@@ -92,7 +92,7 @@
     <string name="journal_gratitude_scan">Gratitude Scan</string>
     <string name="journal_gratitude_scan_prompt">Notice three small sensations that made you feel grounded recently.</string>
     <string name="journal_today_archive">Your Archive</string>
-    <string name="journal_search_hint">Search entries…</string>
+    <string name="journal_search_hint">Search entries...</string>
     <string name="journal_filter_all">All</string>
     <string name="journal_no_results">No entries match your filter.</string>
     <string name="journal_delete_entry_title">Delete Entry</string>
@@ -193,7 +193,7 @@
     <string name="onboarding_headline">Your Private Archive</string>
     <string name="onboarding_body">A sanctuary for your inner world. Track moods, store reflections, and discover patterns in an encrypted environment built for editorial clarity.</string>
     <string name="onboarding_hero_badge">ENCRYPTED REFLECTION</string>
-    <string name="onboarding_sparkles">✦  ✦  ✦</string>
+    <string name="onboarding_sparkles">Quiet. Clear. Yours.</string>
     <string name="onboarding_feature_zero_title">Zero-Knowledge</string>
     <string name="onboarding_feature_zero_body">Only you hold the keys to your emotional history.</string>
     <string name="onboarding_feature_curation_title">Curation Logic</string>
@@ -254,7 +254,7 @@
     <string name="dashboard_last_check_time">LAST CHECK: %1$s</string>
     <string name="dashboard_mood_patterns">MOOD PATTERNS</string>
     <string name="dashboard_stable_baseline">Stable baseline</string>
-    <string name="dashboard_no_pattern_yet">Patterns emerge with time 🌿</string>
+    <string name="dashboard_no_pattern_yet">Patterns emerge with time.</string>
     <string name="dashboard_dominant_pattern">%1$s pattern</string>
     <string name="dashboard_trend_after_checkins">Trend appears after a few check-ins.</string>
     <string name="dashboard_stability_delta">+%1$d%% stability</string>
@@ -278,7 +278,10 @@
     <string name="dashboard_view_all_advice">View All Advice</string>
     <string name="dashboard_recent_logs">Recent Logs</string>
     <string name="dashboard_view_timeline">View Timeline</string>
-    <string name="dashboard_no_notes_yet">Your story starts with a single check-in ✨</string>
+    <string name="dashboard_no_notes_yet">Your story starts with a single check-in.</string>
+    <string name="dashboard_smart_action_tap_to_start">Tap to Start</string>
+    <string name="dashboard_smart_action_start_pause">Start 1-Min Pause</string>
+    <string name="dashboard_smart_action_daily_quote">SMART ACTION</string>
     <string name="dashboard_open_journal">Open Journal</string>
     <string name="dashboard_quoted_note">"%1$s"</string>
     <string name="mood_happy">Happy</string>
@@ -288,7 +291,7 @@
     <string name="mood_stressed">Stressed</string>
     <string name="mood_bored">Bored</string>
     <string name="dashboard_confidence">%1$d%% confidence</string>
-    <string name="calibration_baseline_saved">Baseline captured ✓</string>
+    <string name="calibration_baseline_saved">Baseline captured</string>
 
     <!-- Profile -->
     <string name="settings_profile">Profile</string>
@@ -310,14 +313,14 @@
     <string name="dashboard_greeting_name">Good %1$s, %2$s.</string>
 
     <!-- Mood Triggers -->
-    <string name="trigger_work">💼 Work</string>
-    <string name="trigger_exercise">🏃 Exercise</string>
-    <string name="trigger_social">👥 Social</string>
-    <string name="trigger_sleep">😴 Sleep</string>
-    <string name="trigger_weather">🌤️ Weather</string>
-    <string name="trigger_food">🍽️ Food</string>
-    <string name="trigger_health">💊 Health</string>
-    <string name="trigger_travel">✈️ Travel</string>
+    <string name="trigger_work">Work</string>
+    <string name="trigger_exercise">Exercise</string>
+    <string name="trigger_social">Social</string>
+    <string name="trigger_sleep">Sleep</string>
+    <string name="trigger_weather">Weather</string>
+    <string name="trigger_food">Food</string>
+    <string name="trigger_health">Health</string>
+    <string name="trigger_travel">Travel</string>
     <string name="triggers_label">What\'s influencing your mood?</string>
 
     <!-- Custom Notification Times -->
@@ -349,6 +352,98 @@
     <string name="settings_sensitivity_low_desc">Fewer mood changes, higher accuracy</string>
     <string name="settings_sensitivity_medium_desc">Balanced detection (default)</string>
     <string name="settings_sensitivity_high_desc">More responsive, catches quick changes</string>
+    <!-- Shortcuts -->
+    <string name="shortcut_journal_short">Log Mood</string>
+    <string name="shortcut_journal_long">Add a new journal entry</string>
+    <string name="shortcut_insights_short">Insights</string>
+    <string name="shortcut_insights_long">View your mood insights</string>
+    <string name="shortcut_disabled">Shortcut disabled</string>
+    <!-- Health Connect -->
+    <string name="settings_health_connect">Link Health Connect</string>
+    <string name="settings_health_connect_summary">Allow MirrorMood to read your sleep and step data to find correlations</string>
+    <string name="settings_health_connect_not_installed">Health Connect is not installed</string>
+    <string name="settings_health_connect_linked">Health Connect Linked</string>
+    <string name="settings_health_connect_unlinked">Health Connect Unlinked</string>
+
+    <!-- Achievements -->
+    <string name="achievements_title">Achievements</string>
+    <string name="achievements_unlocked">Unlocked</string>
+    <string name="achievements_of_total">of %1$d total</string>
+    <string name="achievements_unlocked_label">Unlocked</string>
+    <string name="achievements_badge_icon">Achievement badge</string>
+    <string name="achievements_new_unlock">Achievement unlocked!</string>
+
+    <!-- Wellness Sessions -->
+    <string name="wellness_breathing_title">Breathing Exercise</string>
+    <string name="wellness_body_scan_title">Body Scan</string>
+    <string name="wellness_gratitude_title">Gratitude Reflection</string>
+    <string name="wellness_breathe_desc">Follow the ring to calm your nervous system. 4-7-8 breathing pattern.</string>
+    <string name="wellness_body_scan_desc">A gentle head-to-toe scan to notice where tension lives.</string>
+    <string name="wellness_gratitude_desc">Guided prompts to anchor your attention on what matters.</string>
+    <string name="wellness_tap_to_start">Tap to begin</string>
+    <string name="wellness_start_session">Start Session</string>
+    <string name="wellness_stop_session">Stop Session</string>
+    <string name="wellness_session_complete">Complete</string>
+    <string name="wellness_chip_breathing">Breathing</string>
+    <string name="wellness_chip_body_scan">Body Scan</string>
+    <string name="wellness_chip_gratitude">Gratitude</string>
+    <string name="wellness_inhale">Inhale</string>
+    <string name="wellness_hold">Hold</string>
+    <string name="wellness_exhale">Exhale</string>
+    <string name="wellness_reflect">Reflect</string>
+    <string name="wellness_time_remaining">%1$d:%2$02d remaining</string>
+    <string name="wellness_completed_toast">Session complete! Total: %1$d sessions.</string>
+    <string name="wellness_ring_desc">Breathing guide animation</string>
+    <string name="wellness_body_scan_focus">Focus here</string>
+    <string name="wellness_body_scan_step1">Bring awareness to your feet. Feel the weight and warmth.</string>
+    <string name="wellness_body_scan_step2">Move up to your legs. Notice where tension hides.</string>
+    <string name="wellness_body_scan_step3">Feel your abdomen. Let each breath soften and release.</string>
+    <string name="wellness_body_scan_step4">Bring attention to your chest. Let the heart space expand.</string>
+    <string name="wellness_body_scan_step5">Notice your shoulders and neck. Let them drop and unclench.</string>
+    <string name="wellness_body_scan_step6">Finally, your face and jaw. Soften. Release. Arrive.</string>
+    <string name="wellness_gratitude_step1">Think of one person who made your day easier.</string>
+    <string name="wellness_gratitude_step2">Name one thing your body did well for you today.</string>
+    <string name="wellness_gratitude_step3">Recall a small moment that made you smile.</string>
+    <string name="wellness_gratitude_step4">Appreciate something you usually take for granted.</string>
+    <string name="wellness_gratitude_step5">Set one intention for how you want to feel tomorrow.</string>
+
+    <!-- Voice Journaling -->
+    <string name="voice_journal_start">Start voice input</string>
+    <string name="voice_journal_stop">Stop voice input</string>
+    <string name="voice_journal_not_available">Voice input is not available on this device</string>
+    <string name="voice_journal_listening">Listening...</string>
+    <string name="voice_journal_info">Uses on-device speech recognition for privacy</string>
+
+    <!-- Smart Notifications -->
+    <string name="settings_smart_notifications">Smart Timing</string>
+    <string name="settings_smart_notifications_summary">Notifications adapt to your check-in habits</string>
+    <string name="settings_smart_notifications_computed">Computed: Morning %1$d:00 &#183; Evening %2$d:00</string>
+
+    <!-- Accessibility -->
+    <string name="settings_accessibility">Accessibility</string>
+    <string name="settings_reduced_motion">Reduced Motion</string>
+    <string name="settings_reduced_motion_summary">Disable animations and transitions</string>
+    <string name="settings_high_contrast">High Contrast</string>
+    <string name="settings_high_contrast_summary">Increase contrast for better readability</string>
+
+    <!-- Health Connect Dashboard -->
+    <string name="health_card_title">HEALTH SNAPSHOT</string>
+    <string name="health_card_steps">%1$s steps</string>
+    <string name="health_card_sleep">%1$.1f hrs sleep</string>
+    <string name="health_card_quality">Quality: %1$d%%</string>
+    <string name="health_card_link_cta">Link Health Connect</string>
+    <string name="health_card_not_linked">Connect Health data for deeper insights</string>
+
+    <!-- ML Model -->
+    <string name="settings_ml_model">ML Model</string>
+    <string name="settings_ml_model_active">On-device ML model active</string>
+    <string name="settings_ml_model_fallback">Using heuristic classifier (model unavailable)</string>
+    <string name="settings_ml_recalibrate">Recalibrate ML Model</string>
+
+    <!-- General -->
+    <string name="nav_back">Go back</string>
+    <string name="nav_close">Close</string>
 </resources>
+
 
 

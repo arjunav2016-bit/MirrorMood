@@ -1,6 +1,7 @@
 package com.mirrormood.di
 
 import android.content.Context
+import com.mirrormood.data.db.AchievementDao
 import com.mirrormood.data.db.MoodDao
 import com.mirrormood.data.db.MoodDatabase
 import dagger.Module
@@ -24,4 +25,10 @@ object DatabaseModule {
     fun provideMoodDao(database: MoodDatabase): MoodDao {
         return database.moodDao()
     }
+
+    @Provides
+    fun provideAchievementDao(database: MoodDatabase): AchievementDao {
+        return database.achievementDao()
+    }
 }
+

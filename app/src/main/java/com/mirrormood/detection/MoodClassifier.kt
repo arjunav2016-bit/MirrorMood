@@ -15,9 +15,31 @@ package com.mirrormood.detection
 object MoodClassifier {
 
     /**
-     * Enhanced classification using smile, eye openness, head rotation, and blink states.
+     * Primary entry point. Delegates to the heuristic classifier.
+     * When TFLiteMoodClassifier is available, FaceAnalyzer uses an ensemble
+     * of both classifiers. This method remains the heuristic-only path.
      */
     fun classify(
+        smileProb: Float,
+        leftEyeOpen: Float,
+        rightEyeOpen: Float,
+        headEulerAngleX: Float = 0f,
+        headEulerAngleY: Float = 0f,
+        headEulerAngleZ: Float = 0f,
+        isWinking: Boolean = false,
+        isRapidBlinking: Boolean = false,
+        baseline: FaceBaseline? = null
+    ): MoodResult = classifyHeuristic(
+        smileProb, leftEyeOpen, rightEyeOpen,
+        headEulerAngleX, headEulerAngleY, headEulerAngleZ,
+        isWinking, isRapidBlinking, baseline
+    )
+
+    /**
+     * Heuristic classification using smile, eye openness, head rotation, and blink states.
+     * Kept as a named method so FaceAnalyzer can blend it with TFLite output.
+     */
+    fun classifyHeuristic(
         smileProb: Float,
         leftEyeOpen: Float,
         rightEyeOpen: Float,

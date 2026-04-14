@@ -2,17 +2,28 @@ package com.mirrormood.notification
 
 import android.content.Context
 import com.mirrormood.MirrorMoodApp
+import com.mirrormood.data.db.MoodDatabase
+import com.mirrormood.data.repository.MoodRepository
 import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.runBlocking
 import java.util.Calendar
 import java.util.concurrent.TimeUnit
 
 object NotificationScheduler {
 
     fun schedule(context: Context) {
-        scheduleMorningNotification(context)
-        scheduleEveningNotification(context)
+        val prefs = context.getSharedPreferences(MirrorMoodApp.PREFS_NAME, Context.MODE_PRIVATE)
+        val smartEnabled = prefs.getBoolean("smart_notifications", false)
+
+        if (smartEnabled) {
+            scheduleAdaptive(context)
+        } else {
+            scheduleMorningNotification(context)
+            scheduleEveningNotification(context)
+        }
         scheduleWeeklyNotification(context)
         scheduleAnomalyWorker(context)
     }
@@ -25,37 +36,72 @@ object NotificationScheduler {
         val wm = WorkManager.getInstance(context)
         wm.cancelUniqueWork("MorningMoodReminder")
         wm.cancelUniqueWork("EveningMoodSummary")
-        scheduleMorningNotification(context)
-        scheduleEveningNotification(context)
+
+        val prefs = context.getSharedPreferences(MirrorMoodApp.PREFS_NAME, Context.MODE_PRIVATE)
+        val smartEnabled = prefs.getBoolean("smart_notifications", false)
+
+        if (smartEnabled) {
+            scheduleAdaptive(context)
+        } else {
+            scheduleMorningNotification(context)
+            scheduleEveningNotification(context)
+        }
+    }
+
+    /**
+     * Adaptive scheduling uses HabitAnalyzer to determine optimal notification times
+     * based on the user's actual check-in patterns.
+     */
+    private fun scheduleAdaptive(context: Context) {
+        try {
+            val dao = MoodDatabase.getDatabase(context).moodDao()
+            val repository = MoodRepository(dao)
+            val entries = runBlocking { repository.getAllMoods().first() }
+
+            val optimalMorning = HabitAnalyzer.findOptimalMorningHour(entries)
+            val optimalEvening = HabitAnalyzer.findOptimalEveningHour(entries)
+
+            // Save computed times for display in Settings
+            val prefs = context.getSharedPreferences(MirrorMoodApp.PREFS_NAME, Context.MODE_PRIVATE)
+            prefs.edit()
+                .putInt("smart_morning_hour", optimalMorning)
+                .putInt("smart_evening_hour", optimalEvening)
+                .apply()
+
+            scheduleAtHour(context, "MorningMoodReminder", optimalMorning, MorningWorker::class.java)
+            scheduleAtHour(context, "EveningMoodSummary", optimalEvening, EveningWorker::class.java)
+        } catch (e: Exception) {
+            // Fallback to manual scheduling
+            scheduleMorningNotification(context)
+            scheduleEveningNotification(context)
+        }
     }
 
     private fun scheduleMorningNotification(context: Context) {
         val prefs = context.getSharedPreferences(MirrorMoodApp.PREFS_NAME, Context.MODE_PRIVATE)
         val hour = prefs.getInt("notif_morning_hour", 8)
-        val delay = calculateDelayUntilHour(hour)
-
-        val request = PeriodicWorkRequestBuilder<MorningWorker>(1, TimeUnit.DAYS)
-            .setInitialDelay(delay, TimeUnit.MILLISECONDS)
-            .build()
-
-        WorkManager.getInstance(context).enqueueUniquePeriodicWork(
-            "MorningMoodReminder",
-            ExistingPeriodicWorkPolicy.KEEP,
-            request
-        )
+        scheduleAtHour(context, "MorningMoodReminder", hour, MorningWorker::class.java)
     }
 
     private fun scheduleEveningNotification(context: Context) {
         val prefs = context.getSharedPreferences(MirrorMoodApp.PREFS_NAME, Context.MODE_PRIVATE)
         val hour = prefs.getInt("notif_evening_hour", 21)
-        val delay = calculateDelayUntilHour(hour)
+        scheduleAtHour(context, "EveningMoodSummary", hour, EveningWorker::class.java)
+    }
 
-        val request = PeriodicWorkRequestBuilder<EveningWorker>(1, TimeUnit.DAYS)
+    private inline fun <reified T : androidx.work.ListenableWorker> scheduleAtHour(
+        context: Context,
+        workName: String,
+        hour: Int,
+        workerClass: Class<T>
+    ) {
+        val delay = calculateDelayUntilHour(hour)
+        val request = PeriodicWorkRequestBuilder<T>(1, TimeUnit.DAYS)
             .setInitialDelay(delay, TimeUnit.MILLISECONDS)
             .build()
 
         WorkManager.getInstance(context).enqueueUniquePeriodicWork(
-            "EveningMoodSummary",
+            workName,
             ExistingPeriodicWorkPolicy.KEEP,
             request
         )
@@ -110,3 +156,4 @@ object NotificationScheduler {
         )
     }
 }
+

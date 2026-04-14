@@ -8,5 +8,7 @@ data class Milestone(
     val isUnlocked: Boolean,
     val progress: Int, // 0 to 100
     val target: Int,
-    val currentAmount: Int
+    val currentAmount: Int,
+    val category: String = "volume" // "streak", "volume", "exploration", "special"
 )
+

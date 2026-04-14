@@ -1,5 +1,6 @@
 package com.mirrormood.ui.journal
 
+import android.content.Context
 import android.os.Bundle
 import android.view.HapticFeedbackConstants
 import android.view.LayoutInflater
@@ -30,6 +31,8 @@ import com.mirrormood.util.BottomNavTab
 import com.mirrormood.util.MoodUtils
 import com.mirrormood.util.MoodUtils.slideTransition
 import com.mirrormood.util.ThemeHelper
+import com.mirrormood.util.VoiceJournalHelper
+import com.mirrormood.data.repository.PromptEngine
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
@@ -41,6 +44,7 @@ class JournalActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityJournalBinding
     private val viewModel: JournalViewModel by viewModels()
+    private lateinit var voiceHelper: VoiceJournalHelper
     private val entryAdapter = JournalAdapter(
         onNoteSaved = { entryId, note -> viewModel.updateNote(entryId, note) },
         onDeleteRequested = { entry -> showDeleteConfirmation(entry) }
@@ -55,7 +59,9 @@ class JournalActivity : AppCompatActivity() {
             formatWordCount = { count ->
                 resources.getQuantityString(R.plurals.journal_word_count, count, count)
             },
-            countWords = ::fastWordCount
+            countWords = ::fastWordCount,
+            onVoiceClicked = { toggleVoiceInput() },
+            onPromptClicked = { prompt -> applyPromptToEditor(prompt) }
         )
     }
 
@@ -79,6 +85,44 @@ class JournalActivity : AppCompatActivity() {
 
         observeEntries()
         BottomNavHelper.setup(this, BottomNavTab.NONE)
+
+        voiceHelper = VoiceJournalHelper(this)
+    }
+
+    override fun onDestroy() {
+        voiceHelper.destroy()
+        super.onDestroy()
+    }
+
+    private fun toggleVoiceInput() {
+        if (!voiceHelper.isAvailable) {
+            Toast.makeText(this, R.string.voice_journal_not_available, Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        if (voiceHelper.isCurrentlyListening()) {
+            voiceHelper.stopListening()
+        } else {
+            voiceHelper.startListening(
+                onResult = { text ->
+                    headerAdapter.appendDraftText(text)
+                    val prefs = getSharedPreferences("mirrormood_prefs", Context.MODE_PRIVATE)
+                    prefs.edit().putInt(
+                        "voice_journal_count",
+                        prefs.getInt("voice_journal_count", 0) + 1
+                    ).apply()
+                },
+                onPartial = { /* could show partial in UI */ },
+                onError = { msg -> Toast.makeText(this, msg, Toast.LENGTH_SHORT).show() },
+                onListeningStateChanged = { listening ->
+                    headerAdapter.setVoiceListening(listening)
+                }
+            )
+        }
+    }
+
+    private fun applyPromptToEditor(prompt: String) {
+        headerAdapter.appendDraftText(prompt)
     }
 
     private fun saveEntry(mood: String, note: String): Boolean {
@@ -149,7 +193,9 @@ class JournalActivity : AppCompatActivity() {
         private val onSearchChanged: (String) -> Unit,
         private val onFilterChanged: (String?) -> Unit,
         private val formatWordCount: (Int) -> String,
-        private val countWords: (String) -> Int
+        private val countWords: (String) -> Int,
+        private val onVoiceClicked: () -> Unit,
+        private val onPromptClicked: (String) -> Unit
     ) : RecyclerView.Adapter<JournalHeaderAdapter.ViewHolder>() {
 
         private var isArchiveEmpty = true
@@ -181,6 +227,15 @@ class JournalActivity : AppCompatActivity() {
                 isArchiveEmpty = isEmpty
                 attachedHolder?.updateEmptyState(isEmpty)
             }
+        }
+
+        fun appendDraftText(text: String) {
+            draftNote = if (draftNote.isBlank()) text else "$draftNote $text"
+            attachedHolder?.syncDraft(draftNote)
+        }
+
+        fun setVoiceListening(listening: Boolean) {
+            attachedHolder?.updateVoiceState(listening)
         }
 
         private val filterChipMoodMap = mapOf(
@@ -235,6 +290,12 @@ class JournalActivity : AppCompatActivity() {
                     }
                 }
 
+                // Voice journaling
+                binding.btnVoiceJournal.setOnClickListener { view ->
+                    view.performHapticFeedback(HapticFeedbackConstants.CONTEXT_CLICK)
+                    onVoiceClicked()
+                }
+
                 // Search bar
                 binding.etSearch.doAfterTextChanged { editable ->
                     onSearchChanged(editable?.toString().orEmpty())
@@ -260,6 +321,24 @@ class JournalActivity : AppCompatActivity() {
                 binding.tvJournalDate.text = dateLabel
                 updateEmptyState(isArchiveEmpty)
                 bindComposerState()
+                populateSmartPrompts()
+            }
+
+            fun syncDraft(text: String) {
+                isSyncingComposer = true
+                binding.etJournalText.setText(text)
+                binding.etJournalText.setSelection(text.length)
+                binding.tvWordCount.text = formatWordCount(countWords(text))
+                isSyncingComposer = false
+            }
+
+            fun updateVoiceState(listening: Boolean) {
+                binding.tvVoiceStatus.visibility = if (listening) View.VISIBLE else View.GONE
+                binding.tvVoiceStatus.text = if (listening) {
+                    binding.root.context.getString(R.string.voice_journal_listening)
+                } else {
+                    binding.root.context.getString(R.string.voice_journal_info)
+                }
             }
 
             fun updateEmptyState(isEmpty: Boolean) {
@@ -283,6 +362,22 @@ class JournalActivity : AppCompatActivity() {
                 }
                 binding.tvWordCount.text = formatWordCount(countWords(draftNote))
                 isSyncingComposer = false
+            }
+
+            private fun populateSmartPrompts() {
+                val prompts = PromptEngine.generatePrompts(selectedMood)
+                binding.chipGroupSmartPrompts.removeAllViews()
+                prompts.forEach { prompt ->
+                    val chip = com.google.android.material.chip.Chip(binding.root.context).apply {
+                        text = if (prompt.length > 50) prompt.take(47) + "…" else prompt
+                        isCheckable = false
+                        isClickable = true
+                        setOnClickListener {
+                            onPromptClicked(prompt)
+                        }
+                    }
+                    binding.chipGroupSmartPrompts.addView(chip)
+                }
             }
         }
     }

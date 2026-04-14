@@ -54,8 +54,22 @@ class SettingsActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySettingsBinding
     private val prefs by lazy { getSharedPreferences(MirrorMoodApp.PREFS_NAME, Context.MODE_PRIVATE) }
     private lateinit var repository: MoodRepository
+    private lateinit var healthConnectManager: com.mirrormood.health.HealthConnectManager
     private var lockSwitchProgrammatic = false
     private var pendingBackupJson: String? = null
+
+    private val requestHealthPermissions = registerForActivityResult(
+        androidx.health.connect.client.PermissionController.createRequestPermissionResultContract()
+    ) { granted ->
+        if (granted.containsAll(healthConnectManager.permissions)) {
+            binding.switchHealthConnect.isChecked = true
+            prefs.edit().putBoolean("health_connect_enabled", true).apply()
+            Toast.makeText(this, R.string.settings_health_connect_linked, Toast.LENGTH_SHORT).show()
+        } else {
+            binding.switchHealthConnect.isChecked = false
+            prefs.edit().putBoolean("health_connect_enabled", false).apply()
+        }
+    }
 
     private val exportBackupLauncher = registerForActivityResult(
         ActivityResultContracts.CreateDocument("application/json")
@@ -80,6 +94,7 @@ class SettingsActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         repository = MoodRepository(MoodDatabase.getDatabase(applicationContext).moodDao())
+        healthConnectManager = com.mirrormood.health.HealthConnectManager(this)
 
         ViewCompat.setOnApplyWindowInsetsListener(binding.root) { view, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
@@ -95,10 +110,32 @@ class SettingsActivity : AppCompatActivity() {
         setupNotificationTimes()
         setupSecurity()
         setupPauseToggle()
+        setupHealthConnect()
         setupDataRetention()
         setupDataManagement()
+        setupSmartNotifications()
+        setupAccessibility()
         setupActions()
         renderState()
+    }
+
+    private fun setupHealthConnect() {
+        if (!healthConnectManager.isAvailable()) {
+            binding.switchHealthConnect.isEnabled = false
+            binding.switchHealthConnect.isChecked = false
+            binding.switchHealthConnect.contentDescription = getString(R.string.settings_health_connect_not_installed)
+            return
+        }
+
+        binding.switchHealthConnect.setOnCheckedChangeListener { _, checked ->
+            if (lockSwitchProgrammatic) return@setOnCheckedChangeListener
+            if (checked) {
+                requestHealthPermissions.launch(healthConnectManager.permissions)
+            } else {
+                prefs.edit().putBoolean("health_connect_enabled", false).apply()
+                Toast.makeText(this, R.string.settings_health_connect_unlinked, Toast.LENGTH_SHORT).show()
+            }
+        }
     }
 
     // ───── Feature 1: User Profile ─────
@@ -630,6 +667,44 @@ class SettingsActivity : AppCompatActivity() {
             finish()
             slideTransition(forward = false)
         }
+
+        binding.btnAchievements.setOnClickListener { view ->
+            view.performHapticFeedback(HapticFeedbackConstants.CONTEXT_CLICK)
+            startActivity(Intent(this, com.mirrormood.ui.achievements.AchievementsActivity::class.java))
+            slideTransition(forward = true)
+        }
+    }
+
+    // ───── Smart Notifications ─────
+
+    private fun setupSmartNotifications() {
+        binding.switchSmartNotifications.setOnCheckedChangeListener { _, checked ->
+            prefs.edit().putBoolean("smart_notifications", checked).apply()
+            NotificationScheduler.reschedule(this)
+
+            if (checked) {
+                val morningH = prefs.getInt("smart_morning_hour", 8)
+                val eveningH = prefs.getInt("smart_evening_hour", 21)
+                binding.tvSmartTimingComputed.text = getString(
+                    R.string.settings_smart_notifications_computed, morningH, eveningH
+                )
+                binding.tvSmartTimingComputed.visibility = android.view.View.VISIBLE
+            } else {
+                binding.tvSmartTimingComputed.visibility = android.view.View.GONE
+            }
+        }
+    }
+
+    // ───── Accessibility ─────
+
+    private fun setupAccessibility() {
+        binding.switchReducedMotion.setOnCheckedChangeListener { _, checked ->
+            prefs.edit().putBoolean("reduced_motion", checked).apply()
+        }
+
+        binding.switchHighContrast.setOnCheckedChangeListener { _, checked ->
+            prefs.edit().putBoolean("high_contrast", checked).apply()
+        }
     }
 
     private fun renderState() {
@@ -650,6 +725,26 @@ class SettingsActivity : AppCompatActivity() {
         lockSwitchProgrammatic = false
         
         binding.switchPeriodicBackup.isChecked = prefs.getBoolean("weekly_backup_enabled", false)
+
+        lockSwitchProgrammatic = true
+        binding.switchHealthConnect.isChecked = prefs.getBoolean("health_connect_enabled", false)
+        lockSwitchProgrammatic = false
+
+        // Smart notifications
+        val smartEnabled = prefs.getBoolean("smart_notifications", false)
+        binding.switchSmartNotifications.isChecked = smartEnabled
+        if (smartEnabled) {
+            val morningH = prefs.getInt("smart_morning_hour", 8)
+            val eveningH = prefs.getInt("smart_evening_hour", 21)
+            binding.tvSmartTimingComputed.text = getString(
+                R.string.settings_smart_notifications_computed, morningH, eveningH
+            )
+            binding.tvSmartTimingComputed.visibility = android.view.View.VISIBLE
+        }
+
+        // Accessibility
+        binding.switchReducedMotion.isChecked = prefs.getBoolean("reduced_motion", false)
+        binding.switchHighContrast.isChecked = prefs.getBoolean("high_contrast", false)
     }
 
     private fun selectTheme(mode: String) {

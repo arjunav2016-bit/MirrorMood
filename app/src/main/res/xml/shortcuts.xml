@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shortcuts xmlns:android="http://schemas.android.com/apk/res/android">
+    <shortcut
+        android:shortcutId="shortcut_journal"
+        android:enabled="true"
+        android:icon="@drawable/ic_journal"
+        android:shortcutShortLabel="@string/shortcut_journal_short"
+        android:shortcutLongLabel="@string/shortcut_journal_long"
+        android:shortcutDisabledMessage="@string/shortcut_disabled">
+        
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:targetPackage="com.mirrormood"
+            android:targetClass="com.mirrormood.ui.journal.JournalActivity" />
+        <categories android:name="android.shortcut.conversation" />
+    </shortcut>
+
+    <shortcut
+        android:shortcutId="shortcut_insights"
+        android:enabled="true"
+        android:icon="@drawable/ic_insights"
+        android:shortcutShortLabel="@string/shortcut_insights_short"
+        android:shortcutLongLabel="@string/shortcut_insights_long"
+        android:shortcutDisabledMessage="@string/shortcut_disabled">
+        
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:targetPackage="com.mirrormood"
+            android:targetClass="com.mirrormood.ui.insights.InsightsActivity" />
+        <categories android:name="android.shortcut.conversation" />
+    </shortcut>
+</shortcuts>
