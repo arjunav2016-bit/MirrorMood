@@ -1,7 +1,0 @@
-com.mirrormood.wear-pngs-0 F:\AndroidStudioProjects\MirrorMood\wear\build\generated\res\pngs\debug
-com.mirrormood.wear-updated_navigation_xml-1 F:\AndroidStudioProjects\MirrorMood\wear\build\generated\updated_navigation_xml\debug
-com.mirrormood.wear-packageDebugResources-2 F:\AndroidStudioProjects\MirrorMood\wear\build\intermediates\incremental\debug\packageDebugResources\merged.dir
-com.mirrormood.wear-packageDebugResources-3 F:\AndroidStudioProjects\MirrorMood\wear\build\intermediates\incremental\debug\packageDebugResources\stripped.dir
-com.mirrormood.wear-debug-4 F:\AndroidStudioProjects\MirrorMood\wear\build\intermediates\merged_res\debug\mergeDebugResources
-com.mirrormood.wear-debug-5 F:\AndroidStudioProjects\MirrorMood\wear\src\debug\res
-com.mirrormood.wear-main-6 F:\AndroidStudioProjects\MirrorMood\wear\src\main\res
