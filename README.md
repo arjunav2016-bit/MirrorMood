@@ -23,7 +23,8 @@ MirrorMood uses your device's front camera and Google ML Kit's face detection to
 - **Dominant mood** detection with emoji and percentage
 - **Per-mood breakdown** with colored pills showing each mood's share
 - **Peak time analysis** — discover when you're happiest or most stressed
-- **Stacked bar chart**: Today shows Morning/Afternoon/Evening/Night blocks; This Week shows 7-day breakdown
+- **Segmented Mood Bar**: At-a-glance visualization of daily mood distribution with percentages
+- **Full-width 7-Day Trend**: Compare your historical mood flow visually with dynamic day labels
 - **Mood correlations** for deeper pattern analysis
 - Dark mode-compatible charts using the Ethereal Archive color system
 
@@ -36,8 +37,8 @@ MirrorMood uses your device's front camera and Google ML Kit's face detection to
 ### 🧘 Wellness Recommendations
 - **40+ curated wellness tips** organized by mood category
 - **5 filter categories**: All, Breathing, Activity, Mindset, and Self-Care
-- Contextual wellness card on the home screen that adapts to your current mood
-- Dedicated recommendations screen with shuffled, mood-specific tips
+- **Gradient hero-style wellness card** on the home screen that adapts to your current mood
+- Dedicated recommendations screen with **category-colored accent bars**, duration chips, and emoji orbs
 
 ### 📓 Mood Journal
 - Personal journaling with mood tagging
@@ -139,9 +140,9 @@ com.mirrormood/
 │   └── lock/
 │       └── LockActivity.kt            # Biometric lock (launcher activity)
 │
-├── util/
+│   ├── util/
 │   ├── MoodUtils.kt                   # Emoji, color, time formatting, transitions
-│   ├── BottomNavHelper.kt             # Consistent bottom nav across activities
+│   ├── BottomNavHelper.kt             # Consistent standard M3 bottom nav routing
 │   ├── SettingsDialogHelper.kt        # Settings navigation wrapper
 │   └── ThemeHelper.kt                 # Light/Dark/System + edge-to-edge
 │

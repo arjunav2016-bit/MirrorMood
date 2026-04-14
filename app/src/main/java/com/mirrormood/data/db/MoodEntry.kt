@@ -12,5 +12,6 @@ data class MoodEntry(
     val smileScore: Float,
     val eyeOpenScore: Float,
     val confidence: Float = 0f,
-    val note: String? = null
+    val note: String? = null,
+    val triggers: String? = null
 )

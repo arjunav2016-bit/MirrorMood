@@ -26,7 +26,7 @@ MirrorMood is a privacy-focused Android application designed to track a user's e
 - Rich-text journal entry mechanism to contextualize detected periods of stress, happiness, or fatigue.
 
 ### 4. Background Processing & Contextual Nudges
-- **WorkManager-based Scheduling:** Triggers morning reminders, evening summaries, and robust weekly statistical digests.
+- **WorkManager-based Scheduling:** Triggers morning reminders, evening summaries, and robust weekly statistical digests. The `WeeklySummaryWorker` actively calculates **week-over-week trend comparisons** (e.g. "30% happier than last week"), evaluates dominant mood streaks, and factors in unique tracking days.
 - Provides an index of over 40 wellness recommendations tailored immediately to the sensed mood.
 
 ### 5. Security & Customization
@@ -43,7 +43,7 @@ The codebase adheres strongly to modern Android development standards, specifica
 - **Languages:** Kotlin
 - **SDK Targets:** Min API 26 (Android 8.0) | Target API 36
 - **Dependency Injection:** Dagger Hilt globally coordinates ViewModels, application scopes, and Worker classes.
-- **User Interface:** XML ViewBinding integrated deeply with a custom semantic color/token system known as *Ethereal Archive*. Activity navigation adheres to Material Design 3 guidelines.
+- **User Interface:** XML ViewBinding integrated deeply with a custom semantic color/token system known as *Ethereal Archive*. Activity navigation adheres to standard Material Design 3 guidelines featuring full-width edge-to-edge layout constraints instead of floating navigation concepts.
 - **Camera/Perception:** CameraX v1.3.0 combined seamlessly with ML Kit Face Detection v16.1.7.
 - **Local Persistence:** Room Database v2.8.0 combined with Kotlin Symbol Processing (KSP).
 - **Background Tasks:** AndroidX WorkManager handles resilient deferred jobs.

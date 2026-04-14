@@ -32,6 +32,7 @@ class FaceAnalyzer(
     // Temporal smoothing: sliding window of recent mood results
     private val recentMoods = ArrayDeque<MoodResult>(SMOOTHING_WINDOW)
     private var lastSavedMood: String? = null
+    private val consensusThreshold: Int
 
     // Blinking tracking
     private val blinkTimestamps = ArrayDeque<Long>()
@@ -41,6 +42,15 @@ class FaceAnalyzer(
 
     init {
         val prefs = context.getSharedPreferences(MirrorMoodApp.PREFS_NAME, Context.MODE_PRIVATE)
+
+        // Detection sensitivity: 0=Low(4), 1=Medium(3), 2=High(2)
+        val sensitivity = prefs.getInt("detection_sensitivity", 1)
+        consensusThreshold = when (sensitivity) {
+            0 -> 4  // Low — more frames needed, fewer false positives
+            2 -> 2  // High — fewer frames, more responsive
+            else -> CONSENSUS_THRESHOLD // Medium (default)
+        }
+
         val json = prefs.getString("baseline_metrics", null)
         if (json != null) {
             try {
@@ -59,13 +69,13 @@ class FaceAnalyzer(
 
     companion object {
         private const val SMOOTHING_WINDOW = 5
-        private const val CONSENSUS_THRESHOLD = 3 // Must appear >= 3 times in window
+        private const val CONSENSUS_THRESHOLD = 3 // Default: must appear >= 3 times in window
 
-        internal fun getConsensusMood(moods: List<MoodResult>): String? {
-            if (moods.size < CONSENSUS_THRESHOLD) return null
+        internal fun getConsensusMood(moods: List<MoodResult>, threshold: Int = CONSENSUS_THRESHOLD): String? {
+            if (moods.size < threshold) return null
             val counts = moods.groupBy { it.mood }.mapValues { it.value.size }
             val best = counts.maxByOrNull { it.value } ?: return null
-            return if (best.value >= CONSENSUS_THRESHOLD) best.key else null
+            return if (best.value >= threshold) best.key else null
         }
     }
 
@@ -126,7 +136,7 @@ class FaceAnalyzer(
                     recentMoods.addLast(result)
 
                     // Only save when we have consensus
-                    val consensusMood = getConsensusMood(recentMoods.toList())
+                    val consensusMood = getConsensusMood(recentMoods.toList(), consensusThreshold)
                     if (consensusMood != null && consensusMood != lastSavedMood) {
                         lastSavedMood = consensusMood
                         val avgConfidence = recentMoods

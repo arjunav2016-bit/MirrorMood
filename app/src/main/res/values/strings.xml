@@ -245,10 +245,10 @@
     <string name="dashboard_subtitle">Quantitative summary of your emotional data.</string>
     <string name="dashboard_start">Start</string>
     <string name="dashboard_pause">Pause</string>
-    <string name="dashboard_good_morning">Good morning, Analyst.</string>
-    <string name="dashboard_good_afternoon">Good afternoon, Analyst.</string>
-    <string name="dashboard_good_evening">Good evening, Analyst.</string>
-    <string name="dashboard_good_night">Good night, Analyst.</string>
+    <string name="dashboard_good_morning">Good morning, %1$s.</string>
+    <string name="dashboard_good_afternoon">Good afternoon, %1$s.</string>
+    <string name="dashboard_good_evening">Good evening, %1$s.</string>
+    <string name="dashboard_good_night">Good night, %1$s.</string>
     <string name="dashboard_current_mood">Current: %1$s</string>
     <string name="dashboard_last_check_never">LAST CHECK: NO CHECK-IN YET</string>
     <string name="dashboard_last_check_time">LAST CHECK: %1$s</string>
@@ -289,5 +289,66 @@
     <string name="mood_bored">Bored</string>
     <string name="dashboard_confidence">%1$d%% confidence</string>
     <string name="calibration_baseline_saved">Baseline captured ✓</string>
+
+    <!-- Profile -->
+    <string name="settings_profile">Profile</string>
+    <string name="settings_profile_name_title">Display Name</string>
+    <string name="settings_profile_name_summary">Personalize your greeting</string>
+    <string name="settings_profile_name_hint">Enter your name</string>
+    <string name="settings_profile_stats_title">Your Stats</string>
+    <plurals name="settings_profile_total_entries">
+        <item quantity="one">%1$d entry recorded</item>
+        <item quantity="other">%1$d entries recorded</item>
+    </plurals>
+    <plurals name="settings_profile_days_tracked">
+        <item quantity="one">%1$d day tracked</item>
+        <item quantity="other">%1$d days tracked</item>
+    </plurals>
+    <string name="settings_profile_top_mood">Most common mood: %1$s %2$s</string>
+    <string name="settings_profile_no_data_yet">No mood data yet</string>
+    <string name="settings_profile_name_saved">Name updated</string>
+    <string name="dashboard_greeting_name">Good %1$s, %2$s.</string>
+
+    <!-- Mood Triggers -->
+    <string name="trigger_work">💼 Work</string>
+    <string name="trigger_exercise">🏃 Exercise</string>
+    <string name="trigger_social">👥 Social</string>
+    <string name="trigger_sleep">😴 Sleep</string>
+    <string name="trigger_weather">🌤️ Weather</string>
+    <string name="trigger_food">🍽️ Food</string>
+    <string name="trigger_health">💊 Health</string>
+    <string name="trigger_travel">✈️ Travel</string>
+    <string name="triggers_label">What\'s influencing your mood?</string>
+
+    <!-- Custom Notification Times -->
+    <string name="settings_notification_times">Notification Schedule</string>
+    <string name="settings_morning_reminder">Morning Reminder</string>
+    <string name="settings_evening_summary">Evening Summary</string>
+    <string name="settings_notification_times_updated">Notification times updated</string>
+
+    <!-- Data Retention -->
+    <string name="settings_data_retention">Data Retention</string>
+    <string name="settings_retention_summary">Entries older than this are auto-deleted</string>
+    <string name="settings_retention_30">30 days</string>
+    <string name="settings_retention_90">90 days</string>
+    <string name="settings_retention_180">6 months</string>
+    <string name="settings_retention_365">1 year</string>
+    <string name="settings_retention_forever">Forever</string>
+    <string name="settings_retention_updated">Retention set to %1$s</string>
+    <plurals name="settings_entry_count">
+        <item quantity="one">%1$d entry in database</item>
+        <item quantity="other">%1$d entries in database</item>
+    </plurals>
+
+    <!-- Detection Sensitivity -->
+    <string name="settings_sensitivity">Detection Sensitivity</string>
+    <string name="settings_sensitivity_summary">Adjust how many frames are needed before classifying a mood</string>
+    <string name="settings_sensitivity_low">Low</string>
+    <string name="settings_sensitivity_medium">Medium</string>
+    <string name="settings_sensitivity_high">High</string>
+    <string name="settings_sensitivity_low_desc">Fewer mood changes, higher accuracy</string>
+    <string name="settings_sensitivity_medium_desc">Balanced detection (default)</string>
+    <string name="settings_sensitivity_high_desc">More responsive, catches quick changes</string>
 </resources>
+
 

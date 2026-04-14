@@ -4,7 +4,7 @@
     <dimen name="bottom_nav_content_padding">76dp</dimen>
     <dimen name="home_content_bottom_padding">76dp</dimen>
     <!-- FAB sits just above the nav bar -->
-    <dimen name="bottom_nav_fab_margin_bottom">68dp</dimen>
+    <dimen name="bottom_nav_fab_margin_bottom">88dp</dimen>
 
     <!-- Timeline entry dimensions -->
     <dimen name="timeline_entry_spacing_top">6dp</dimen>

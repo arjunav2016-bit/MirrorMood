@@ -57,14 +57,15 @@ class MainViewModel @Inject constructor(
             .apply()
     }
 
-    fun saveReflection(mood: String, note: String) {
+    fun saveReflection(mood: String, note: String, triggers: String? = null) {
         viewModelScope.launch {
             repository.saveMood(
                 MoodEntry(
                     mood = mood,
                     smileScore = 0f,
                     eyeOpenScore = 0f,
-                    note = note
+                    note = note,
+                    triggers = triggers
                 )
             )
         }
@@ -90,7 +91,17 @@ class MainViewModel @Inject constructor(
         val reflectionPrompt: String = MoodUtils.getReflectionPrompt("Neutral"),
         val distribution: List<MoodDistribution> = emptyList(),
         val trendBuckets: List<Int> = List(7) { 0 },
-        val stabilityDelta: Int = 0
+        val stabilityDelta: Int = 0,
+        val smartAction: SmartActionState? = null
+    )
+
+    data class SmartActionState(
+        val isBreatheMode: Boolean,
+        val quoteText: String = "",
+        val quoteAuthor: String = "",
+        val title: String = "",
+        val subtitle: String = "",
+        val emoji: String = ""
     )
 
     data class MoodDistribution(
@@ -111,7 +122,8 @@ class MainViewModel @Inject constructor(
         internal fun buildHomeUiState(entries: List<MoodEntry>): HomeUiState {
             if (entries.isEmpty()) {
                 return HomeUiState(
-                    trendBuckets = List(7) { 0 }
+                    trendBuckets = List(7) { 0 },
+                    smartAction = buildSmartActionState("Neutral")
                 )
             }
 
@@ -153,8 +165,40 @@ class MainViewModel @Inject constructor(
                     (((firstCount - secondCount).coerceAtLeast(0) * 100f) / sourceEntries.size).roundToInt()
                 } else {
                     0
-                }
+                },
+                smartAction = buildSmartActionState(entries.firstOrNull()?.mood ?: "Neutral")
             )
+        }
+
+        @JvmStatic
+        @VisibleForTesting
+        internal fun buildSmartActionState(latestMood: String): SmartActionState {
+            return when (latestMood) {
+                "Stressed", "Tired", "Bored" -> {
+                    SmartActionState(
+                        isBreatheMode = true,
+                        title = "Take a Breath",
+                        subtitle = "Recenter your focus.",
+                        emoji = "🫧"
+                    )
+                }
+                else -> {
+                    val quotes = listOf(
+                        Pair("Whatever you can do or dream you can, begin it.", "Johann Wolfgang von Goethe"),
+                        Pair("Act as if what you do makes a difference. It does.", "William James"),
+                        Pair("Success is not final, failure is not fatal: it is the courage to continue that counts.", "Winston Churchill"),
+                        Pair("Believe you can and you're halfway there.", "Theodore Roosevelt")
+                    )
+                    val quote = quotes.random()
+                    SmartActionState(
+                        isBreatheMode = false,
+                        quoteText = quote.first,
+                        quoteAuthor = quote.second,
+                        title = "Daily Inspiration",
+                        emoji = "✨"
+                    )
+                }
+            }
         }
 
         @JvmStatic

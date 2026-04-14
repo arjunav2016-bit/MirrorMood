@@ -13,6 +13,11 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
+import androidx.work.Constraints
+import androidx.work.ExistingPeriodicWorkPolicy
+import androidx.work.NetworkType
+import androidx.work.PeriodicWorkRequestBuilder
+import androidx.work.WorkManager
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.lifecycleScope
@@ -21,8 +26,11 @@ import com.mirrormood.R
 import com.mirrormood.data.db.MoodDatabase
 import com.mirrormood.data.repository.MoodRepository
 import com.mirrormood.databinding.ActivitySettingsBinding
+import com.mirrormood.notification.NotificationScheduler
 import com.mirrormood.security.PinStorage
+import com.mirrormood.worker.BackupWorker
 import com.mirrormood.ui.privacy.PrivacyActivity
+import com.mirrormood.util.MoodUtils
 import com.mirrormood.util.MoodUtils.slideTransition
 import com.mirrormood.util.ThemeHelper
 import com.mirrormood.widget.MoodWidgetProvider
@@ -79,15 +87,195 @@ class SettingsActivity : AppCompatActivity() {
             insets
         }
 
+        setupProfile()
         setupThemeCards()
         setupGoalCard()
+        setupSensitivity()
         setupQuietHours()
+        setupNotificationTimes()
         setupSecurity()
         setupPauseToggle()
+        setupDataRetention()
         setupDataManagement()
         setupActions()
         renderState()
     }
+
+    // ───── Feature 1: User Profile ─────
+
+    private fun setupProfile() {
+        binding.btnEditName.setOnClickListener { view ->
+            view.performHapticFeedback(HapticFeedbackConstants.CONTEXT_CLICK)
+            showNameDialog()
+        }
+        loadProfileStats()
+    }
+
+    private fun showNameDialog() {
+        val currentName = prefs.getString("user_display_name", null) ?: ""
+        val editText = EditText(this).apply {
+            setText(currentName)
+            hint = getString(R.string.settings_profile_name_hint)
+            setPadding(48, 32, 48, 32)
+            setSelection(currentName.length)
+        }
+
+        AlertDialog.Builder(this)
+            .setTitle(R.string.settings_profile_name_title)
+            .setView(editText)
+            .setPositiveButton(android.R.string.ok) { _, _ ->
+                val name = editText.text?.toString()?.trim().orEmpty()
+                if (name.isNotBlank()) {
+                    prefs.edit().putString("user_display_name", name).apply()
+                    binding.tvProfileName.text = name
+                    Toast.makeText(this, R.string.settings_profile_name_saved, Toast.LENGTH_SHORT).show()
+                } else {
+                    prefs.edit().remove("user_display_name").apply()
+                    binding.tvProfileName.text = getString(R.string.settings_profile_name_summary)
+                }
+            }
+            .setNegativeButton(android.R.string.cancel, null)
+            .show()
+    }
+
+    private fun loadProfileStats() {
+        val name = prefs.getString("user_display_name", null)
+        binding.tvProfileName.text = name ?: getString(R.string.settings_profile_name_summary)
+
+        lifecycleScope.launch {
+            val entries = withContext(Dispatchers.IO) {
+                repository.getAllMoods().first()
+            }
+
+            if (entries.isEmpty()) {
+                binding.tvProfileTotalEntries.text = getString(R.string.settings_profile_no_data_yet)
+                binding.tvProfileDaysTracked.text = ""
+                binding.tvProfileTopMood.text = ""
+                return@launch
+            }
+
+            val totalEntries = entries.size
+            binding.tvProfileTotalEntries.text = resources.getQuantityString(
+                R.plurals.settings_profile_total_entries, totalEntries, totalEntries
+            )
+
+            val distinctDays = entries.map { entry ->
+                val cal = java.util.Calendar.getInstance()
+                cal.timeInMillis = entry.timestamp
+                cal.get(java.util.Calendar.DAY_OF_YEAR) * 10000 + cal.get(java.util.Calendar.YEAR)
+            }.distinct().size
+            binding.tvProfileDaysTracked.text = resources.getQuantityString(
+                R.plurals.settings_profile_days_tracked, distinctDays, distinctDays
+            )
+
+            val topMood = entries.groupBy { it.mood }
+                .maxByOrNull { it.value.size }?.key ?: "Neutral"
+            binding.tvProfileTopMood.text = getString(
+                R.string.settings_profile_top_mood,
+                MoodUtils.getEmoji(topMood),
+                topMood
+            )
+
+            // Also update entry count in data section
+            binding.tvEntryCount.text = resources.getQuantityString(
+                R.plurals.settings_entry_count, totalEntries, totalEntries
+            )
+        }
+    }
+
+    // ───── Feature 5: Detection Sensitivity ─────
+
+    private fun setupSensitivity() {
+        val currentSensitivity = prefs.getInt("detection_sensitivity", 1)
+        binding.sliderSensitivity.value = currentSensitivity.toFloat()
+        updateSensitivityLabel(currentSensitivity)
+
+        binding.sliderSensitivity.addOnChangeListener { _, value, fromUser ->
+            if (!fromUser) return@addOnChangeListener
+            val level = value.toInt()
+            prefs.edit().putInt("detection_sensitivity", level).apply()
+            updateSensitivityLabel(level)
+        }
+    }
+
+    private fun updateSensitivityLabel(level: Int) {
+        val (name, desc) = when (level) {
+            0 -> getString(R.string.settings_sensitivity_low) to getString(R.string.settings_sensitivity_low_desc)
+            2 -> getString(R.string.settings_sensitivity_high) to getString(R.string.settings_sensitivity_high_desc)
+            else -> getString(R.string.settings_sensitivity_medium) to getString(R.string.settings_sensitivity_medium_desc)
+        }
+        binding.tvSensitivityLabel.text = "$name — $desc"
+    }
+
+    // ───── Feature 3: Custom Notification Times ─────
+
+    private fun setupNotificationTimes() {
+        val morningHour = prefs.getInt("notif_morning_hour", 8)
+        val eveningHour = prefs.getInt("notif_evening_hour", 21)
+        binding.etMorningTime.setText(formatHour(morningHour))
+        binding.etEveningTime.setText(formatHour(eveningHour))
+
+        binding.etMorningTime.setOnClickListener {
+            val current = prefs.getInt("notif_morning_hour", 8)
+            TimePickerDialog(this, { _, hourOfDay, _ ->
+                prefs.edit().putInt("notif_morning_hour", hourOfDay).apply()
+                binding.etMorningTime.setText(formatHour(hourOfDay))
+                NotificationScheduler.reschedule(this)
+                Toast.makeText(this, R.string.settings_notification_times_updated, Toast.LENGTH_SHORT).show()
+            }, current, 0, false).show()
+        }
+
+        binding.etEveningTime.setOnClickListener {
+            val current = prefs.getInt("notif_evening_hour", 21)
+            TimePickerDialog(this, { _, hourOfDay, _ ->
+                prefs.edit().putInt("notif_evening_hour", hourOfDay).apply()
+                binding.etEveningTime.setText(formatHour(hourOfDay))
+                NotificationScheduler.reschedule(this)
+                Toast.makeText(this, R.string.settings_notification_times_updated, Toast.LENGTH_SHORT).show()
+            }, current, 0, false).show()
+        }
+    }
+
+    // ───── Feature 4: Data Retention ─────
+
+    private fun setupDataRetention() {
+        val retentionDays = prefs.getInt("data_retention_days", 90)
+        checkRetentionChip(retentionDays)
+
+        binding.chipGroupRetention.setOnCheckedStateChangeListener { _, checkedIds ->
+            val chipId = checkedIds.firstOrNull() ?: return@setOnCheckedStateChangeListener
+            val days = when (chipId) {
+                R.id.chipRetention30 -> 30
+                R.id.chipRetention90 -> 90
+                R.id.chipRetention180 -> 180
+                R.id.chipRetention365 -> 365
+                R.id.chipRetentionForever -> 0 // 0 = Forever
+                else -> 90
+            }
+            prefs.edit().putInt("data_retention_days", days).apply()
+            val label = when (days) {
+                30 -> getString(R.string.settings_retention_30)
+                90 -> getString(R.string.settings_retention_90)
+                180 -> getString(R.string.settings_retention_180)
+                365 -> getString(R.string.settings_retention_365)
+                else -> getString(R.string.settings_retention_forever)
+            }
+            Toast.makeText(this, getString(R.string.settings_retention_updated, label), Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun checkRetentionChip(days: Int) {
+        val chipId = when (days) {
+            30 -> R.id.chipRetention30
+            90 -> R.id.chipRetention90
+            180 -> R.id.chipRetention180
+            365 -> R.id.chipRetention365
+            else -> R.id.chipRetentionForever
+        }
+        binding.chipGroupRetention.check(chipId)
+    }
+
+    // ───── Existing features ─────
 
     private fun setupThemeCards() {
         binding.btnModeLight.setOnClickListener { selectTheme(ThemeHelper.MODE_LIGHT) }
@@ -200,6 +388,28 @@ class SettingsActivity : AppCompatActivity() {
             exportBackup()
         }
 
+        binding.switchPeriodicBackup.setOnCheckedChangeListener { _, checked ->
+            if (checked) {
+                prefs.edit().putBoolean("weekly_backup_enabled", true).apply()
+                val constraints = Constraints.Builder()
+                    .setRequiresBatteryNotLow(true)
+                    .build()
+                val backupWork = PeriodicWorkRequestBuilder<BackupWorker>(7, java.util.concurrent.TimeUnit.DAYS)
+                    .setConstraints(constraints)
+                    .build()
+                WorkManager.getInstance(this).enqueueUniquePeriodicWork(
+                    "weekly_backup",
+                    ExistingPeriodicWorkPolicy.KEEP,
+                    backupWork
+                )
+                Toast.makeText(this, "Automated weekly backups enabled", Toast.LENGTH_SHORT).show()
+            } else {
+                prefs.edit().putBoolean("weekly_backup_enabled", false).apply()
+                WorkManager.getInstance(this).cancelUniqueWork("weekly_backup")
+                Toast.makeText(this, "Automated backups disabled", Toast.LENGTH_SHORT).show()
+            }
+        }
+
         binding.btnImportBackup.setOnClickListener { view ->
             view.performHapticFeedback(HapticFeedbackConstants.CONTEXT_CLICK)
             showImportBackupConfirmation()
@@ -230,11 +440,12 @@ class SettingsActivity : AppCompatActivity() {
 
             withContext(Dispatchers.IO) {
                 val dateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
-                val csvHeader = "id,timestamp,date_time,mood,smile_score,eye_open_score,note\n"
+                val csvHeader = "id,timestamp,date_time,mood,smile_score,eye_open_score,note,triggers\n"
                 val csvBody = entries.reversed().joinToString("\n") { entry ->
                     val dateStr = dateFormat.format(Date(entry.timestamp))
                     val escapedNote = (entry.note ?: "").replace("\"", "\"\"")
-                    "${entry.id},${entry.timestamp},\"$dateStr\",${entry.mood},${entry.smileScore},${entry.eyeOpenScore},\"$escapedNote\""
+                    val escapedTriggers = (entry.triggers ?: "").replace("\"", "\"\"")
+                    "${entry.id},${entry.timestamp},\"$dateStr\",${entry.mood},${entry.smileScore},${entry.eyeOpenScore},\"$escapedNote\",\"$escapedTriggers\""
                 }
 
                 val exportDir = File(getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS), "")
@@ -362,11 +573,12 @@ class SettingsActivity : AppCompatActivity() {
                     .put("smileScore", entry.smileScore.toDouble())
                     .put("eyeOpenScore", entry.eyeOpenScore.toDouble())
                     .put("note", entry.note)
+                    .put("triggers", entry.triggers)
             )
         }
 
         return JSONObject()
-            .put("schemaVersion", 1)
+            .put("schemaVersion", 2)
             .put("exportedAt", System.currentTimeMillis())
             .put("entries", entryArray)
             .toString(2)
@@ -374,7 +586,8 @@ class SettingsActivity : AppCompatActivity() {
 
     private fun parseBackupJson(json: String): List<com.mirrormood.data.db.MoodEntry> {
         val root = JSONObject(json)
-        if (root.optInt("schemaVersion", -1) != 1) {
+        val schemaVersion = root.optInt("schemaVersion", -1)
+        if (schemaVersion !in 1..2) {
             throw JSONException("Unsupported MirrorMood backup schema")
         }
 
@@ -389,7 +602,8 @@ class SettingsActivity : AppCompatActivity() {
                 mood = mood,
                 smileScore = item.getDouble("smileScore").toFloat(),
                 eyeOpenScore = item.getDouble("eyeOpenScore").toFloat(),
-                note = if (item.isNull("note")) null else item.getString("note")
+                note = if (item.isNull("note")) null else item.getString("note"),
+                triggers = if (item.has("triggers") && !item.isNull("triggers")) item.getString("triggers") else null
             )
         }
     }
@@ -434,6 +648,8 @@ class SettingsActivity : AppCompatActivity() {
         lockSwitchProgrammatic = true
         binding.switchBiometric.isChecked = prefs.getBoolean("lock_enabled", false)
         lockSwitchProgrammatic = false
+        
+        binding.switchPeriodicBackup.isChecked = prefs.getBoolean("weekly_backup_enabled", false)
     }
 
     private fun selectTheme(mode: String) {

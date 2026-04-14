@@ -147,6 +147,23 @@
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
+            <!-- ═══ Milestones ═══ -->
+            <TextView
+                style="?attr/textAppearanceTitleSmall"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:text="Milestones" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvMilestones"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:clipToPadding="false"
+                android:orientation="horizontal"
+                android:paddingEnd="8dp" />
+
             <!-- ═══ Mood Breakdown ═══ -->
             <TextView
                 style="?attr/textAppearanceTitleSmall"

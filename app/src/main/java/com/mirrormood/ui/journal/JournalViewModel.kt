@@ -85,14 +85,15 @@ class JournalViewModel @Inject constructor(
         }
     }
 
-    fun saveEntry(mood: String, note: String) {
+    fun saveEntry(mood: String, note: String, triggers: String? = null) {
         viewModelScope.launch {
             repository.saveMood(
                 MoodEntry(
                     mood = mood,
                     smileScore = 0f,
                     eyeOpenScore = 0f,
-                    note = note
+                    note = note,
+                    triggers = triggers
                 )
             )
         }

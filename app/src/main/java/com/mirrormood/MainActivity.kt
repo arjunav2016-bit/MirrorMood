@@ -2,6 +2,7 @@ package com.mirrormood
 
 import android.Manifest
 import android.animation.ValueAnimator
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.drawable.GradientDrawable
@@ -52,7 +53,9 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var viewModel: MainViewModel
     private var selectedMood: String = "Neutral"
+    private val selectedTriggers = mutableSetOf<String>()
     private var isQuickComposerExpanded: Boolean = false
+    private var breathingAnimator: ValueAnimator? = null
 
     private val permissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestMultiplePermissions()
@@ -105,6 +108,25 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+        // Trigger chips — multi-select
+        val triggerChipMap = mapOf(
+            R.id.chipTriggerWork to "Work",
+            R.id.chipTriggerExercise to "Exercise",
+            R.id.chipTriggerSocial to "Social",
+            R.id.chipTriggerSleep to "Sleep",
+            R.id.chipTriggerWeather to "Weather",
+            R.id.chipTriggerFood to "Food",
+            R.id.chipTriggerHealth to "Health",
+            R.id.chipTriggerTravel to "Travel"
+        )
+
+        triggerChipMap.forEach { (chipId, trigger) ->
+            findViewById<Chip>(chipId)?.setOnCheckedChangeListener { _, isChecked ->
+                if (isChecked) selectedTriggers.add(trigger)
+                else selectedTriggers.remove(trigger)
+            }
+        }
+
         binding.quickNoteHeader.setOnClickListener {
             setQuickComposerExpanded(!isQuickComposerExpanded)
         }
@@ -147,8 +169,10 @@ class MainActivity : AppCompatActivity() {
             return
         }
 
-        viewModel.saveReflection(selectedMood, note)
+        val triggers = if (selectedTriggers.isNotEmpty()) selectedTriggers.joinToString(",") else null
+        viewModel.saveReflection(selectedMood, note, triggers)
         binding.etQuickNote.text?.clear()
+        selectedTriggers.clear()
         setQuickComposerExpanded(false)
         Toast.makeText(this, R.string.journal_saved, Toast.LENGTH_SHORT).show()
     }
@@ -181,6 +205,7 @@ class MainActivity : AppCompatActivity() {
         lifecycleScope.launch {
             viewModel.homeUiState.collect { state ->
                 renderGreeting()
+                renderSmartActionCard(state.smartAction)
                 renderArchiveCard(state)
                 renderDistributionCard(state)
                 renderRecentEchoes(state.recentEntries)
@@ -224,8 +249,111 @@ class MainActivity : AppCompatActivity() {
             hour < 21 -> R.string.dashboard_good_evening
             else      -> R.string.dashboard_good_night
         }
-        binding.tvGreeting.text = getString(greeting)
+
+        val prefs = getSharedPreferences(MirrorMoodApp.PREFS_NAME, Context.MODE_PRIVATE)
+        val userName = prefs.getString("user_display_name", null) ?: "Analyst"
+
+        binding.tvGreeting.text = getString(greeting, userName)
         binding.tvSubtitle.text = getString(R.string.dashboard_subtitle)
+    }
+
+    private fun renderSmartActionCard(state: MainViewModel.SmartActionState?) {
+        if (breathingAnimator?.isRunning == true) {
+            // Do not interrupt an active breathing session
+            return
+        }
+
+        val smartActionCard = findViewById<com.google.android.material.card.MaterialCardView>(R.id.smartActionCard) ?: return
+        if (state == null) {
+            smartActionCard.visibility = View.GONE
+            return
+        }
+        smartActionCard.visibility = View.VISIBLE
+        
+        val breatheContainer = findViewById<View>(R.id.breatheContainer)
+        val quoteContainer = findViewById<View>(R.id.quoteContainer)
+        
+        if (state.isBreatheMode) {
+            breatheContainer.visibility = View.VISIBLE
+            quoteContainer.visibility = View.GONE
+            
+            findViewById<TextView>(R.id.tvSmartBreatheTitle)?.text = state.title
+            findViewById<TextView>(R.id.tvSmartBreatheSubtitle)?.text = state.subtitle
+            findViewById<TextView>(R.id.tvSmartBreatheEmoji)?.text = state.emoji
+            
+            findViewById<View>(R.id.viewBreathingRing)?.apply {
+                scaleX = 1f
+                scaleY = 1f
+            }
+            findViewById<TextView>(R.id.tvBreathingInstruction)?.text = "Tap to Start"
+            
+            findViewById<View>(R.id.btnStartBreathing)?.setOnClickListener {
+                startBreathingAnimation()
+            }
+            findViewById<View>(R.id.frameBreathingArea)?.setOnClickListener {
+                startBreathingAnimation()
+            }
+        } else {
+            breatheContainer.visibility = View.GONE
+            quoteContainer.visibility = View.VISIBLE
+            
+            findViewById<TextView>(R.id.tvSmartQuoteLabel)?.text = state.title
+            findViewById<TextView>(R.id.tvSmartQuoteText)?.text = "\"${state.quoteText}\""
+            findViewById<TextView>(R.id.tvSmartQuoteAuthor)?.text = "— ${state.quoteAuthor}"
+        }
+    }
+
+    private fun startBreathingAnimation() {
+        val ring = findViewById<View>(R.id.viewBreathingRing) ?: return
+        val text = findViewById<TextView>(R.id.tvBreathingInstruction) ?: return
+        val btn = findViewById<com.google.android.material.button.MaterialButton>(R.id.btnStartBreathing) ?: return
+        
+        btn.isEnabled = false
+        breathingAnimator?.cancel()
+        
+        breathingAnimator = ValueAnimator.ofFloat(0f, 1f).apply {
+            duration = 19000L
+            repeatMode = ValueAnimator.RESTART
+            repeatCount = 3 
+            interpolator = android.view.animation.LinearInterpolator()
+            
+            addUpdateListener { anim ->
+                val fraction = anim.animatedValue as Float
+                val elapsed = fraction * 19000f
+                val scale: Float
+                
+                // Helper for smoothstep easing
+                fun easeInOut(t: Float) = t * t * (3 - 2 * t)
+                
+                when {
+                    elapsed < 4000f -> {
+                        val subFraction = elapsed / 4000f
+                        scale = 1f + (1.5f * easeInOut(subFraction))
+                        text.text = "Inhale..."
+                    }
+                    elapsed < 11000f -> {
+                        scale = 2.5f
+                        text.text = "Hold..."
+                    }
+                    else -> {
+                        val subFraction = (elapsed - 11000f) / 8000f
+                        scale = 2.5f - (1.5f * easeInOut(subFraction))
+                        text.text = "Exhale..."
+                    }
+                }
+                
+                ring.scaleX = scale
+                ring.scaleY = scale
+            }
+            addListener(object : android.animation.AnimatorListenerAdapter() {
+                override fun onAnimationEnd(animation: android.animation.Animator) {
+                    text.text = "Session Complete"
+                    btn.isEnabled = true
+                    ring.animate().scaleX(1f).scaleY(1f).setDuration(500).start()
+                }
+            })
+            start()
+        }
     }
 
     private var currentResonanceMood: String? = null

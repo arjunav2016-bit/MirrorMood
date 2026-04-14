@@ -375,6 +375,26 @@ class JournalActivity : AppCompatActivity() {
                 if (binding.etNote.text?.toString() != desiredNote) {
                     binding.etNote.setText(desiredNote)
                 }
+
+                // Display triggers if present
+                if (!entry.triggers.isNullOrBlank()) {
+                    binding.tvTriggers.visibility = android.view.View.VISIBLE
+                    binding.tvTriggers.text = entry.triggers!!.split(",").joinToString("  ") { tag ->
+                        when (tag.trim()) {
+                            "Work" -> "💼 Work"
+                            "Exercise" -> "🏃 Exercise"
+                            "Social" -> "👥 Social"
+                            "Sleep" -> "😴 Sleep"
+                            "Weather" -> "🌤️ Weather"
+                            "Food" -> "🍽️ Food"
+                            "Health" -> "💊 Health"
+                            "Travel" -> "✈️ Travel"
+                            else -> tag.trim()
+                        }
+                    }
+                } else {
+                    binding.tvTriggers.visibility = android.view.View.GONE
+                }
             }
         }
     }

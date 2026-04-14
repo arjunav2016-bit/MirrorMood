@@ -33,6 +33,9 @@ import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
 import android.view.animation.DecelerateInterpolator
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.mirrormood.util.MilestoneEngine
+import com.mirrormood.util.MilestoneAdapter
 
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -44,6 +47,7 @@ class InsightsActivity : AppCompatActivity() {
     @Inject lateinit var repository: MoodRepository
 
     private var currentTab = Tab.TODAY
+    private val milestoneAdapter = MilestoneAdapter()
 
     private enum class Tab { TODAY, WEEK }
 
@@ -61,8 +65,13 @@ class InsightsActivity : AppCompatActivity() {
 
         setupTabs()
         setupNavigationCards()
+        
+        binding.rvMilestones.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+        binding.rvMilestones.adapter = milestoneAdapter
+        
         BottomNavHelper.setup(this, BottomNavTab.INSIGHTS)
         loadTab(Tab.TODAY)
+        loadMilestones()
         playEntranceAnimations()
     }
 
@@ -134,6 +143,16 @@ class InsightsActivity : AppCompatActivity() {
                 }
                 renderBreakdown(entries, "today")
             }
+        }
+    }
+
+    private fun loadMilestones() {
+        lifecycleScope.launch {
+            val allEntries = withContext(Dispatchers.IO) {
+                repository.getAllMoodEntries()
+            }
+            val milestones = MilestoneEngine.generateMilestones(allEntries)
+            milestoneAdapter.submitList(milestones)
         }
     }
 

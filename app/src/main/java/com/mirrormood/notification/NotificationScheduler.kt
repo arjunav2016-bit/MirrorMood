@@ -1,6 +1,7 @@
 package com.mirrormood.notification
 
 import android.content.Context
+import com.mirrormood.MirrorMoodApp
 import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
@@ -16,8 +17,22 @@ object NotificationScheduler {
         scheduleAnomalyWorker(context)
     }
 
+    /**
+     * Re-schedule notifications with updated times from user preferences.
+     * Called when user changes notification times in Settings.
+     */
+    fun reschedule(context: Context) {
+        val wm = WorkManager.getInstance(context)
+        wm.cancelUniqueWork("MorningMoodReminder")
+        wm.cancelUniqueWork("EveningMoodSummary")
+        scheduleMorningNotification(context)
+        scheduleEveningNotification(context)
+    }
+
     private fun scheduleMorningNotification(context: Context) {
-        val delay = calculateDelayUntilHour(8) // 8:00 AM
+        val prefs = context.getSharedPreferences(MirrorMoodApp.PREFS_NAME, Context.MODE_PRIVATE)
+        val hour = prefs.getInt("notif_morning_hour", 8)
+        val delay = calculateDelayUntilHour(hour)
 
         val request = PeriodicWorkRequestBuilder<MorningWorker>(1, TimeUnit.DAYS)
             .setInitialDelay(delay, TimeUnit.MILLISECONDS)
@@ -31,7 +46,9 @@ object NotificationScheduler {
     }
 
     private fun scheduleEveningNotification(context: Context) {
-        val delay = calculateDelayUntilHour(21) // 9:00 PM
+        val prefs = context.getSharedPreferences(MirrorMoodApp.PREFS_NAME, Context.MODE_PRIVATE)
+        val hour = prefs.getInt("notif_evening_hour", 21)
+        val delay = calculateDelayUntilHour(hour)
 
         val request = PeriodicWorkRequestBuilder<EveningWorker>(1, TimeUnit.DAYS)
             .setInitialDelay(delay, TimeUnit.MILLISECONDS)

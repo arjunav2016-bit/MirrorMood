@@ -54,13 +54,20 @@ class MoodRepository(private val moodDao: MoodDao) {
         moodDao.deleteOldEntries(cutoff)
     }
 
+    suspend fun cleanOldData(retentionDays: Int) {
+        if (retentionDays <= 0) return // "Forever" — skip cleanup
+        val cutoff = System.currentTimeMillis() - TimeUnit.DAYS.toMillis(retentionDays.toLong())
+        moodDao.deleteOldEntries(cutoff)
+    }
+
     private fun MoodEntry.backupKey(): BackupKey {
         return BackupKey(
             timestamp = timestamp,
             mood = mood,
             smileScore = smileScore,
             eyeOpenScore = eyeOpenScore,
-            note = note
+            note = note,
+            triggers = triggers
         )
     }
 
@@ -69,6 +76,7 @@ class MoodRepository(private val moodDao: MoodDao) {
         val mood: String,
         val smileScore: Float,
         val eyeOpenScore: Float,
-        val note: String?
+        val note: String?,
+        val triggers: String?
     )
 }

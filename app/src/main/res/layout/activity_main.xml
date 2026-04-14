@@ -68,6 +68,9 @@
                 android:text="@string/dashboard_subtitle"
                 android:textColor="?attr/colorOnSurfaceVariant" />
 
+            <!-- ═══ Smart Action Card ═══ -->
+            <include layout="@layout/layout_smart_action_card" />
+
             <!-- ═══ Mood Card ═══ -->
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/moodCard"
@@ -587,6 +590,79 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@string/mood_bored" />
+                        </com.google.android.material.chip.ChipGroup>
+
+                        <!-- Trigger Chips -->
+                        <TextView
+                            style="?attr/textAppearanceLabelSmall"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="12dp"
+                            android:text="@string/triggers_label"
+                            android:textColor="?attr/colorOnSurfaceVariant" />
+
+                        <com.google.android.material.chip.ChipGroup
+                            android:id="@+id/chipGroupTriggers"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            app:singleSelection="false">
+
+                            <com.google.android.material.chip.Chip
+                                android:id="@+id/chipTriggerWork"
+                                style="@style/Widget.Material3.Chip.Filter"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/trigger_work" />
+
+                            <com.google.android.material.chip.Chip
+                                android:id="@+id/chipTriggerExercise"
+                                style="@style/Widget.Material3.Chip.Filter"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/trigger_exercise" />
+
+                            <com.google.android.material.chip.Chip
+                                android:id="@+id/chipTriggerSocial"
+                                style="@style/Widget.Material3.Chip.Filter"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/trigger_social" />
+
+                            <com.google.android.material.chip.Chip
+                                android:id="@+id/chipTriggerSleep"
+                                style="@style/Widget.Material3.Chip.Filter"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/trigger_sleep" />
+
+                            <com.google.android.material.chip.Chip
+                                android:id="@+id/chipTriggerWeather"
+                                style="@style/Widget.Material3.Chip.Filter"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/trigger_weather" />
+
+                            <com.google.android.material.chip.Chip
+                                android:id="@+id/chipTriggerFood"
+                                style="@style/Widget.Material3.Chip.Filter"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/trigger_food" />
+
+                            <com.google.android.material.chip.Chip
+                                android:id="@+id/chipTriggerHealth"
+                                style="@style/Widget.Material3.Chip.Filter"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/trigger_health" />
+
+                            <com.google.android.material.chip.Chip
+                                android:id="@+id/chipTriggerTravel"
+                                style="@style/Widget.Material3.Chip.Filter"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/trigger_travel" />
                         </com.google.android.material.chip.ChipGroup>
 
                         <com.google.android.material.textfield.TextInputLayout
