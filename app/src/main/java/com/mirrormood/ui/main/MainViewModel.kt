@@ -2,10 +2,12 @@ package com.mirrormood.ui.main
 
 import android.app.Application
 import android.content.Context
+import android.util.Log
 import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.mirrormood.MirrorMoodApp
+import com.mirrormood.data.Milestone
 import com.mirrormood.data.WellnessRecommendation
 import com.mirrormood.data.db.MoodEntry
 import com.mirrormood.data.repository.AchievementRepository
@@ -23,6 +25,7 @@ import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import java.util.Calendar
 import kotlin.math.roundToInt
@@ -49,8 +52,8 @@ class MainViewModel @Inject constructor(
     private val _healthState = MutableStateFlow<HealthSnapshot?>(null)
     val healthState: StateFlow<HealthSnapshot?> = _healthState.asStateFlow()
 
-    private val _newlyUnlocked = MutableSharedFlow<String>()
-    val newlyUnlocked: SharedFlow<String> = _newlyUnlocked.asSharedFlow()
+    private val _newlyUnlocked = MutableSharedFlow<Milestone>()
+    val newlyUnlocked: SharedFlow<Milestone> = _newlyUnlocked.asSharedFlow()
 
     init {
         observeArchive()
@@ -68,10 +71,15 @@ class MainViewModel @Inject constructor(
                 if (!prefs.getBoolean("health_connect_enabled", false)) return@launch
 
                 val manager = HealthConnectManager(getApplication())
-                if (!manager.isAvailable()) return@launch
+                if (!manager.isAvailable()) {
+                    Log.d(TAG, "Health Connect not available on this device")
+                    return@launch
+                }
                 _healthState.value = manager.getTodaySnapshot()
-            } catch (_: Exception) {
-                // Health Connect unavailable; no card shown.
+            } catch (e: SecurityException) {
+                Log.w(TAG, "Health Connect permission denied", e)
+            } catch (e: Exception) {
+                Log.w(TAG, "Health Connect data unavailable", e)
             }
         }
     }
@@ -91,8 +99,14 @@ class MainViewModel @Inject constructor(
             val newlyUnlockedIds = achievementRepository.checkAndUnlock(
                 entries, getApplication()
             )
-            newlyUnlockedIds.forEach { id ->
-                _newlyUnlocked.emit(id)
+            if (newlyUnlockedIds.isNotEmpty()) {
+                val milestones = achievementRepository.getAllMilestones().first()
+                val milestonesById = milestones.associateBy { it.id }
+                newlyUnlockedIds.forEach { id ->
+                    milestonesById[id]?.let { milestone ->
+                        _newlyUnlocked.emit(milestone)
+                    }
+                }
             }
         }
     }
@@ -174,6 +188,7 @@ class MainViewModel @Inject constructor(
     )
 
     companion object {
+        private const val TAG = "MainViewModel"
 
         @JvmStatic
         @VisibleForTesting

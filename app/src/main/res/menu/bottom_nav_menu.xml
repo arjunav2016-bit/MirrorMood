@@ -15,5 +15,5 @@
     <item
         android:id="@+id/navTips"
         android:icon="@drawable/ic_nav_advice_selector"
-        android:title="@string/nav_journal" />
+        android:title="@string/nav_tips" />
 </menu>

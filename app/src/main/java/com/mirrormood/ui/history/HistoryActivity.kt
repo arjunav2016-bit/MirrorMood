@@ -23,6 +23,7 @@ import java.util.Calendar
 import java.util.Locale
 
 import dagger.hilt.android.AndroidEntryPoint
+import androidx.activity.OnBackPressedCallback
 
 @AndroidEntryPoint
 class HistoryActivity : AppCompatActivity() {
@@ -78,6 +79,14 @@ class HistoryActivity : AppCompatActivity() {
         }
 
         requestMonthData()
+
+        // Consistent back navigation
+        onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                finish()
+                slideTransition(forward = false)
+            }
+        })
     }
 
     private fun requestMonthData() {
@@ -265,7 +274,7 @@ class HistoryActivity : AppCompatActivity() {
         binding.tvDetailDate.text = dateFormat.format(dateCal.time)
 
         val total = entries.size
-        binding.tvDetailEntryCount.text = "$total mood ${if (total == 1) "entry" else "entries"}"
+        binding.tvDetailEntryCount.text = resources.getQuantityString(R.plurals.history_day_entry_count, total, total)
 
         val moodCounts = entries.groupBy { it.mood }
         val happyCount = moodCounts["Happy"]?.size ?: 0

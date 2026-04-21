@@ -21,6 +21,7 @@ import com.mirrormood.util.MoodUtils.slideTransition
 import com.mirrormood.util.ThemeHelper
 
 import dagger.hilt.android.AndroidEntryPoint
+import androidx.activity.OnBackPressedCallback
 
 @AndroidEntryPoint
 class RecommendationsActivity : AppCompatActivity() {
@@ -49,6 +50,14 @@ class RecommendationsActivity : AppCompatActivity() {
         setupRecycler()
         setupFilterChips()
         BottomNavHelper.setup(this, BottomNavTab.ADVICE)
+
+        // Consistent back navigation
+        onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                finish()
+                slideTransition(forward = false)
+            }
+        })
     }
 
     private fun setupHeader(mood: String) {
@@ -70,7 +79,7 @@ class RecommendationsActivity : AppCompatActivity() {
 
         tvEmoji.text = config.emoji
         tvTitle.text = config.title
-        tvTipCount.text = "${allTips.size} tips available"
+        tvTipCount.text = resources.getQuantityString(R.plurals.recommendations_tip_count, allTips.size, allTips.size)
         headerCard.alpha = 0f
         headerCard.animate()
             .alpha(1f)

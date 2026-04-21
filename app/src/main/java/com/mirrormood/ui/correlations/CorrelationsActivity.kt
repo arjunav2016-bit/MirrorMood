@@ -17,6 +17,8 @@ import com.mirrormood.util.MoodUtils.slideTransition
 import com.mirrormood.util.ThemeHelper
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import android.view.animation.DecelerateInterpolator
+import androidx.activity.OnBackPressedCallback
 
 @AndroidEntryPoint
 class CorrelationsActivity : AppCompatActivity() {
@@ -60,6 +62,34 @@ class CorrelationsActivity : AppCompatActivity() {
         }
 
         observeViewModel()
+        playEntranceAnimations()
+
+        // Consistent back navigation
+        onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                finish()
+                slideTransition(forward = false)
+            }
+        })
+    }
+
+    private fun playEntranceAnimations() {
+        val views = listOfNotNull(
+            binding.root.findViewById<View>(R.id.cardNotLinked),
+            binding.root.findViewById<View>(R.id.cardHealthStatus)
+        ).filter { it.visibility == View.VISIBLE }
+        val offsetPx = 40 * resources.displayMetrics.density
+        views.forEachIndexed { index, view ->
+            view.alpha = 0f
+            view.translationY = offsetPx
+            view.animate()
+                .alpha(1f)
+                .translationY(0f)
+                .setStartDelay((index * 80).toLong())
+                .setDuration(450)
+                .setInterpolator(DecelerateInterpolator(1.8f))
+                .start()
+        }
     }
 
     private fun observeViewModel() {
@@ -80,7 +110,7 @@ class CorrelationsActivity : AppCompatActivity() {
                         
                         // Populate steps data
                         binding.tvStepsAvg.text = String.format("%,d", snapshot.steps)
-                        binding.tvBestMoodSteps.text = String.format("%,d", (snapshot.steps * 1.2).toInt())
+                        binding.tvBestMoodSteps.text = String.format("%,d", snapshot.steps)
                         binding.tvStepsInsight.text = getString(R.string.correlations_activity_insight_value)
                     }
                 } else {

@@ -439,11 +439,11 @@ class SettingsActivity : AppCompatActivity() {
                     ExistingPeriodicWorkPolicy.KEEP,
                     backupWork
                 )
-                Toast.makeText(this, "Automated weekly backups enabled", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, R.string.settings_weekly_backup_enabled, Toast.LENGTH_SHORT).show()
             } else {
                 prefs.edit().putBoolean("weekly_backup_enabled", false).apply()
                 WorkManager.getInstance(this).cancelUniqueWork("weekly_backup")
-                Toast.makeText(this, "Automated backups disabled", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, R.string.settings_weekly_backup_disabled, Toast.LENGTH_SHORT).show()
             }
         }
 

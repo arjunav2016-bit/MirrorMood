@@ -18,6 +18,8 @@ import com.mirrormood.databinding.ActivityWellnessSessionBinding
 import com.mirrormood.util.MoodUtils.slideTransition
 import com.mirrormood.util.ThemeHelper
 import dagger.hilt.android.AndroidEntryPoint
+import android.view.animation.DecelerateInterpolator
+import androidx.activity.OnBackPressedCallback
 
 @AndroidEntryPoint
 class WellnessSessionActivity : AppCompatActivity() {
@@ -55,6 +57,36 @@ class WellnessSessionActivity : AppCompatActivity() {
         setupSessionChips()
         setupButtons()
         updateSessionUI()
+        playEntranceAnimations()
+
+        // Consistent back navigation
+        onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                stopSession()
+                finish()
+                slideTransition(forward = false)
+            }
+        })
+    }
+
+    private fun playEntranceAnimations() {
+        val views = listOfNotNull(
+            binding.tvSessionType,
+            binding.frameRingArea,
+            binding.btnStartSession
+        )
+        val offsetPx = 40 * resources.displayMetrics.density
+        views.forEachIndexed { index, view ->
+            view.alpha = 0f
+            view.translationY = offsetPx
+            view.animate()
+                .alpha(1f)
+                .translationY(0f)
+                .setStartDelay((index * 80).toLong())
+                .setDuration(450)
+                .setInterpolator(DecelerateInterpolator(1.8f))
+                .start()
+        }
     }
 
     private fun setupSessionChips() {

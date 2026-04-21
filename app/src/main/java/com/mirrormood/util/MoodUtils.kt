@@ -91,14 +91,47 @@ object MoodUtils {
     }
 
     fun getReflectionPrompt(mood: String): String {
-        return when (normalizeMood(mood)) {
-            "Happy" -> "What helped you feel good today?"
-            "Focused" -> "What is going well, and what do you want to finish next?"
-            "Stressed" -> "What feels heaviest right now?"
-            "Tired" -> "What would help you recharge today?"
-            "Bored" -> "What would make the next hour more engaging?"
-            else -> "What are you noticing right now?"
+        // Rotate prompts based on time of day for variety
+        val hour = java.util.Calendar.getInstance().get(java.util.Calendar.HOUR_OF_DAY)
+        val prompts = when (normalizeMood(mood)) {
+            "Happy" -> listOf(
+                "What helped you feel good today?",
+                "Who or what brought you energy today?",
+                "What part of today would you like to repeat?",
+                "Name one thing you did well that deserves recognition."
+            )
+            "Focused" -> listOf(
+                "What is going well, and what do you want to finish next?",
+                "What helped you get into this zone today?",
+                "Is there something you can protect from distraction right now?",
+                "What does your focus feel like — calm, driven, or something else?"
+            )
+            "Stressed" -> listOf(
+                "What feels heaviest right now?",
+                "If you could set one thing aside, what would it be?",
+                "What would help your body relax in this moment?",
+                "Is the pressure coming from outside, or from the standards you hold?"
+            )
+            "Tired" -> listOf(
+                "What would help you recharge today?",
+                "When did the tiredness start — morning, afternoon, or all day?",
+                "What is one kind thing you can do for your body right now?",
+                "Are you tired from too much, or too little stimulation?"
+            )
+            "Bored" -> listOf(
+                "What would make the next hour more engaging?",
+                "Is there something you have been curious about but haven't explored?",
+                "What would future-you thank you for starting today?",
+                "What is one small thing you could change about your routine right now?"
+            )
+            else -> listOf(
+                "What are you noticing right now?",
+                "If your mood were a weather pattern, what would it be?",
+                "What has been quietly steady in your day?",
+                "What is one word that describes where you are right now?"
+            )
         }
+        return prompts[hour / 6 % prompts.size]
     }
 
     fun getRitualTitle(mood: String): String {

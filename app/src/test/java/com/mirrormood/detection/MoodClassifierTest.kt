@@ -325,4 +325,55 @@ class MoodClassifierTest {
         )
         assertEquals("Happy", result.mood)
     }
+
+    @Test
+    fun `combineResults returns heuristic when model is unavailable`() {
+        val heuristic = MoodResult("Focused", 0.72f)
+
+        val result = MoodClassifier.combineResults(
+            heuristic = heuristic,
+            model = null
+        )
+
+        assertEquals(heuristic, result)
+    }
+
+    @Test
+    fun `combineResults returns model when heuristic is unavailable`() {
+        val model = MoodResult("Happy", 0.81f)
+
+        val result = MoodClassifier.combineResults(
+            heuristic = null,
+            model = model
+        )
+
+        assertEquals(model, result)
+    }
+
+    @Test
+    fun `combineResults keeps heuristic winner with default weighting`() {
+        val result = MoodClassifier.combineResults(
+            heuristic = MoodResult("Stressed", 0.9f),
+            model = MoodResult("Happy", 0.6f)
+        )
+
+        assertEquals("Stressed", result?.mood)
+        assertEquals(0.54f, result?.confidence ?: 0f, 0.0001f)
+    }
+
+    @Test
+    fun `combineResults can favor model when configured heavier`() {
+        val result = MoodClassifier.combineResults(
+            heuristic = MoodResult("Neutral", 0.6f),
+            model = MoodResult("Happy", 0.8f),
+            config = MoodClassifier.EnsembleConfig(
+                heuristicWeight = 0.2f,
+                modelWeight = 0.8f
+            )
+        )
+
+        assertEquals("Happy", result?.mood)
+        assertTrue(result != null)
+        assertTrue((result?.confidence ?: 0f) > 0.6f)
+    }
 }

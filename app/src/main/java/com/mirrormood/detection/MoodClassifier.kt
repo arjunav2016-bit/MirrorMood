@@ -14,6 +14,11 @@ package com.mirrormood.detection
  */
 object MoodClassifier {
 
+    data class EnsembleConfig(
+        val heuristicWeight: Float = 0.6f,
+        val modelWeight: Float = 0.4f
+    )
+
     /**
      * Primary entry point. Delegates to the heuristic classifier.
      * When TFLiteMoodClassifier is available, FaceAnalyzer uses an ensemble
@@ -112,5 +117,40 @@ object MoodClassifier {
         // Pick the mood with the highest score
         val best = scores.maxByOrNull { it.value }!!
         return MoodResult(mood = best.key, confidence = best.value)
+    }
+
+    /**
+     * Blend heuristic and model outputs when both are available.
+     * Falls back to the non-null result if either side is missing.
+     */
+    fun combineResults(
+        heuristic: MoodResult?,
+        model: MoodResult?,
+        config: EnsembleConfig = EnsembleConfig()
+    ): MoodResult? {
+        if (heuristic == null) return model
+        if (model == null) return heuristic
+
+        val normalizedWeights = normalizeWeights(config)
+        val scores = linkedMapOf<String, Float>()
+        scores[heuristic.mood] = heuristic.confidence * normalizedWeights.first
+        scores[model.mood] = (scores[model.mood] ?: 0f) + model.confidence * normalizedWeights.second
+
+        val best = scores.maxByOrNull { it.value } ?: return heuristic
+        return MoodResult(
+            mood = best.key,
+            confidence = best.value.coerceIn(0f, 1f)
+        )
+    }
+
+    private fun normalizeWeights(config: EnsembleConfig): Pair<Float, Float> {
+        val heuristicWeight = config.heuristicWeight.coerceAtLeast(0f)
+        val modelWeight = config.modelWeight.coerceAtLeast(0f)
+        val total = heuristicWeight + modelWeight
+        return if (total <= 0f) {
+            0.5f to 0.5f
+        } else {
+            heuristicWeight / total to modelWeight / total
+        }
     }
 }

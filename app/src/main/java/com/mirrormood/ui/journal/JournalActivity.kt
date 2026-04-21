@@ -38,6 +38,7 @@ import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
+import androidx.activity.OnBackPressedCallback
 
 @AndroidEntryPoint
 class JournalActivity : AppCompatActivity() {
@@ -84,9 +85,20 @@ class JournalActivity : AppCompatActivity() {
         binding.rvJournal.setItemViewCacheSize(8)
 
         observeEntries()
-        BottomNavHelper.setup(this, BottomNavTab.NONE)
+        // Journal is a focused creation screen — hide bottom nav
+        (binding.root.findViewById<android.view.View>(R.id.bottomNav)
+            ?: binding.root.findViewById<android.view.View>(R.id.includeBottomNav))
+            ?.visibility = android.view.View.GONE
 
         voiceHelper = VoiceJournalHelper(this)
+
+        // Consistent back navigation
+        onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                finish()
+                slideTransition(forward = false)
+            }
+        })
     }
 
     override fun onDestroy() {

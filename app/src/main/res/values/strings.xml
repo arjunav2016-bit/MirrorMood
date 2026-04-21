@@ -459,6 +459,43 @@
     <!-- General -->
     <string name="nav_back">Go back</string>
     <string name="nav_close">Close</string>
+    <string name="nav_tips">Wellness</string>
+
+    <!-- Polish: Hardcoded string extractions -->
+    <string name="settings_weekly_backup_enabled">Automated weekly backups enabled</string>
+    <string name="settings_weekly_backup_disabled">Automated backups disabled</string>
+    <plurals name="recommendations_tip_count">
+        <item quantity="one">%1$d tip available</item>
+        <item quantity="other">%1$d tips available</item>
+    </plurals>
+    <plurals name="history_day_entry_count">
+        <item quantity="one">%1$d mood entry</item>
+        <item quantity="other">%1$d mood entries</item>
+    </plurals>
+    <string name="achievements_progress_label">%1$d/%2$d</string>
+
+    <!-- Polish: Achievement unlock Snackbar -->
+    <string name="achievements_unlocked_detail">%1$s \"%2$s\" unlocked!</string>
+    <string name="achievements_view">View</string>
+
+    <!-- Polish: Wellness Studio link from Smart Action -->
+    <string name="dashboard_try_full_session">Try a full session →</string>
+    <string name="dashboard_wellness_studio">Wellness Studio</string>
+    <string name="dashboard_wellness_studio_subtitle">Breathing · Body Scan · Gratitude</string>
+    <string name="dashboard_achievements_title">Achievements</string>
+    <plurals name="dashboard_achievements_summary">
+        <item quantity="one">%1$d badge unlocked</item>
+        <item quantity="other">%1$d badges unlocked</item>
+    </plurals>
+    <string name="dashboard_view_all">View All</string>
+    <string name="dashboard_correlations">Health Correlations</string>
+    <string name="dashboard_correlations_subtitle">See how sleep and steps affect your mood</string>
+
+    <!-- Polish: Quick composer mood-only save -->
+    <string name="dashboard_mood_logged">Mood logged</string>
+
+    <!-- Polish: Health card on Home -->
+    <string name="dashboard_health_link_prompt">Connect Health data for deeper insights →</string>
 </resources>
 
 

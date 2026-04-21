@@ -13,6 +13,7 @@ import com.mirrormood.widget.MoodWidgetProvider
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlin.math.max
 
 class FaceAnalyzer(
     private val repository: MoodRepository,
@@ -39,6 +40,7 @@ class FaceAnalyzer(
     private var isCurrentlyBlinking = false
 
     private var baseline: FaceBaseline? = null
+    private val tfliteClassifier = TFLiteMoodClassifier(context)
 
     init {
         val prefs = context.getSharedPreferences(MirrorMoodApp.PREFS_NAME, Context.MODE_PRIVATE)
@@ -123,11 +125,16 @@ class FaceAnalyzer(
 
                     val isRapidBlinking = blinkTimestamps.size >= 3
 
-                    val result = MoodClassifier.classify(
+                    val heuristicResult = MoodClassifier.classifyHeuristic(
                         smileProb, leftEye, rightEye,
                         headX, headY, headZ,
                         isWinking, isRapidBlinking, baseline
                     )
+                    val modelResult = buildFaceBitmap(imageProxy, face.boundingBox)?.let { faceBitmap ->
+                        tfliteClassifier.classify(faceBitmap, baseline.toCalibrationOffsets())
+                    }
+                    val result = MoodClassifier.combineResults(heuristicResult, modelResult)
+                        ?: heuristicResult
 
                     // Add to smoothing window
                     if (recentMoods.size >= SMOOTHING_WINDOW) {
@@ -163,6 +170,108 @@ class FaceAnalyzer(
             .addOnCompleteListener {
                 imageProxy.close() // always close the image!
             }
+    }
+
+    private fun FaceBaseline?.toCalibrationOffsets(): Map<String, Float> {
+        val current = this ?: return emptyMap()
+        return mapOf(
+            "Happy" to ((current.smileProb - 0.5f) * 0.15f).coerceIn(-0.08f, 0.08f),
+            "Tired" to ((0.45f - ((current.leftEyeOpen + current.rightEyeOpen) / 2f)) * 0.2f)
+                .coerceIn(-0.08f, 0.08f),
+            "Focused" to ((0.4f - kotlin.math.abs(current.headYaw) / 30f) * 0.08f)
+                .coerceIn(-0.05f, 0.05f)
+        )
+    }
+
+    private fun buildFaceBitmap(
+        imageProxy: ImageProxy,
+        boundingBox: android.graphics.Rect
+    ): android.graphics.Bitmap? {
+        val mediaImage = imageProxy.image ?: return null
+        val nv21 = yuv420888ToNv21(imageProxy) ?: return null
+        val yuvImage = android.graphics.YuvImage(
+            nv21,
+            android.graphics.ImageFormat.NV21,
+            mediaImage.width,
+            mediaImage.height,
+            null
+        )
+
+        val jpegStream = java.io.ByteArrayOutputStream()
+        if (!yuvImage.compressToJpeg(
+                android.graphics.Rect(0, 0, mediaImage.width, mediaImage.height),
+                90,
+                jpegStream
+            )
+        ) {
+            return null
+        }
+
+        val jpegBytes = jpegStream.toByteArray()
+        val fullBitmap = android.graphics.BitmapFactory.decodeByteArray(jpegBytes, 0, jpegBytes.size)
+            ?: return null
+
+        val rotatedBitmap = when (val rotation = imageProxy.imageInfo.rotationDegrees) {
+            0 -> fullBitmap
+            else -> android.graphics.Bitmap.createBitmap(
+                fullBitmap,
+                0,
+                0,
+                fullBitmap.width,
+                fullBitmap.height,
+                android.graphics.Matrix().apply { postRotate(rotation.toFloat()) },
+                true
+            )
+        }
+
+        val safeRect = android.graphics.Rect(
+            boundingBox.left.coerceIn(0, max(0, rotatedBitmap.width - 1)),
+            boundingBox.top.coerceIn(0, max(0, rotatedBitmap.height - 1)),
+            boundingBox.right.coerceIn(1, rotatedBitmap.width),
+            boundingBox.bottom.coerceIn(1, rotatedBitmap.height)
+        )
+        if (safeRect.width() <= 1 || safeRect.height() <= 1) return null
+
+        return android.graphics.Bitmap.createBitmap(
+            rotatedBitmap,
+            safeRect.left,
+            safeRect.top,
+            safeRect.width(),
+            safeRect.height()
+        )
+    }
+
+    private fun yuv420888ToNv21(imageProxy: ImageProxy): ByteArray? {
+        val yPlane = imageProxy.planes.getOrNull(0) ?: return null
+        val uPlane = imageProxy.planes.getOrNull(1) ?: return null
+        val vPlane = imageProxy.planes.getOrNull(2) ?: return null
+
+        val yBuffer = yPlane.buffer.duplicate()
+        val uBuffer = uPlane.buffer.duplicate()
+        val vBuffer = vPlane.buffer.duplicate()
+
+        val ySize = yBuffer.remaining()
+        val uSize = uBuffer.remaining()
+        val vSize = vBuffer.remaining()
+        val nv21 = ByteArray(ySize + uSize + vSize)
+
+        yBuffer.get(nv21, 0, ySize)
+
+        val chromaRowStride = uPlane.rowStride
+        val chromaPixelStride = uPlane.pixelStride
+        val width = imageProxy.width
+        val height = imageProxy.height
+        var outputOffset = ySize
+
+        for (row in 0 until height / 2) {
+            for (col in 0 until width / 2) {
+                val index = row * chromaRowStride + col * chromaPixelStride
+                nv21[outputOffset++] = vBuffer.get(index)
+                nv21[outputOffset++] = uBuffer.get(index)
+            }
+        }
+
+        return nv21
     }
 
     /**

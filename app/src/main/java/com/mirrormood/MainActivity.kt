@@ -22,17 +22,21 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.chip.Chip
 import com.google.android.material.color.DynamicColors
+import com.google.android.material.snackbar.Snackbar
 import com.mirrormood.data.WellnessRecommendation
 import com.mirrormood.data.db.MoodEntry
 import com.mirrormood.databinding.ActivityMainBinding
 import com.mirrormood.notification.MoodNotificationManager
 import com.mirrormood.notification.NotificationScheduler
 import com.mirrormood.service.MoodMonitorService
+import com.mirrormood.ui.achievements.AchievementsActivity
+import com.mirrormood.ui.correlations.CorrelationsActivity
 import com.mirrormood.ui.journal.JournalActivity
 import com.mirrormood.ui.main.MainViewModel
 import com.mirrormood.ui.recommendations.RecommendationsActivity
 import com.mirrormood.ui.settings.SettingsActivity
 import com.mirrormood.ui.timeline.TimelineActivity
+import com.mirrormood.ui.wellness.WellnessSessionActivity
 import com.mirrormood.util.BottomNavHelper
 import com.mirrormood.util.BottomNavTab
 import com.mirrormood.util.MoodUtils
@@ -158,23 +162,32 @@ class MainActivity : AppCompatActivity() {
             btnViewAdvice.setOnClickListener {
                 openAdvice(viewModel.homeUiState.value.dominantMood)
             }
+
+            // Polish: Surface hidden screens from Home dashboard
+            root.findViewById<View>(R.id.btnOpenWellnessStudio)?.setOnClickListener {
+                navigateTo(WellnessSessionActivity::class.java)
+            }
+            root.findViewById<View>(R.id.btnViewAchievements)?.setOnClickListener {
+                navigateTo(AchievementsActivity::class.java)
+            }
+            root.findViewById<View>(R.id.btnOpenCorrelations)?.setOnClickListener {
+                navigateTo(CorrelationsActivity::class.java)
+            }
         }
     }
 
     private fun saveQuickEntry() {
         val note = binding.etQuickNote.text?.toString()?.trim().orEmpty()
-        if (note.isBlank()) {
-            setQuickComposerExpanded(true)
-            Toast.makeText(this, R.string.journal_save_prompt, Toast.LENGTH_SHORT).show()
-            return
-        }
-
         val triggers = if (selectedTriggers.isNotEmpty()) selectedTriggers.joinToString(",") else null
+
+        // Allow mood-only saves (note is optional on the quick composer)
         viewModel.saveReflection(selectedMood, note, triggers)
         binding.etQuickNote.text?.clear()
         selectedTriggers.clear()
         setQuickComposerExpanded(false)
-        Toast.makeText(this, R.string.journal_saved, Toast.LENGTH_SHORT).show()
+
+        val toastRes = if (note.isBlank()) R.string.dashboard_mood_logged else R.string.journal_saved
+        Toast.makeText(this, toastRes, Toast.LENGTH_SHORT).show()
     }
 
     private fun openAdvice(mood: String) {
@@ -226,22 +239,26 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        // Achievement unlock notifications
+        // Achievement unlock notifications — show enriched Snackbar with emoji + name
         lifecycleScope.launch {
-            viewModel.newlyUnlocked.collect { achievementId ->
-                Toast.makeText(
-                    this@MainActivity,
-                    getString(R.string.achievements_new_unlock),
-                    Toast.LENGTH_SHORT
-                ).show()
+            viewModel.newlyUnlocked.collect { milestone ->
+                val message = getString(
+                    R.string.achievements_unlocked_detail,
+                    milestone.emoji,
+                    milestone.title
+                )
+                Snackbar.make(binding.root, message, Snackbar.LENGTH_LONG)
+                    .setAction(getString(R.string.achievements_view)) {
+                        navigateTo(AchievementsActivity::class.java)
+                    }
+                    .show()
             }
         }
 
-        // Health snapshot — log availability
+        // Health snapshot — render compact health card on dashboard
         lifecycleScope.launch {
             viewModel.healthState.collect { snapshot ->
-                // Health card rendering handled by layout visibility
-                // This data is available for the Correlations screen
+                renderHealthCard(snapshot)
             }
         }
     }
@@ -372,10 +389,46 @@ class MainActivity : AppCompatActivity() {
                 override fun onAnimationEnd(animation: android.animation.Animator) {
                     text.text = getString(R.string.wellness_session_complete)
                     btn.isEnabled = true
+                    btn.text = getString(R.string.dashboard_try_full_session)
+                    btn.setOnClickListener { navigateTo(WellnessSessionActivity::class.java) }
                     ring.animate().scaleX(1f).scaleY(1f).setDuration(500).start()
                 }
             })
             start()
+        }
+    }
+
+    private fun renderHealthCard(snapshot: com.mirrormood.health.HealthSnapshot?) {
+        val healthCard = binding.root.findViewById<View>(R.id.healthSnapshotCard)
+        val healthLinkPrompt = binding.root.findViewById<View>(R.id.tvHealthLinkPrompt)
+
+        if (healthCard == null) return  // Layout doesn't have the card yet
+
+        val prefs = getSharedPreferences(MirrorMoodApp.PREFS_NAME, Context.MODE_PRIVATE)
+        val isLinked = prefs.getBoolean("health_connect_enabled", false)
+
+        if (!isLinked) {
+            healthCard.visibility = View.GONE
+            healthLinkPrompt?.apply {
+                visibility = View.VISIBLE
+                setOnClickListener { navigateTo(SettingsActivity::class.java) }
+            }
+            return
+        }
+
+        healthLinkPrompt?.visibility = View.GONE
+
+        if (snapshot != null) {
+            healthCard.visibility = View.VISIBLE
+            healthCard.findViewById<TextView>(R.id.tvHealthSteps)?.text =
+                getString(R.string.health_card_steps, String.format("%,d", snapshot.steps))
+            healthCard.findViewById<TextView>(R.id.tvHealthSleep)?.text =
+                getString(R.string.health_card_sleep, snapshot.sleepHours)
+            healthCard.findViewById<TextView>(R.id.tvHealthQuality)?.text =
+                getString(R.string.health_card_quality, snapshot.sleepQualityScore)
+            healthCard.setOnClickListener { navigateTo(CorrelationsActivity::class.java) }
+        } else {
+            healthCard.visibility = View.GONE
         }
     }
 

@@ -29,6 +29,7 @@ import com.mirrormood.util.MoodUtils.slideTransition
 import com.mirrormood.util.ThemeHelper
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import androidx.activity.OnBackPressedCallback
 
 @AndroidEntryPoint
 class AchievementsActivity : AppCompatActivity() {
@@ -59,6 +60,14 @@ class AchievementsActivity : AppCompatActivity() {
             slideTransition(forward = false)
         }
 
+        // Consistent back navigation via system gesture/button
+        onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                finish()
+                slideTransition(forward = false)
+            }
+        })
+
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.milestones.collect { milestones ->
@@ -66,6 +75,28 @@ class AchievementsActivity : AppCompatActivity() {
                     adapter.submitList(milestones)
                 }
             }
+        }
+
+        playEntranceAnimations()
+    }
+
+    private fun playEntranceAnimations() {
+        val offsetPx = 40 * resources.displayMetrics.density
+        val views = listOfNotNull(
+            binding.root.findViewById<View>(R.id.tvUnlockedCount),
+            binding.progressOverall,
+            binding.rvAchievements
+        )
+        views.forEachIndexed { index, view ->
+            view.alpha = 0f
+            view.translationY = offsetPx
+            view.animate()
+                .alpha(1f)
+                .translationY(0f)
+                .setStartDelay((index * 80).toLong())
+                .setDuration(450)
+                .setInterpolator(android.view.animation.DecelerateInterpolator(1.8f))
+                .start()
         }
     }
 
@@ -112,7 +143,7 @@ class AchievementsActivity : AppCompatActivity() {
                     emoji.scaleY = 1f
                 } else {
                     progress.setProgressCompat(milestone.progress, false)
-                    label.text = "${milestone.currentAmount}/${milestone.target}"
+                    label.text = itemView.context.getString(R.string.achievements_progress_label, milestone.currentAmount, milestone.target)
                     itemView.alpha = 0.7f
                 }
             }
