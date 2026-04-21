@@ -1,44 +1,85 @@
 MirrorMood Project Overview
 
-MirrorMood is an Android app that tracks a user's mood in real time by analyzing facial expressions with the device's front camera.
-It uses Google ML Kit face detection and a custom mood classifier to estimate emotional state from signals like smile probability,
-eye openness, blinking, winking, and head movement.
+MirrorMood is an Android wellness ecosystem that tracks a user's mood in real time by analyzing
+facial expressions with the device's front camera. It uses Google ML Kit face detection and a
+TensorFlow Lite neural network (trained on FER2013) to estimate emotional state from signals like
+smile probability, eye openness, blinking, winking, and head movement.
 
-The app is designed around privacy. All processing happens on the device, and mood data is stored locally in a Room database.
-It does not need to send camera frames or mood history to external servers in order to work.
+The ecosystem extends beyond the phone with a Wear OS companion app for 1-tap mood logging from
+the wrist and Health Connect integration for correlating mood with sleep, steps, and heart rate.
+
+The app is designed around privacy. All processing happens on the device, and mood data is stored
+locally in a Room database. No camera frames, health data, or mood history are ever sent to
+external servers.
 
 Main purpose:
 - Help users understand how their mood changes over time
-- Provide wellness suggestions based on detected mood
-- Let users keep a private record of mood history and journal entries
+- Provide wellness suggestions and guided sessions based on detected mood
+- Let users keep a private record of mood history and voice/text journal entries
+- Correlate mood with biometric and activity data via Health Connect
+- Gamify mood tracking with achievements and milestones to encourage consistent usage
+- Enable quick mood logging from a Wear OS smartwatch
 
 Core features:
 - Real-time mood monitoring using the front camera
+- Dual classification pipeline: heuristic scoring (MoodClassifier) + neural network (TFLiteMoodClassifier)
+- 5-frame consensus algorithm in FaceAnalyzer to prevent noisy classifications
+- Face calibration workflow to personalize detection for individual facial characteristics
 - Mood classification into Happy, Stressed, Tired, Focused, Bored, and Neutral
-- Insights and analytics screens for daily and weekly mood patterns
-- Timeline and history views for past mood entries
-- Mood journal for notes linked to emotional state
-- Wellness recommendations based on the current mood
-- Notifications such as reminders, summaries, and weekly digests
-- Home screen widget for quick mood status
-- App lock with biometric authentication
-- Export and delete options for local data management
+- Insights and analytics screens for daily and weekly mood patterns (MPAndroidChart)
+- Correlations screen showing mood vs. sleep, steps, and heart rate data from Health Connect
+- Timeline and history views for past mood entries (calendar grid + chronological list)
+- Mood journal with text and voice entry support (on-device SpeechRecognizer)
+- Guided wellness sessions: breathing exercises, body scan meditation, gratitude practice
+- Achievements and milestones with progress tracking (e.g., streaks, total entries)
+- Wellness recommendations: 40+ tips filterable by 5 categories
+- Notifications: morning reminders, evening summaries, weekly digests, anomaly alerts
+- Home screen widget for quick mood status at a glance
+- App lock with biometric authentication (AndroidX Biometric) + SHA-256 PIN fallback
+- Export (CSV, JSON) and delete options for local data management
+- Privacy report showing a transparent snapshot of all collected data
+- Wear OS companion app for manual 1-tap mood logging (synced via Data Layer API)
+- Quick Settings tile for instant mood logging access
+- Automated rolling JSON backups (keeps last 5)
+- Periodic database cleanup worker
 
 How the project is structured:
-- Kotlin Android app with XML layouts and ViewBinding
-- MVVM-style architecture with ViewModels and repository classes
-- CameraX for camera access
-- Google ML Kit for face detection
-- Room for local database storage
-- WorkManager and a foreground service for background monitoring and scheduled tasks
+- Multi-module Kotlin Android app: app/ (phone) + wear/ (Wear OS companion)
+- XML layouts with ViewBinding and Material 3 navigation
+- MVVM architecture with ViewModels, StateFlow/Flow, and repository classes
+- Dagger Hilt for dependency injection (app + workers)
+- CameraX 1.4.0 for camera access
+- Google ML Kit Face Detection 16.1.7 for facial analysis
+- TensorFlow Lite 2.16.1 for neural network mood inference
+- Room 2.8.0 for local database storage (multi-entity: moods + achievements)
+- MPAndroidChart v3.1.0 for data visualization
+- WorkManager 2.9.0 and a foreground service for background monitoring and scheduled tasks
+- Health Connect Client for reading sleep, steps, and heart rate data
+- Wearable Data Layer API 18.1.0 for watch-phone sync
+- Ethereal Archive custom design system with Manrope + Inter typography
 
 Important project areas:
-- MainActivity: main dashboard and mood summary experience
-- detection/: face analysis and mood classification logic
-- data/: database models, DAO, and repository layer
-- ui/: screens for timeline, journal, settings, privacy, lockscreen, and more
-- notification/: reminder and summary scheduling
-- widget/: home screen widget support
+- MainActivity: main dashboard and mood summary experience with bottom navigation
+- detection/: face analysis, calibration, TFLite inference, and mood classification logic
+- data/: database models, DAOs, repositories, achievement definitions, and wellness recommendations
+- health/: Health Connect manager and sleep quality analysis
+- ui/: screens for timeline, history, journal, recommendations, wellness sessions,
+       achievements, correlations, calibration, onboarding, settings, privacy, and lockscreen
+- notification/: reminder and summary scheduling, anomaly detection, habit analysis
+- service/: foreground camera service and Quick Settings tile
+- security/: PIN storage with SHA-256 hashing
+- util/: emoji rendering, milestone engine, voice journal helper, bottom nav routing,
+         theme management, and settings dialog helpers
+- widget/: home screen widget support with auto-refresh
+- worker/: anomaly detection, automated backups, and database cleanup
+- wear/: Wear OS companion module with 6-mood quick-log buttons + Data Layer sync
 
-In short, MirrorMood is a privacy-focused emotional wellness app that turns on-device facial expression analysis into mood tracking,
-reflection tools, and helpful insights for the user.
+CI/CD:
+- GitHub Actions workflow (android-ci.yml) runs unit tests and builds debug APK
+- Triggered on pushes and pull requests to main branch
+- Uses JDK 21 Temurin on Ubuntu with Gradle action
+
+In short, MirrorMood is a privacy-focused emotional wellness ecosystem that combines on-device
+facial expression analysis, neural network inference, Health Connect integration, Wear OS
+companion logging, guided wellness sessions, gamified achievements, and actionable insights
+into a holistic mood tracking and reflection platform.
