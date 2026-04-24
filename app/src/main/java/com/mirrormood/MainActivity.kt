@@ -220,7 +220,7 @@ class MainActivity : AppCompatActivity() {
             viewModel.homeUiState.collect { state ->
                 renderGreeting()
                 renderSmartActionCard(state.smartAction)
-                renderPredictionCard(state.prediction)
+                renderPredictionCard(state.forecast)
                 renderArchiveCard(state)
                 renderDistributionCard(state)
                 renderRecentEchoes(state.recentEntries)
@@ -345,21 +345,31 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun renderPredictionCard(prediction: MoodPredictor.Prediction?) {
+    private fun renderPredictionCard(forecast: MoodPredictor.Forecast) {
         val card = findViewById<com.google.android.material.card.MaterialCardView>(R.id.predictionCard) ?: return
-        if (prediction == null) {
-            card.visibility = View.GONE
-            return
-        }
         card.visibility = View.VISIBLE
 
-        findViewById<TextView>(R.id.tvPredictionEmoji)?.text = MoodUtils.getEmoji(prediction.mood)
-        findViewById<TextView>(R.id.tvPredictionMood)?.text =
-            getString(R.string.prediction_likely_mood, prediction.mood)
-        findViewById<TextView>(R.id.tvPredictionConfidence)?.text =
-            getString(R.string.prediction_confidence, prediction.confidence)
-        findViewById<TextView>(R.id.tvPredictionExplanation)?.text =
-            MoodPredictor.getExplanation(prediction)
+        when (forecast) {
+            is MoodPredictor.Forecast.Ready -> {
+                val prediction = forecast.prediction
+                findViewById<TextView>(R.id.tvPredictionEmoji)?.text = MoodUtils.getEmoji(prediction.mood)
+                findViewById<TextView>(R.id.tvPredictionMood)?.text =
+                    getString(R.string.prediction_likely_mood, prediction.mood)
+                findViewById<TextView>(R.id.tvPredictionConfidence)?.text =
+                    getString(R.string.prediction_confidence, prediction.confidence)
+                findViewById<TextView>(R.id.tvPredictionExplanation)?.text =
+                    MoodPredictor.getExplanation(prediction)
+            }
+            is MoodPredictor.Forecast.Learning -> {
+                findViewById<TextView>(R.id.tvPredictionEmoji)?.text = getString(R.string.prediction_learning_icon)
+                findViewById<TextView>(R.id.tvPredictionMood)?.text =
+                    getString(R.string.prediction_learning_title)
+                findViewById<TextView>(R.id.tvPredictionConfidence)?.text =
+                    getString(R.string.prediction_learning_count, forecast.matchingEntries)
+                findViewById<TextView>(R.id.tvPredictionExplanation)?.text =
+                    MoodPredictor.getLearningExplanation(forecast)
+            }
+        }
     }
 
     private fun startBreathingAnimation() {

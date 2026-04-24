@@ -173,7 +173,7 @@ class MainViewModel @Inject constructor(
         val stabilityDelta: Int = 0,
         val wellnessTip: WellnessRecommendation = WellnessRepository.getContextualTip("Neutral"),
         val smartAction: SmartActionState? = null,
-        val prediction: MoodPredictor.Prediction? = null
+        val forecast: MoodPredictor.Forecast = MoodPredictor.forecast(emptyList())
     )
 
     data class SmartActionState(
@@ -255,7 +255,7 @@ class MainViewModel @Inject constructor(
                 },
                 wellnessTip = buildWellnessTip(entries, dominantMood),
                 smartAction = buildSmartActionState(entries, anomalyDetectedAt),
-                prediction = MoodPredictor.predict(entries)
+                forecast = MoodPredictor.forecast(entries)
             )
         }
 

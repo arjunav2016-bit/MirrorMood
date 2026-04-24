@@ -33,6 +33,33 @@ class MoodPredictorTest {
     }
 
     @Test
+    fun `forecast returns learning state for empty list`() {
+        val forecast = MoodPredictor.forecast(emptyList())
+
+        assertTrue(forecast is MoodPredictor.Forecast.Learning)
+        val learning = forecast as MoodPredictor.Forecast.Learning
+        assertEquals(0, learning.totalEntries)
+        assertEquals(3, learning.entriesNeeded)
+    }
+
+    @Test
+    fun `forecast returns learning state when matching pattern is sparse`() {
+        val currentHour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY)
+        val entries = listOf(
+            createEntry("Happy", daysAgo = 1, hour = currentHour),
+            createEntry("Focused", daysAgo = 2, hour = currentHour)
+        )
+
+        val forecast = MoodPredictor.forecast(entries)
+
+        assertTrue(forecast is MoodPredictor.Forecast.Learning)
+        val learning = forecast as MoodPredictor.Forecast.Learning
+        assertEquals(2, learning.totalEntries)
+        assertEquals(1, learning.entriesNeeded)
+        assertTrue(learning.matchingEntries <= 2)
+    }
+
+    @Test
     fun `predict returns dominant mood from matching time slot`() {
         // Create entries at the current hour/day for the last several weeks
         val currentHour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY)
@@ -48,6 +75,21 @@ class MoodPredictorTest {
         assertEquals("Happy", prediction!!.mood)
         assertTrue(prediction.confidence in 35..95)
         assertTrue(prediction.basedOnCount >= 3)
+    }
+
+    @Test
+    fun `forecast returns ready state from matching time slot`() {
+        val currentHour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY)
+        val entries = (0..3).map { week ->
+            createEntry("Focused", daysAgo = week * 7, hour = currentHour)
+        }
+
+        val forecast = MoodPredictor.forecast(entries)
+
+        assertTrue(forecast is MoodPredictor.Forecast.Ready)
+        val prediction = (forecast as MoodPredictor.Forecast.Ready).prediction
+        assertEquals("Focused", prediction.mood)
+        assertTrue(prediction.confidence in 35..95)
     }
 
     @Test
@@ -71,5 +113,20 @@ class MoodPredictorTest {
         val explanation = MoodPredictor.getExplanation(prediction)
         assertTrue(explanation.isNotEmpty())
         assertTrue(explanation.contains("afternoon") || explanation.contains("Happy") || explanation.contains("happy"))
+    }
+
+    @Test
+    fun `getLearningExplanation returns actionable message`() {
+        val learning = MoodPredictor.Forecast.Learning(
+            totalEntries = 2,
+            matchingEntries = 1,
+            entriesNeeded = 2,
+            timeSlot = "Morning"
+        )
+
+        val explanation = MoodPredictor.getLearningExplanation(learning)
+
+        assertTrue(explanation.contains("2"))
+        assertTrue(explanation.contains("morning"))
     }
 }

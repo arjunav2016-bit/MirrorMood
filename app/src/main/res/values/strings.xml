@@ -534,6 +534,9 @@
     <string name="prediction_confidence">%1$d%% match</string>
     <string name="prediction_likely_mood">Likely: %1$s</string>
     <string name="prediction_based_on">Based on %1$d entries</string>
+    <string name="prediction_learning_icon">...</string>
+    <string name="prediction_learning_title">Learning your pattern</string>
+    <string name="prediction_learning_count">%1$d matches</string>
 
     <!-- Phase 2: Week-over-Week Comparison -->
     <string name="insights_comparison_title">WEEK OVER WEEK</string>
@@ -581,4 +584,3 @@
     <string name="privacy_last_export">Last export: %1$s</string>
     <string name="privacy_never_exported">Never exported</string>
 </resources>
-
