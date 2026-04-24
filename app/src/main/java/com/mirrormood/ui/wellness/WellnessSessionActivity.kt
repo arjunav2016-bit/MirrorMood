@@ -153,19 +153,19 @@ class WellnessSessionActivity : AppCompatActivity() {
         when (currentSession) {
             SessionType.BREATHING -> {
                 binding.tvSessionType.text = getString(R.string.wellness_breathing_title)
-                binding.tvSessionEmoji.text = "🫧"
+                binding.tvSessionEmoji.text = WellnessSessionDisplay.emojiFor(WellnessSessionDisplay.TYPE_BREATHING)
                 binding.tvStepDescription.text = getString(R.string.wellness_breathe_desc)
                 binding.tvInstruction.text = getString(R.string.wellness_tap_to_start)
             }
             SessionType.BODY_SCAN -> {
                 binding.tvSessionType.text = getString(R.string.wellness_body_scan_title)
-                binding.tvSessionEmoji.text = "🧘"
+                binding.tvSessionEmoji.text = WellnessSessionDisplay.emojiFor(WellnessSessionDisplay.TYPE_BODY_SCAN)
                 binding.tvStepDescription.text = getString(R.string.wellness_body_scan_desc)
                 binding.tvInstruction.text = getString(R.string.wellness_tap_to_start)
             }
             SessionType.GRATITUDE -> {
                 binding.tvSessionType.text = getString(R.string.wellness_gratitude_title)
-                binding.tvSessionEmoji.text = "✨"
+                binding.tvSessionEmoji.text = WellnessSessionDisplay.emojiFor(WellnessSessionDisplay.TYPE_GRATITUDE)
                 binding.tvStepDescription.text = getString(R.string.wellness_gratitude_desc)
                 binding.tvInstruction.text = getString(R.string.wellness_tap_to_start)
             }
@@ -341,9 +341,9 @@ class WellnessSessionActivity : AppCompatActivity() {
 
         // Persist session to Room for history tracking
         val sessionLabel = when (currentSession) {
-            SessionType.BREATHING -> "Breathing"
-            SessionType.BODY_SCAN -> "Body Scan"
-            SessionType.GRATITUDE -> "Gratitude"
+            SessionType.BREATHING -> WellnessSessionDisplay.TYPE_BREATHING
+            SessionType.BODY_SCAN -> WellnessSessionDisplay.TYPE_BODY_SCAN
+            SessionType.GRATITUDE -> WellnessSessionDisplay.TYPE_GRATITUDE
         }
         val durationMs = System.currentTimeMillis() - sessionStartTimeMs
         lifecycleScope.launch(Dispatchers.IO) {

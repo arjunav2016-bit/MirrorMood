@@ -167,7 +167,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="🧘"
+            android:text="@string/session_history_empty_icon"
             android:textSize="48sp" />
 
         <TextView
@@ -177,5 +177,13 @@
             android:layout_marginTop="12dp"
             android:text="@string/session_history_empty"
             android:textColor="?attr/colorOnSurfaceVariant" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnStartFirstSession"
+            style="@style/MM.Button.Tonal"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:layout_marginTop="20dp"
+            android:text="@string/session_history_empty_action" />
     </LinearLayout>
 </LinearLayout>

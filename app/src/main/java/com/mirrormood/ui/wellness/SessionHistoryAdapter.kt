@@ -33,12 +33,7 @@ class SessionHistoryAdapter :
 
         fun bind(session: WellnessSessionEntity) {
             binding.tvSessionType.text = session.type
-            binding.tvSessionEmoji.text = when (session.type) {
-                "Breathing" -> "🫧"
-                "Body Scan" -> "🧘"
-                "Gratitude" -> "🙏"
-                else -> "✨"
-            }
+            binding.tvSessionEmoji.text = WellnessSessionDisplay.emojiFor(session.type)
             binding.tvSessionDate.text = dateFormat.format(Date(session.completedAt))
 
             val totalSeconds = session.durationMs / 1000

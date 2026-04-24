@@ -572,6 +572,10 @@
     <string name="session_history_favorite">Favorite</string>
     <string name="session_history_recent">Recent Sessions</string>
     <string name="session_history_empty">Complete a wellness session to see your history.</string>
+    <string name="session_history_empty_icon">&#x1F9D8;</string>
+    <string name="session_history_empty_action">Start a Session</string>
+    <string name="session_history_minutes_value">%1$dm</string>
+    <string name="session_history_no_favorite">-</string>
     <string name="session_history_view">View History</string>
 
     <!-- Privacy Audit Stats -->
