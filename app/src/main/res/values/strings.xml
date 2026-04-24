@@ -586,6 +586,9 @@
 
     <!-- Privacy Audit Stats -->
     <string name="privacy_audit_title">DATA AUDIT</string>
+    <string name="privacy_audit_mood_entries_label">Mood Entries</string>
+    <string name="privacy_audit_sessions_label">Sessions</string>
+    <string name="privacy_audit_storage_label">Storage</string>
     <string name="privacy_total_entries">%1$d mood entries</string>
     <string name="privacy_total_sessions">%1$d wellness sessions</string>
     <string name="privacy_oldest_entry">Oldest entry: %1$s</string>

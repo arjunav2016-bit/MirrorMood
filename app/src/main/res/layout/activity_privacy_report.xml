@@ -310,7 +310,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="4dp"
-                            android:text="Mood Entries"
+                            android:text="@string/privacy_audit_mood_entries_label"
                             android:textColor="?attr/colorOnSurfaceVariant" />
                     </LinearLayout>
 
@@ -338,7 +338,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="4dp"
-                            android:text="Sessions"
+                            android:text="@string/privacy_audit_sessions_label"
                             android:textColor="?attr/colorOnSurfaceVariant" />
                     </LinearLayout>
 
@@ -366,7 +366,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="4dp"
-                            android:text="Storage"
+                            android:text="@string/privacy_audit_storage_label"
                             android:textColor="?attr/colorOnSurfaceVariant" />
                     </LinearLayout>
                 </LinearLayout>

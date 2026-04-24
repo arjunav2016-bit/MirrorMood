@@ -32,6 +32,7 @@ import javax.inject.Inject
 class PrivacyReportActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityPrivacyReportBinding
+    private var cachedAudit: PrivacyDataAudit? = null
 
     @Inject lateinit var moodRepository: MoodRepository
     @Inject lateinit var wellnessSessionRepository: WellnessSessionRepository
@@ -88,41 +89,57 @@ class PrivacyReportActivity : AppCompatActivity() {
 
     private fun loadDataAudit() {
         lifecycleScope.launch {
-            val moodEntries = withContext(Dispatchers.IO) {
-                moodRepository.getAllMoodEntries()
-            }
-            val sessionCount = withContext(Dispatchers.IO) {
-                wellnessSessionRepository.getTotalCount()
-            }
+            val audit = loadAudit()
+            cachedAudit = audit
 
-            binding.tvAuditMoodCount.text = moodEntries.size.toString()
-            binding.tvAuditSessionCount.text = sessionCount.toString()
+            binding.tvAuditMoodCount.text = audit.moodEntryCount.toString()
+            binding.tvAuditSessionCount.text = audit.wellnessSessionCount.toString()
+            binding.tvAuditStorageSize.text = getString(
+                R.string.privacy_storage_estimate,
+                audit.estimatedStorageKb
+            )
+            binding.tvAuditOldest.text = audit.oldestEntrySummary
+        }
+    }
 
-            // Estimate storage: ~200 bytes per mood entry + ~50 bytes per session
-            val estimatedKB = ((moodEntries.size * 200L) + (sessionCount * 50L)) / 1024
-            binding.tvAuditStorageSize.text = getString(R.string.privacy_storage_estimate, estimatedKB.toInt())
-
-            // Oldest entry
-            if (moodEntries.isNotEmpty()) {
+    private suspend fun loadAudit(): PrivacyDataAudit {
+        return withContext(Dispatchers.IO) {
+            val moodEntries = moodRepository.getAllMoodEntries()
+            val sessionCount = wellnessSessionRepository.getTotalCount()
+            val estimatedKB = ((moodEntries.size * BYTES_PER_MOOD_ENTRY) +
+                (sessionCount * BYTES_PER_WELLNESS_SESSION)) / BYTES_PER_KB
+            val oldestSummary = if (moodEntries.isNotEmpty()) {
                 val oldest = moodEntries.minByOrNull { it.timestamp }
-                val dateStr = SimpleDateFormat("MMM dd, yyyy", Locale.getDefault())
-                    .format(Date(oldest!!.timestamp))
-                binding.tvAuditOldest.text = getString(R.string.privacy_oldest_entry, dateStr)
+                val dateStr = AUDIT_DATE_FORMAT.format(Date(oldest!!.timestamp))
+                getString(R.string.privacy_oldest_entry, dateStr)
             } else {
-                binding.tvAuditOldest.text = getString(R.string.privacy_no_data)
+                getString(R.string.privacy_no_data)
             }
+            PrivacyDataAudit(
+                moodEntryCount = moodEntries.size,
+                wellnessSessionCount = sessionCount,
+                estimatedStorageKb = estimatedKB.toInt(),
+                oldestEntrySummary = oldestSummary
+            )
         }
     }
 
     private fun shareReport() {
-        val snapshot = PrivacySnapshotFactory.create(this)
-        val report = PrivacySnapshotFactory.buildReportText(this, snapshot)
-        val shareIntent = Intent(Intent.ACTION_SEND).apply {
-            type = "text/plain"
-            putExtra(Intent.EXTRA_SUBJECT, getString(R.string.privacy_transparency_report))
-            putExtra(Intent.EXTRA_TEXT, report)
+        lifecycleScope.launch {
+            val snapshot = PrivacySnapshotFactory.create(this@PrivacyReportActivity)
+            val audit = cachedAudit ?: loadAudit().also { cachedAudit = it }
+            val report = PrivacySnapshotFactory.buildReportText(
+                this@PrivacyReportActivity,
+                snapshot,
+                audit
+            )
+            val shareIntent = Intent(Intent.ACTION_SEND).apply {
+                type = "text/plain"
+                putExtra(Intent.EXTRA_SUBJECT, getString(R.string.privacy_transparency_report))
+                putExtra(Intent.EXTRA_TEXT, report)
+            }
+            startActivity(Intent.createChooser(shareIntent, getString(R.string.privacy_share_report_chooser)))
         }
-        startActivity(Intent.createChooser(shareIntent, getString(R.string.privacy_share_report_chooser)))
     }
 
     private fun openAppPermissionSettings() {
@@ -135,5 +152,11 @@ class PrivacyReportActivity : AppCompatActivity() {
             Toast.makeText(this, R.string.privacy_open_settings_error, Toast.LENGTH_SHORT).show()
         }
     }
-}
 
+    private companion object {
+        const val BYTES_PER_MOOD_ENTRY = 200L
+        const val BYTES_PER_WELLNESS_SESSION = 50L
+        const val BYTES_PER_KB = 1024L
+        val AUDIT_DATE_FORMAT = SimpleDateFormat("MMM dd, yyyy", Locale.getDefault())
+    }
+}

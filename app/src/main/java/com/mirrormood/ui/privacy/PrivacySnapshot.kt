@@ -23,6 +23,13 @@ data class PrivacySnapshot(
     val exportsSummary: String
 )
 
+data class PrivacyDataAudit(
+    val moodEntryCount: Int,
+    val wellnessSessionCount: Int,
+    val estimatedStorageKb: Int,
+    val oldestEntrySummary: String
+)
+
 object PrivacySnapshotFactory {
 
     fun create(context: Context): PrivacySnapshot {
@@ -40,7 +47,11 @@ object PrivacySnapshotFactory {
         )
     }
 
-    fun buildReportText(context: Context, snapshot: PrivacySnapshot): String {
+    fun buildReportText(
+        context: Context,
+        snapshot: PrivacySnapshot,
+        audit: PrivacyDataAudit? = null
+    ): String {
         return buildString {
             appendLine(context.getString(R.string.app_name))
             appendLine(context.getString(R.string.privacy_transparency_report))
@@ -58,6 +69,14 @@ object PrivacySnapshotFactory {
             appendLine("- ${context.getString(R.string.privacy_report_processing)}: ${snapshot.processingSummary}")
             appendLine("- ${context.getString(R.string.privacy_report_storage)}: ${snapshot.storageSummary}")
             appendLine("- ${context.getString(R.string.privacy_report_exports)}: ${snapshot.exportsSummary}")
+            if (audit != null) {
+                appendLine()
+                appendLine("${context.getString(R.string.privacy_audit_title)}:")
+                appendLine("- ${context.getString(R.string.privacy_audit_mood_entries_label)}: ${audit.moodEntryCount}")
+                appendLine("- ${context.getString(R.string.privacy_audit_sessions_label)}: ${audit.wellnessSessionCount}")
+                appendLine("- ${context.getString(R.string.privacy_audit_storage_label)}: ${context.getString(R.string.privacy_storage_estimate, audit.estimatedStorageKb)}")
+                appendLine("- ${audit.oldestEntrySummary}")
+            }
         }.trim()
     }
 
