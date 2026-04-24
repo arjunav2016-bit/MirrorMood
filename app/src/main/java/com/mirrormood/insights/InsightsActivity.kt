@@ -91,6 +91,14 @@ class InsightsActivity : AppCompatActivity() {
             startActivity(intent)
             slideTransition(forward = true)
         }
+
+        binding.cardWeeklyReport.setOnClickListener {
+            val intent = Intent(this, com.mirrormood.ui.report.WeeklyReportActivity::class.java).apply {
+                addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP)
+            }
+            startActivity(intent)
+            slideTransition(forward = true)
+        }
     }
 
     // ── Tab Switching ─────────────────────────────────────────────
@@ -111,6 +119,7 @@ class InsightsActivity : AppCompatActivity() {
         currentTab = tab
         when (tab) {
             Tab.TODAY -> {
+                binding.cardWeekComparison.visibility = View.GONE
                 loadTodayInsights()
                 loadTodayChart()
             }
@@ -136,7 +145,7 @@ class InsightsActivity : AppCompatActivity() {
                 if (entries.isEmpty()) {
                     binding.tvDominantMoodLabel.text = getString(R.string.insights_no_data)
                     binding.tvDominantEmoji.text = "😐"
-                    binding.tvDominantPercent.text = "Start monitoring to see insights"
+                    binding.tvDominantPercent.text = getString(R.string.insights_start_monitoring)
                     binding.tvTotalEntries.text = SimpleDateFormat("MMM dd", Locale.getDefault()).format(calendar.time)
                     binding.moodBreakdownContainer.removeAllViews()
                     return@collect
@@ -223,13 +232,65 @@ class InsightsActivity : AppCompatActivity() {
             if (entries.isEmpty()) {
                 binding.tvDominantMoodLabel.text = getString(R.string.insights_no_data)
                 binding.tvDominantEmoji.text = "😐"
-                binding.tvDominantPercent.text = "No data from the past 7 days"
-                binding.tvTotalEntries.text = "0 readings"
+                binding.tvDominantPercent.text = getString(R.string.insights_no_week_data)
+                binding.tvTotalEntries.text = getString(R.string.insights_zero_readings)
                 binding.moodBreakdownContainer.removeAllViews()
+                binding.cardWeekComparison.visibility = View.GONE
                 return@launch
             }
 
             renderBreakdown(entries, "this week")
+
+            // Week-over-week comparison
+            val lastWeekEnd = startMs
+            val lastWeekCal = Calendar.getInstance().apply { timeInMillis = lastWeekEnd }
+            lastWeekCal.add(Calendar.DAY_OF_YEAR, -7)
+            val lastWeekStart = lastWeekCal.timeInMillis
+
+            val lastWeekEntries = withContext(Dispatchers.IO) {
+                repository.getMoodsForRange(lastWeekStart, lastWeekEnd)
+            }
+
+            if (lastWeekEntries.size < 3) {
+                binding.cardWeekComparison.visibility = View.GONE
+                return@launch
+            }
+
+            binding.cardWeekComparison.visibility = View.VISIBLE
+
+            // Compute happy % and stress % for both weeks
+            val thisHappyPct = if (entries.isNotEmpty()) (entries.count { it.mood == "Happy" } * 100) / entries.size else 0
+            val thisStressPct = if (entries.isNotEmpty()) (entries.count { it.mood == "Stressed" } * 100) / entries.size else 0
+            val lastHappyPct = (lastWeekEntries.count { it.mood == "Happy" } * 100) / lastWeekEntries.size
+            val lastStressPct = (lastWeekEntries.count { it.mood == "Stressed" } * 100) / lastWeekEntries.size
+
+            val happyDelta = thisHappyPct - lastHappyPct
+            val stressDelta = thisStressPct - lastStressPct
+
+            binding.tvCompHappyDelta.text = when {
+                happyDelta > 0 -> getString(R.string.insights_comparison_more, happyDelta)
+                happyDelta < 0 -> getString(R.string.insights_comparison_less, happyDelta)
+                else -> "→ 0%"
+            }
+            binding.tvCompHappyDelta.setTextColor(ContextCompat.getColor(this@InsightsActivity,
+                if (happyDelta >= 0) R.color.mm_mood_happy else R.color.mm_mood_stressed
+            ))
+
+            binding.tvCompStressDelta.text = when {
+                stressDelta > 0 -> getString(R.string.insights_comparison_more, stressDelta)
+                stressDelta < 0 -> getString(R.string.insights_comparison_less, stressDelta)
+                else -> "→ 0%"
+            }
+            binding.tvCompStressDelta.setTextColor(ContextCompat.getColor(this@InsightsActivity,
+                if (stressDelta <= 0) R.color.mm_mood_happy else R.color.mm_mood_stressed
+            ))
+
+            // Overall trend summary
+            binding.tvCompTrend.text = when {
+                happyDelta > 5 && stressDelta < 0 -> getString(R.string.insights_comparison_improved)
+                happyDelta < -5 || stressDelta > 5 -> getString(R.string.insights_comparison_declined)
+                else -> getString(R.string.insights_comparison_stable)
+            }
         }
     }
 
@@ -297,8 +358,8 @@ class InsightsActivity : AppCompatActivity() {
 
         binding.tvDominantEmoji.text = MoodUtils.getEmoji(dominant)
         binding.tvDominantMoodLabel.text = dominant
-        binding.tvDominantPercent.text = "$dominantPercent% of entries"
-        binding.tvDominantSummary.text = "Your dominant mood $periodLabel"
+        binding.tvDominantPercent.text = getString(R.string.insights_dominant_percent, dominantPercent)
+        binding.tvDominantSummary.text = getString(R.string.insights_dominant_summary, periodLabel)
 
         // Build mood breakdown dynamically in the container
         val container = binding.moodBreakdownContainer
@@ -334,17 +395,17 @@ class InsightsActivity : AppCompatActivity() {
             Calendar.getInstance().apply { timeInMillis = entry.timestamp }.get(Calendar.HOUR_OF_DAY)
         }
         binding.tvPeakTimeLabel.text = happiestEntry?.let {
-            "Happiest at ${MoodUtils.formatHour(Calendar.getInstance().apply { timeInMillis = it.timestamp }.get(Calendar.HOUR_OF_DAY))}"
-        } ?: "Most active: --"
+            getString(R.string.insights_happiest_at, MoodUtils.formatHour(Calendar.getInstance().apply { timeInMillis = it.timestamp }.get(Calendar.HOUR_OF_DAY)))
+        } ?: getString(R.string.insights_no_peak)
 
         val stressedEntry = moodCounts["Stressed"]?.maxByOrNull { entry ->
             Calendar.getInstance().apply { timeInMillis = entry.timestamp }.get(Calendar.HOUR_OF_DAY)
         }
         binding.tvPeakActivity.text = stressedEntry?.let {
-            "Most stressed at ${MoodUtils.formatHour(Calendar.getInstance().apply { timeInMillis = it.timestamp }.get(Calendar.HOUR_OF_DAY))}"
-        } ?: "No data yet"
+            getString(R.string.insights_stressed_at, MoodUtils.formatHour(Calendar.getInstance().apply { timeInMillis = it.timestamp }.get(Calendar.HOUR_OF_DAY)))
+        } ?: getString(R.string.insights_no_stress_data)
 
-        binding.tvConfidence.text = "Detection confidence: ${if (total > 5) "High" else "Building..."}"
+        binding.tvConfidence.text = if (total > 5) getString(R.string.insights_confidence_high) else getString(R.string.insights_confidence_building)
     }
 
     private fun renderChart(barEntries: List<BarEntry>, moods: List<String>, labels: Array<String>) {

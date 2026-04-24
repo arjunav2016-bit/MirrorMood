@@ -41,6 +41,7 @@ import com.mirrormood.util.BottomNavHelper
 import com.mirrormood.util.BottomNavTab
 import com.mirrormood.util.MoodUtils
 import com.mirrormood.util.MoodUtils.slideTransition
+import com.mirrormood.util.MoodPredictor
 import com.mirrormood.util.ThemeHelper
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.Calendar
@@ -219,6 +220,7 @@ class MainActivity : AppCompatActivity() {
             viewModel.homeUiState.collect { state ->
                 renderGreeting()
                 renderSmartActionCard(state.smartAction)
+                renderPredictionCard(state.prediction)
                 renderArchiveCard(state)
                 renderDistributionCard(state)
                 renderRecentEchoes(state.recentEntries)
@@ -341,6 +343,23 @@ class MainActivity : AppCompatActivity() {
                 visibility = if (state.quoteAuthor.isBlank()) View.GONE else View.VISIBLE
             }
         }
+    }
+
+    private fun renderPredictionCard(prediction: MoodPredictor.Prediction?) {
+        val card = findViewById<com.google.android.material.card.MaterialCardView>(R.id.predictionCard) ?: return
+        if (prediction == null) {
+            card.visibility = View.GONE
+            return
+        }
+        card.visibility = View.VISIBLE
+
+        findViewById<TextView>(R.id.tvPredictionEmoji)?.text = MoodUtils.getEmoji(prediction.mood)
+        findViewById<TextView>(R.id.tvPredictionMood)?.text =
+            getString(R.string.prediction_likely_mood, prediction.mood)
+        findViewById<TextView>(R.id.tvPredictionConfidence)?.text =
+            getString(R.string.prediction_confidence, prediction.confidence)
+        findViewById<TextView>(R.id.tvPredictionExplanation)?.text =
+            MoodPredictor.getExplanation(prediction)
     }
 
     private fun startBreathingAnimation() {

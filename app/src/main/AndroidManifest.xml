@@ -113,6 +113,16 @@
             android:name=".ui.wellness.WellnessSessionActivity"
             android:launchMode="singleTop"
             android:exported="false" />
+        <!-- Weekly Report -->
+        <activity
+            android:name=".ui.report.WeeklyReportActivity"
+            android:launchMode="singleTop"
+            android:exported="false" />
+        <!-- Session History -->
+        <activity
+            android:name=".ui.wellness.SessionHistoryActivity"
+            android:launchMode="singleTop"
+            android:exported="false" />
 
 
         <!-- Background Mood Monitor Service -->

@@ -10,18 +10,31 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.lifecycle.lifecycleScope
 import com.mirrormood.R
+import com.mirrormood.data.repository.MoodRepository
+import com.mirrormood.data.repository.WellnessSessionRepository
 import com.mirrormood.databinding.ActivityPrivacyReportBinding
 import com.mirrormood.util.BottomNavHelper
 import com.mirrormood.util.BottomNavTab
 import com.mirrormood.util.MoodUtils.slideTransition
 import com.mirrormood.util.ThemeHelper
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class PrivacyReportActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityPrivacyReportBinding
+
+    @Inject lateinit var moodRepository: MoodRepository
+    @Inject lateinit var wellnessSessionRepository: WellnessSessionRepository
 
     override fun onCreate(savedInstanceState: Bundle?) {
         ThemeHelper.applyTheme(this)
@@ -57,6 +70,7 @@ class PrivacyReportActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         bindReport()
+        loadDataAudit()
     }
 
     private fun bindReport() {
@@ -70,6 +84,34 @@ class PrivacyReportActivity : AppCompatActivity() {
         binding.tvProcessingValue.text = snapshot.processingSummary
         binding.tvStorageValue.text = snapshot.storageSummary
         binding.tvExportsValue.text = snapshot.exportsSummary
+    }
+
+    private fun loadDataAudit() {
+        lifecycleScope.launch {
+            val moodEntries = withContext(Dispatchers.IO) {
+                moodRepository.getAllMoodEntries()
+            }
+            val sessionCount = withContext(Dispatchers.IO) {
+                wellnessSessionRepository.getTotalCount()
+            }
+
+            binding.tvAuditMoodCount.text = moodEntries.size.toString()
+            binding.tvAuditSessionCount.text = sessionCount.toString()
+
+            // Estimate storage: ~200 bytes per mood entry + ~50 bytes per session
+            val estimatedKB = ((moodEntries.size * 200L) + (sessionCount * 50L)) / 1024
+            binding.tvAuditStorageSize.text = getString(R.string.privacy_storage_estimate, estimatedKB.toInt())
+
+            // Oldest entry
+            if (moodEntries.isNotEmpty()) {
+                val oldest = moodEntries.minByOrNull { it.timestamp }
+                val dateStr = SimpleDateFormat("MMM dd, yyyy", Locale.getDefault())
+                    .format(Date(oldest!!.timestamp))
+                binding.tvAuditOldest.text = getString(R.string.privacy_oldest_entry, dateStr)
+            } else {
+                binding.tvAuditOldest.text = getString(R.string.privacy_no_data)
+            }
+        }
     }
 
     private fun shareReport() {
@@ -94,3 +136,4 @@ class PrivacyReportActivity : AppCompatActivity() {
         }
     }
 }
+

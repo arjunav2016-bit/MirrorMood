@@ -229,6 +229,9 @@
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
+            <!-- ═══ Mood Prediction Card ═══ -->
+            <include layout="@layout/layout_prediction_card" />
+
             <!-- ═══ Mood Patterns Card ═══ -->
             <com.google.android.material.card.MaterialCardView
                 style="@style/MM.Card.Filled"

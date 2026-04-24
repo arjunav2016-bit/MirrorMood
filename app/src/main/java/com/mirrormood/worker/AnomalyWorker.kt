@@ -35,10 +35,14 @@ class AnomalyWorker @AssistedInject constructor(
             val ratio = negativeCount.toFloat() / recentEntries.size
 
             if (ratio >= 0.75f) {
+                // Save anomaly state so the dashboard Smart Action Card can react
+                val prefs = context.getSharedPreferences("mirrormood_prefs", Context.MODE_PRIVATE)
+                prefs.edit().putLong("anomaly_detected_at", now).apply()
+
                 MoodNotificationManager.sendAnomalyAlert(
                     context = context,
-                    title = "Take a breath? 💙",
-                    message = "We noticed you've been feeling stressed or tired lately. Consider taking a 5-minute break."
+                    title = context.getString(com.mirrormood.R.string.anomaly_notification_title),
+                    message = context.getString(com.mirrormood.R.string.anomaly_notification_message)
                 )
             }
 

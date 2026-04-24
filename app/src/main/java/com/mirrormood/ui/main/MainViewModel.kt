@@ -17,6 +17,7 @@ import com.mirrormood.data.repository.WellnessRepository
 import com.mirrormood.health.HealthConnectManager
 import com.mirrormood.health.HealthSnapshot
 import com.mirrormood.util.MoodUtils
+import com.mirrormood.util.MoodPredictor
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -146,7 +147,14 @@ class MainViewModel @Inject constructor(
             repository.getAllMoods().collect { entries ->
                 val sorted = entries.sortedByDescending { it.timestamp }
                 _latestMood.value = sorted.firstOrNull()
-                _homeUiState.value = buildHomeUiState(sorted)
+
+                // Read anomaly state for smart action card
+                val prefs = getApplication<Application>().getSharedPreferences(
+                    MirrorMoodApp.PREFS_NAME, Context.MODE_PRIVATE
+                )
+                val anomalyAt = prefs.getLong("anomaly_detected_at", 0L)
+
+                _homeUiState.value = buildHomeUiState(sorted, anomalyAt)
                 _streakState.value = buildStreakState(sorted)
                 checkAchievements(sorted)
             }
@@ -164,7 +172,8 @@ class MainViewModel @Inject constructor(
         val trendBuckets: List<Int> = List(7) { 0 },
         val stabilityDelta: Int = 0,
         val wellnessTip: WellnessRecommendation = WellnessRepository.getContextualTip("Neutral"),
-        val smartAction: SmartActionState? = null
+        val smartAction: SmartActionState? = null,
+        val prediction: MoodPredictor.Prediction? = null
     )
 
     data class SmartActionState(
@@ -192,13 +201,16 @@ class MainViewModel @Inject constructor(
 
         @JvmStatic
         @VisibleForTesting
-        internal fun buildHomeUiState(entries: List<MoodEntry>): HomeUiState {
+        internal fun buildHomeUiState(
+            entries: List<MoodEntry>,
+            anomalyDetectedAt: Long = 0L
+        ): HomeUiState {
             if (entries.isEmpty()) {
                 return HomeUiState(
                     trendBuckets = List(7) { 0 },
                     reflectionPrompt = buildReflectionPrompt("Neutral", emptyList()),
                     wellnessTip = buildWellnessTip(emptyList(), "Neutral"),
-                    smartAction = buildSmartActionState(emptyList())
+                    smartAction = buildSmartActionState(emptyList(), anomalyDetectedAt)
                 )
             }
 
@@ -242,13 +254,28 @@ class MainViewModel @Inject constructor(
                     0
                 },
                 wellnessTip = buildWellnessTip(entries, dominantMood),
-                smartAction = buildSmartActionState(entries)
+                smartAction = buildSmartActionState(entries, anomalyDetectedAt),
+                prediction = MoodPredictor.predict(entries)
             )
         }
 
         @JvmStatic
         @VisibleForTesting
-        internal fun buildSmartActionState(entries: List<MoodEntry>): SmartActionState {
+        internal fun buildSmartActionState(
+            entries: List<MoodEntry>,
+            anomalyDetectedAt: Long = 0L
+        ): SmartActionState {
+            // If anomaly was detected within the last 2 hours, prioritize intervention
+            val twoHoursAgo = System.currentTimeMillis() - (2 * 60 * 60 * 1000L)
+            if (anomalyDetectedAt > twoHoursAgo) {
+                return SmartActionState(
+                    isBreatheMode = true,
+                    title = "Time to Reset",
+                    subtitle = "We noticed elevated stress or fatigue recently. A short breathing exercise can help your nervous system recalibrate.",
+                    emoji = MoodUtils.getEmoji("Stressed")
+                )
+            }
+
             val latestMood = entries.firstOrNull()?.mood ?: "Neutral"
             val repeatedTrigger = findRepeatedTrigger(entries)
             val streak = buildStreakState(entries)

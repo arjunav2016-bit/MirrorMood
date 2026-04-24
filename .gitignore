@@ -1,6 +1,7 @@
 *.iml
 .gradle
 .gradle-local
+.gradle-user
 .gradle-user-home
 /local.properties
 /.idea/

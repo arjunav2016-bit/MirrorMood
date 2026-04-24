@@ -48,10 +48,14 @@
                 android:gravity="center"
                 android:text="@string/wellness_breathing_title" />
 
-            <View
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnHistory"
+                style="@style/Widget.Material3.Button.IconButton"
                 android:layout_width="48dp"
-                android:layout_height="1dp"
-                android:importantForAccessibility="no" />
+                android:layout_height="48dp"
+                android:contentDescription="@string/session_history_title"
+                app:icon="@drawable/ic_journal"
+                app:iconTint="?attr/colorOnSurface" />
         </LinearLayout>
 
         <!-- Session emoji -->

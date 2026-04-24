@@ -32,15 +32,23 @@ class WearDataReceiverService : WearableListenerService() {
                     val dataMapItem = DataMapItem.fromDataItem(event.dataItem)
                     val dataMap = dataMapItem.dataMap
                     
-                    val mood = dataMap.getString("mood") ?: continue
+                    val rawMood = dataMap.getString("mood") ?: continue
                     val timestamp = dataMap.getLong("timestamp", System.currentTimeMillis())
                     
-                    // Simple logic: we don't have facial markers from the watch,
-                    // so we use placeholder 0f but label it with the recorded mood.
+                    // Normalize legacy watch moods to phone categories
+                    val mood = when (rawMood) {
+                        "Calm" -> "Neutral"
+                        "Excited" -> "Happy"
+                        "Sad" -> "Stressed"
+                        else -> rawMood
+                    }
+                    
+                    // We don't have facial markers from the watch,
+                    // so we use placeholder scores but full confidence for manual input.
                     val entry = MoodEntry(
                         timestamp = timestamp,
                         mood = mood,
-                        smileScore = if (mood == "Happy" || mood == "Excited") 1f else 0f,
+                        smileScore = if (mood == "Happy") 1f else 0f,
                         eyeOpenScore = 0.5f,
                         confidence = 1.0f,
                         note = "Quick logged from Wear OS"

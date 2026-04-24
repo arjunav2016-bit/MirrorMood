@@ -2,8 +2,10 @@ package com.mirrormood.di
 
 import com.mirrormood.data.db.AchievementDao
 import com.mirrormood.data.db.MoodDao
+import com.mirrormood.data.db.WellnessSessionDao
 import com.mirrormood.data.repository.AchievementRepository
 import com.mirrormood.data.repository.MoodRepository
+import com.mirrormood.data.repository.WellnessSessionRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -24,6 +26,12 @@ object RepositoryModule {
     @Singleton
     fun provideAchievementRepository(dao: AchievementDao): AchievementRepository {
         return AchievementRepository(dao)
+    }
+
+    @Provides
+    @Singleton
+    fun provideWellnessSessionRepository(dao: WellnessSessionDao): WellnessSessionRepository {
+        return WellnessSessionRepository(dao)
     }
 }
 

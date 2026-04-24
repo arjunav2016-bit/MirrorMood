@@ -4,6 +4,7 @@ import android.content.Context
 import com.mirrormood.data.db.AchievementDao
 import com.mirrormood.data.db.MoodDao
 import com.mirrormood.data.db.MoodDatabase
+import com.mirrormood.data.db.WellnessSessionDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -29,6 +30,11 @@ object DatabaseModule {
     @Provides
     fun provideAchievementDao(database: MoodDatabase): AchievementDao {
         return database.achievementDao()
+    }
+
+    @Provides
+    fun provideWellnessSessionDao(database: MoodDatabase): WellnessSessionDao {
+        return database.wellnessSessionDao()
     }
 }
 

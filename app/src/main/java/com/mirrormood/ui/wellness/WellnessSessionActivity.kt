@@ -14,12 +14,20 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.mirrormood.MirrorMoodApp
 import com.mirrormood.R
+import com.mirrormood.data.db.MoodEntry
+import com.mirrormood.data.db.WellnessSessionEntity
+import com.mirrormood.data.repository.MoodRepository
+import com.mirrormood.data.repository.WellnessSessionRepository
 import com.mirrormood.databinding.ActivityWellnessSessionBinding
 import com.mirrormood.util.MoodUtils.slideTransition
 import com.mirrormood.util.ThemeHelper
 import dagger.hilt.android.AndroidEntryPoint
 import android.view.animation.DecelerateInterpolator
 import androidx.activity.OnBackPressedCallback
+import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class WellnessSessionActivity : AppCompatActivity() {
@@ -28,6 +36,14 @@ class WellnessSessionActivity : AppCompatActivity() {
     private var sessionAnimator: ValueAnimator? = null
     private var currentSession: SessionType = SessionType.BREATHING
     private var isSessionActive = false
+
+    @Inject
+    lateinit var moodRepository: MoodRepository
+
+    @Inject
+    lateinit var wellnessSessionRepository: WellnessSessionRepository
+
+    private var sessionStartTimeMs: Long = 0L
 
     enum class SessionType { BREATHING, BODY_SCAN, GRATITUDE }
 
@@ -58,6 +74,13 @@ class WellnessSessionActivity : AppCompatActivity() {
         setupButtons()
         updateSessionUI()
         playEntranceAnimations()
+
+        binding.btnHistory.setOnClickListener { v ->
+            v.performHapticFeedback(HapticFeedbackConstants.CONTEXT_CLICK)
+            val intent = android.content.Intent(this, SessionHistoryActivity::class.java)
+            startActivity(intent)
+            slideTransition(forward = true)
+        }
 
         // Consistent back navigation
         onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
@@ -151,6 +174,7 @@ class WellnessSessionActivity : AppCompatActivity() {
 
     private fun startSession() {
         isSessionActive = true
+        sessionStartTimeMs = System.currentTimeMillis()
         binding.btnStartSession.text = getString(R.string.wellness_stop_session)
         binding.tvTimer.visibility = View.VISIBLE
         binding.chipGroupSession.isEnabled = false
@@ -314,6 +338,34 @@ class WellnessSessionActivity : AppCompatActivity() {
         val prefs = getSharedPreferences(MirrorMoodApp.PREFS_NAME, Context.MODE_PRIVATE)
         val count = prefs.getInt("wellness_sessions_completed", 0) + 1
         prefs.edit().putInt("wellness_sessions_completed", count).apply()
+
+        // Persist session to Room for history tracking
+        val sessionLabel = when (currentSession) {
+            SessionType.BREATHING -> "Breathing"
+            SessionType.BODY_SCAN -> "Body Scan"
+            SessionType.GRATITUDE -> "Gratitude"
+        }
+        val durationMs = System.currentTimeMillis() - sessionStartTimeMs
+        lifecycleScope.launch(Dispatchers.IO) {
+            wellnessSessionRepository.saveSession(
+                WellnessSessionEntity(
+                    type = sessionLabel,
+                    durationMs = durationMs
+                )
+            )
+        }
+        val autoNote = getString(R.string.wellness_auto_journal_note, sessionLabel)
+        val entry = MoodEntry(
+            mood = "Neutral",
+            smileScore = 0.5f,
+            eyeOpenScore = 0.5f,
+            confidence = 1.0f,
+            note = autoNote,
+            triggers = "Wellness:$sessionLabel"
+        )
+        lifecycleScope.launch(Dispatchers.IO) {
+            moodRepository.saveMood(entry)
+        }
 
         Toast.makeText(this, getString(R.string.wellness_completed_toast, count), Toast.LENGTH_SHORT).show()
     }

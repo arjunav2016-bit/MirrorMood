@@ -26,12 +26,13 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        // Mood labels aligned with phone app categories
         val moods = listOf(
             binding.btnHappy to "Happy",
-            binding.btnCalm to "Calm",
-            binding.btnExcited to "Excited",
+            binding.btnCalm to "Neutral",
+            binding.btnExcited to "Focused",
             binding.btnTired to "Tired",
-            binding.btnSad to "Sad",
+            binding.btnSad to "Bored",
             binding.btnStressed to "Stressed"
         )
 
@@ -44,7 +45,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun logMood(mood: String) {
         binding.tvStatus.visibility = View.VISIBLE
-        binding.tvStatus.text = "Syncing..."
+        binding.tvStatus.text = getString(R.string.wear_syncing)
         binding.tvStatus.setTextColor(android.graphics.Color.YELLOW)
 
         scope.launch {
@@ -62,14 +63,14 @@ class MainActivity : AppCompatActivity() {
                 Tasks.await(dataClient.putDataItem(putDataReq))
                 
                 runOnUiThread {
-                    binding.tvStatus.text = "Logged $mood!"
+                    binding.tvStatus.text = getString(R.string.wear_logged, mood)
                     binding.tvStatus.setTextColor(android.graphics.Color.GREEN)
                     hideStatusDelayed()
                 }
             } catch (e: Exception) {
                 Log.e("Wear", "Sync failed", e)
                 runOnUiThread {
-                    binding.tvStatus.text = "Failed to sync"
+                    binding.tvStatus.text = getString(R.string.wear_sync_failed)
                     binding.tvStatus.setTextColor(android.graphics.Color.RED)
                     hideStatusDelayed()
                 }
