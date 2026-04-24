@@ -134,7 +134,7 @@
                             style="?attr/textAppearanceLabelSmall"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Total entries"
+                            android:text="@string/weekly_report_total_entries_label"
                             android:textColor="?attr/colorOnPrimaryContainer" />
                     </LinearLayout>
 
@@ -155,7 +155,7 @@
                             style="?attr/textAppearanceLabelSmall"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Avg per day"
+                            android:text="@string/weekly_report_avg_per_day_label"
                             android:textColor="?attr/colorOnPrimaryContainer" />
                     </LinearLayout>
                 </LinearLayout>
@@ -164,13 +164,15 @@
 
         <!-- ═══ Mood Breakdown ═══ -->
         <TextView
+            android:id="@+id/tvMoodBreakdownTitle"
             style="?attr/textAppearanceTitleSmall"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
-            android:text="Mood Breakdown" />
+            android:text="@string/weekly_report_mood_breakdown" />
 
         <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardMoodBreakdown"
             style="@style/MM.Card.Filled"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -186,6 +188,7 @@
 
         <!-- ═══ Best & Toughest Days ═══ -->
         <LinearLayout
+            android:id="@+id/dayHighlightsContainer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"

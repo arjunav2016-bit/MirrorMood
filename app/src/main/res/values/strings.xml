@@ -557,6 +557,12 @@
     <string name="weekly_report_headline">Your Week in Review</string>
     <string name="weekly_report_total_entries">%1$d total entries</string>
     <string name="weekly_report_avg_per_day">~%1$d per day</string>
+    <string name="weekly_report_total_entries_label">Total entries</string>
+    <string name="weekly_report_avg_per_day_label">Avg per day</string>
+    <string name="weekly_report_mood_breakdown">Mood Breakdown</string>
+    <string name="weekly_report_mood_label">%1$s %2$s</string>
+    <string name="weekly_report_date_range">%1$s - %2$s</string>
+    <string name="weekly_report_day_detail">%1$d entries, mostly %2$s</string>
     <string name="weekly_report_best_day">Best Day</string>
     <string name="weekly_report_toughest_day">Toughest Day</string>
     <string name="weekly_report_empty">Start logging moods to see your weekly summary.</string>
