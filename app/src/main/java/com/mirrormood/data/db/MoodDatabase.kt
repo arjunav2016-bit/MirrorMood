@@ -24,20 +24,20 @@ abstract class MoodDatabase : RoomDatabase() {
         private var INSTANCE: MoodDatabase? = null
 
         val MIGRATION_2_3 = object : Migration(2, 3) {
-            override fun migrate(database: SupportSQLiteDatabase) {
-                database.execSQL("ALTER TABLE mood_entries ADD COLUMN confidence REAL NOT NULL DEFAULT 0.0")
+            override fun migrate(db: SupportSQLiteDatabase) {
+                db.execSQL("ALTER TABLE mood_entries ADD COLUMN confidence REAL NOT NULL DEFAULT 0.0")
             }
         }
 
         val MIGRATION_3_4 = object : Migration(3, 4) {
-            override fun migrate(database: SupportSQLiteDatabase) {
-                database.execSQL("ALTER TABLE mood_entries ADD COLUMN triggers TEXT DEFAULT NULL")
+            override fun migrate(db: SupportSQLiteDatabase) {
+                db.execSQL("ALTER TABLE mood_entries ADD COLUMN triggers TEXT DEFAULT NULL")
             }
         }
 
         val MIGRATION_4_5 = object : Migration(4, 5) {
-            override fun migrate(database: SupportSQLiteDatabase) {
-                database.execSQL("""
+            override fun migrate(db: SupportSQLiteDatabase) {
+                db.execSQL("""
                     CREATE TABLE IF NOT EXISTS achievements (
                         id TEXT NOT NULL PRIMARY KEY,
                         title TEXT NOT NULL,
@@ -53,8 +53,8 @@ abstract class MoodDatabase : RoomDatabase() {
         }
 
         val MIGRATION_5_6 = object : Migration(5, 6) {
-            override fun migrate(database: SupportSQLiteDatabase) {
-                database.execSQL("""
+            override fun migrate(db: SupportSQLiteDatabase) {
+                db.execSQL("""
                     CREATE TABLE IF NOT EXISTS wellness_sessions (
                         id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
                         type TEXT NOT NULL,
@@ -65,6 +65,13 @@ abstract class MoodDatabase : RoomDatabase() {
             }
         }
 
+        val ALL_MIGRATIONS = arrayOf(
+            MIGRATION_2_3,
+            MIGRATION_3_4,
+            MIGRATION_4_5,
+            MIGRATION_5_6
+        )
+
         fun getDatabase(context: Context): MoodDatabase {
             return INSTANCE ?: synchronized(this) {
                 val instance = Room.databaseBuilder(
@@ -72,7 +79,7 @@ abstract class MoodDatabase : RoomDatabase() {
                     MoodDatabase::class.java,
                     "mood_database"
                 )
-                .addMigrations(MIGRATION_2_3, MIGRATION_3_4, MIGRATION_4_5, MIGRATION_5_6)
+                .addMigrations(*ALL_MIGRATIONS)
                 .fallbackToDestructiveMigration(dropAllTables = true)
                 .build()
                 INSTANCE = instance
